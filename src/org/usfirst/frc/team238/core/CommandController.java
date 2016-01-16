@@ -40,7 +40,7 @@ public class CommandController {
 		manualOperatorCommandList = new Command[numCommands];
 		autonomousCommandList = new Command[numCommands];
 		driveTrainList = new Command[1];
-		
+		//now populate the commmsnd list
 		setupOperatorCommands();
 		setupDriverCommands(myRobotDrive);
 		setupAutonomousCommands(autonomousDrive);
