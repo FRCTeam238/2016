@@ -13,7 +13,7 @@ import org.usfirst.frc.team238.robot.Robot;
 public class AutonomousController implements AutonomousState {
 
 	private AutonomousState currentState;
-	private AutonomousState lastState;
+	//private AutonomousState lastState;
 	private int index = 0;
 	Robot the238Robot;
 	ArrayList<AutonomousState> steps;
