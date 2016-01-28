@@ -13,11 +13,11 @@ public class CrusaderCommon {
 	public final static double ARM_ENCODER_MAX_VAL = 1.0;  //WILL BE CHANGED TO FIT
 	public final static double ARM_ENCODER_MIN_VAL = -1.0; //WILL BE CHANGED TO FIT
 	
-	public static final String PREFERENCE_OP_MODE = "mode";
-	public static final String PREFVALUE_OP_MODE_NORMAL = "normal";
-	public static final String PREFVALUE_OP_MODE_TEST = "test";
-	public static final String PREFVALUE_OP_AUTO = "auto";
-	public static final String PREFVALUE_OP_AUTO_DEFAULT = "1";
+	//public static final String PREFERENCE_OP_MODE = "mode";
+	//public static final String PREFVALUE_OP_MODE_NORMAL = "normal";
+	//public static final String PREFVALUE_OP_MODE_TEST = "test";
+	public static final String PREFVALUE_OP_AUTO = "Autonomous";
+	public static final String PREFVALUE_OP_AUTO_DEFAULT = "0";
 	
 	//two types of command lists
 	public static final int OPR_CMD_LIST = 1;

@@ -177,7 +177,16 @@ public class CommandController {
 		else
 		{
 			//this one line does the same thing as the above 4 lines  except it's using the operatorCommandList
-			operatorCommandList[slot[CrusaderCommon.INPUT_OPR_CONTROL]].execute();
+			//operatorCommandList[slot[CrusaderCommon.INPUT_OPR_CONTROL]].execute();
+			//get the value( button pressed) from the array
+			//int buttonpressed = slot[CrusaderCommon.INPUT_OPR_CONTROL];
+			//use the index to get the command that was loaded during robot init
+			//Command manualCmd = operatorCommandList[buttonpressed];
+			//ask the control Board for a value to feed to the execute command
+			//double valueForMotors = ControlBoard.getManualCommandValue();
+			//execute the command
+			//System.out.println("!!!!!!!!!!!DEBUG!!!!!!!!!!!" + buttonpressed);
+			//manualCmd.execute();
 		}
 		
 		driverLeftCommandList[slot[CrusaderCommon.INPUT_DRIVER_LEFT_JS]].execute();
