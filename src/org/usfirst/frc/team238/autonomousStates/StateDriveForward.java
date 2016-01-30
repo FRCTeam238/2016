@@ -14,7 +14,7 @@ public class StateDriveForward implements AutonomousState {
 		//System.out.println("StateDriveForward = "
 		//		+ String.valueOf(howfar));
 		//get specific  objects needed for creating the command object 
-		cmdDrFwd = theMcp.getAutoCmd();
+		cmdDrFwd = (CommandDriveForward) theMcp.getAutoCmd("CommandDriveForward");
 		cmdDrFwd.setParams(params);
 	}
 	

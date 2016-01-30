@@ -1,6 +1,9 @@
 package org.usfirst.frc.team238.core;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.usfirst.frc.team238.commands.CommandDriveForward;
 import org.usfirst.frc.team238.commands.CommandTankDrive;
 import org.usfirst.frc.team238.commands.NoDriverCommand;
@@ -17,11 +20,18 @@ import edu.wpi.first.wpilibj.RobotDrive;
 public class CommandController {
 	
 	Command operatorCommandList[];
-	Command driverRightCommandList[];
-	Command driverLeftCommandList[];
+	//Command driverRightCommandList[];
+	//Command driverLeftCommandList[];
 	Command manualOperatorCommandList[];
 	Command autonomousCommandList[];
-	Command driveTrainList[];
+	//Command driveTrainList[];
+	AutonomousCmdFactory theRouge;
+	DriverCommandFactory  theDriverCommands;
+	
+	HashMap<String, Command> autoCmdList;
+	HashMap<Integer, Command> driverCmdList; 
+	HashMap<Integer, Command> driverLeftCmdList;
+	HashMap<Integer, Command> driverRightCmdList;
 	
 	NoOperatorCommand theDoNothingCmd;
 	NoDriverCommand theDoNothingRightDriverCmd;
@@ -35,80 +45,93 @@ public class CommandController {
 		int numCommands = 10; 
 		System.out.println("ControlBoard Init:NUMCMDS = " + numCommands);
 		operatorCommandList = new Command[numCommands];
-		driverLeftCommandList = new Command[numCommands];
-		driverRightCommandList = new Command[numCommands];
+	//	driverLeftCommandList = new Command[numCommands];
+	//	driverRightCommandList = new Command[numCommands];
 		manualOperatorCommandList = new Command[numCommands];
 		autonomousCommandList = new Command[numCommands];
-		driveTrainList = new Command[1];
+		//driveTrainList = new Command[1];
+		
 		//now populate the commmsnd list
 		setupOperatorCommands();
 		setupDriverCommands(myRobotDrive);
 		setupAutonomousCommands(autonomousDrive);
 	}
 	
-	public CommandDriveForward getAutoCmd()
+	//gets AutoCommand by name
+	public Command getAutoCmd(String cmdName)
 	{
-		return autoDriveForward;
+		return autoCmdList.get(cmdName);
+		
 	}
 	
-	
+	//loads all the autonomous commands from the auto factory
 	private void setupAutonomousCommands(AutonomousDrive autonomousDrive)
 	{
-		autoDriveForward = new CommandDriveForward(autonomousDrive);
+		//autoDriveForward = new CommandDriveForward(autonomousDrive);
+		theRouge = new AutonomousCmdFactory();
+		theRouge.init();
+		autoCmdList = theRouge.createAutonomousCommands(autonomousDrive);
+		
 	}
 	
 	private void setupDriverCommands( RobotDrive myRobotDrive)
 	{
+		theDriverCommands = new DriverCommandFactory();
+		theDriverCommands.init();
 		
-		cmdToDriveTheRobot = new CommandTankDrive(myRobotDrive);
+		driverLeftCmdList = theDriverCommands.createDriverLeftCommands();
+		driverRightCmdList = theDriverCommands.createDriverRightCommands();
+		driverCmdList = theDriverCommands.createDriverCommands(myRobotDrive);
 		
-		theDoNothingRightDriverCmd = new NoDriverCommand();
-		theDoNothingLeftDriverCmd = new NoDriverCommand();
-		
-		setCommand(	CrusaderCommon.DT_CMD_LIST, 
-					CrusaderCommon.DRIVE_TRAIN_CMD_IDX,
-					cmdToDriveTheRobot);
-		
-		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
-					CrusaderCommon.LEFTDRIVER_CMD_IDX_DONOTHING,
-					theDoNothingLeftDriverCmd);
-		
-		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
-					CrusaderCommon.RIGHTDRIVER_CMD_IDX_DONOTHING,
-					theDoNothingRightDriverCmd);
-		
-		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
-					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINRIGHT,
-					theDoNothingLeftDriverCmd);
-
-		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
-					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINLEFT,
-					theDoNothingLeftDriverCmd);
-
-		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
-					CrusaderCommon.LEFTDRIVER_CMD_IDX_UNUSED3,
-					theDoNothingLeftDriverCmd);
-
-		
-		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
-					CrusaderCommon.LEFTDRIVER_CMD_IDX_SHIFTLOW,
-					theDoNothingRightDriverCmd);
-
-		
-		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
-					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINRIGHT,
-					theDoNothingRightDriverCmd);
-		
-		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
-					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINLEFT,
-					theDoNothingRightDriverCmd);
-
-		
-		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
-					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SHIFTHIGH,
-					theDoNothingRightDriverCmd);
-		
-		
+//		cmdToDriveTheRobot = new CommandTankDrive(myRobotDrive);
+//		
+//		theDoNothingRightDriverCmd = new NoDriverCommand();
+//		theDoNothingLeftDriverCmd = new NoDriverCommand();
+//		
+//		setCommand(	CrusaderCommon.DT_CMD_LIST, 
+//					CrusaderCommon.DRIVE_TRAIN_CMD_IDX,
+//					cmdToDriveTheRobot);
+//		
+//		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
+//					CrusaderCommon.LEFTDRIVER_CMD_IDX_DONOTHING,
+//					theDoNothingLeftDriverCmd);
+//		
+//		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
+//					CrusaderCommon.RIGHTDRIVER_CMD_IDX_DONOTHING,
+//					theDoNothingRightDriverCmd);
+//		
+//		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
+//					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINRIGHT,
+//					theDoNothingLeftDriverCmd);
+//
+//		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
+//					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINLEFT,
+//					theDoNothingLeftDriverCmd);
+//
+//		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
+//					CrusaderCommon.LEFTDRIVER_CMD_IDX_UNUSED3,
+//					theDoNothingLeftDriverCmd);
+//
+//		
+//		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
+//					CrusaderCommon.LEFTDRIVER_CMD_IDX_SHIFTLOW,
+//					theDoNothingRightDriverCmd);
+//
+//		
+//		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
+//					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINRIGHT,
+//					theDoNothingRightDriverCmd);
+//		
+//		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
+//					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINLEFT,
+//					theDoNothingRightDriverCmd);
+//
+//		
+//		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
+//					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SHIFTHIGH,
+//					theDoNothingRightDriverCmd);
+//		
+//		
 	}
 	
 	private void setupOperatorCommands()
@@ -124,30 +147,30 @@ public class CommandController {
 		
 	}
 	
-	private void setCommand(int list, int slot, Command command){
-		
-		switch(list)
-		{
-		case CrusaderCommon.OPR_CMD_LIST:
-			operatorCommandList[slot] = command;
-			break;
-		case CrusaderCommon.LEFTDRIVER_CMD_LIST:
-			driverLeftCommandList[slot] = command;
-			break;
-		case CrusaderCommon.RIGHTDRIVER_CMD_LIST:
-			driverRightCommandList[slot] = command;
-			break;
-		case CrusaderCommon.AUTONOMOUS_CMD_LIST:
-			autonomousCommandList[slot] = command;
-			break;
-		case CrusaderCommon.DT_CMD_LIST:
-			driveTrainList[slot] = command;
-			break;
-		default:
-			manualOperatorCommandList[slot] = command;
-		}
-	}
-	
+//	private void setCommand(int list, int slot, Command command){
+//		
+//		switch(list)
+//		{
+//		case CrusaderCommon.OPR_CMD_LIST:
+//			operatorCommandList[slot] = command;
+//			break;
+//		case CrusaderCommon.LEFTDRIVER_CMD_LIST:
+//			driverLeftCommandList[slot] = command;
+//			break;
+//		case CrusaderCommon.RIGHTDRIVER_CMD_LIST:
+//			driverRightCommandList[slot] = command;
+//			break;
+//		case CrusaderCommon.AUTONOMOUS_CMD_LIST:
+//			autonomousCommandList[slot] = command;
+//			break;
+//		case CrusaderCommon.DT_CMD_LIST:
+//			driveTrainList[slot] = command;
+//			break;
+//		default:
+//			manualOperatorCommandList[slot] = command;
+//		}
+//	}
+//	
 	/*
 	 * Gets the buttons that are pressed or switches that are set from the controls (joysticks or custom)  
 	 * which the values  ( button1 = 1 etc) are an index into the array of commands that have been pre-loaded 
@@ -186,13 +209,23 @@ public class CommandController {
 			//double valueForMotors = ControlBoard.getManualCommandValue();
 			//execute the command
 			//System.out.println("!!!!!!!!!!!DEBUG!!!!!!!!!!!" + buttonpressed);
-			//manualCmd.execute();
+			//manualCmd.execute();and
 		}
 		
-		driverLeftCommandList[slot[CrusaderCommon.INPUT_DRIVER_LEFT_JS]].execute();
-		driverRightCommandList[slot[CrusaderCommon.INPUT_DRIVER_RIGHT_JS]].execute();
-		driveTrainList[slot[CrusaderCommon.DT_CMD_LIST]].execute();
+		//driverLeftCommandList[slot[CrusaderCommon.INPUT_DRIVER_LEFT_JS]].execute();
+		//driverRightCommandList[slot[CrusaderCommon.INPUT_DRIVER_RIGHT_JS]].execute();
+		//driveTrainList[slot[CrusaderCommon.DT_CMD_LIST]].execute();
+		
+		Integer command = slot[CrusaderCommon.INPUT_DRIVER_LEFT_JS];
+		driverLeftCmdList.get(command).execute();
+		
+		command = slot[CrusaderCommon.INPUT_DRIVER_RIGHT_JS];
+		driverRightCmdList.get(command).execute();
+		
+		command = slot[CrusaderCommon.DT_CMD_LIST];
+		System.out.println("!!!!!!!!!!!DEBUG!!!!!!!!!!! :  " + command);
+		Command test = driverCmdList.get(command); //
+		test.execute();
 	}
-	
 	
 }
