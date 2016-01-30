@@ -27,8 +27,7 @@ public class Robot extends IterativeRobot {
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-	Arm theArm;
-	Lift theLift;
+	
 	CANTalon leftFrontDrive; //id = 1
 	CANTalon leftRearDrive; //id = 2
 	CANTalon rightFrontDrive; //id = 3
@@ -143,12 +142,7 @@ public class Robot extends IterativeRobot {
 			myControlBoard.controlBoardInit();
 
 			//Create robot core objects 
-			theLift = new Lift();
-			theLift.liftInit();
-			System.out.println("Storm the Castle!");
-
-			theArm = new Arm();
-			theArm.armInit();
+			
 			
 			leftFrontDrive = new CANTalon(1);  //id = 1
 			leftRearDrive = new CANTalon(2);   //id = 2
@@ -213,7 +207,7 @@ public class Robot extends IterativeRobot {
 			commandValue = myControlBoard.getCommands();
 			//pass the array with the commands coming form the control to the Controller object 
 			theMCP.buttonPressed(commandValue);
-			theLift.UpdateDashboard();
+			
 
 		} catch (Exception e) {
 			System.out.println("telopperiodic: ");
