@@ -14,8 +14,8 @@ public class Intake {
 	public void Init()
 	{
 		intakeEncoder = new Encoder(4,5);
-		intakeMotor = new CANTalon(5);
-		intakeSolenoid = new Solenoid(0);
+		intakeMotor = new CANTalon(1);
+		intakeSolenoid = new Solenoid(1);
 	}
 	//Starts the intake pulling balls in.
 	public void rotateCollectorIn()  
