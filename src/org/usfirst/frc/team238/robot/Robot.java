@@ -38,7 +38,8 @@ public class Robot extends IterativeRobot {
 	ControlBoard myControlBoard;
 	CommandController theMCP;
 	RobotDrive myRobotDrive;
-
+	Intake myIntake;
+	
 	// Autonomous Mode Support
 	String autoMode;
 	AutonomousDrive autonomousDrive;
@@ -155,9 +156,11 @@ public class Robot extends IterativeRobot {
 			autonomousDrive = new AutonomousDrive(myRobotDrive);
 			autonomousDrive.init();
 			
+			myIntake = new Intake();
+			
 			//Controller object for telop
 			theMCP = new CommandController();
-			theMCP.init(myRobotDrive, autonomousDrive);
+			theMCP.init(myRobotDrive, autonomousDrive, myIntake);
 
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 

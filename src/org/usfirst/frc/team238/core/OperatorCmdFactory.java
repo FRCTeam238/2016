@@ -17,22 +17,22 @@ public class OperatorCmdFactory {
 	
 	CommandStopCollector operatorStopCollector;
 	
-	HashMap <String, Command> operatorCommands;
+	HashMap <Integer, Command> operatorCommands;
 	
-	public void Init(){
+	public void init(){
 	
-	operatorCommands = new HashMap<String, Command>(10);
+	operatorCommands = new HashMap<Integer, Command>(10);
 	
 	}
 	
-	public HashMap<String, Command> createOperatorCommands(Intake theIntake){
+	public HashMap<Integer, Command> createOperatorCommands(Intake theIntake){
 	
 		operatorCollectorIn = new CommandCollectorIn(theIntake);
-		operatorCommands.put("CommandCollectorIn", operatorCollectorIn);
+		operatorCommands.put(2, operatorCollectorIn);
 		operatorCollectorOut = new CommandCollectorOut(theIntake);
-		operatorCommands.put("CommandCollectorOut", operatorCollectorOut);
+		operatorCommands.put(3, operatorCollectorOut);
 		operatorStopCollector = new CommandStopCollector(theIntake);
-		operatorCommands.put("CommandStopCollector", operatorStopCollector);
+		operatorCommands.put(0, operatorStopCollector);
 		
 		return operatorCommands;
 	
