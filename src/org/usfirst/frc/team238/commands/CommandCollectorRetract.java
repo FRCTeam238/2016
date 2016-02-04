@@ -21,7 +21,7 @@ public class CommandCollectorRetract implements Command {
 		
 	}
 
-	@Override
+	//@Override
 	public void execute(double overRideValue) {
 		// TODO Auto-generated method stub
 

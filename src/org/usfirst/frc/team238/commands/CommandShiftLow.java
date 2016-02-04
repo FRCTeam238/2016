@@ -1,36 +1,35 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
-import org.usfirst.frc.team238.robot.Intake;
+import org.usfirst.frc.team238.robot.Drivetrain;
 
-public class CommandCollectorIn implements Command {
+public class CommandShiftLow implements Command {
 	
-	Intake myIntake;
-	
-	public CommandCollectorIn (Intake theIntake) {
-		
-		this.myIntake = theIntake;
+	Drivetrain myDrivetrain;
+	public CommandShiftLow(Drivetrain driveTrain)
+	{
+		this.myDrivetrain = driveTrain;
 	}
-	
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		myIntake.rotateCollectorIn();
-		
+		myDrivetrain.shiftLow();
 	}
 
 	//@Override
 	public void execute(double overRideValue) {
+		
 		// TODO Auto-generated method stub
-
 	}
+
 	public void setParams()
 	{
-		
+
 	}
-	 
+
 	public boolean complete()
 	{
-		 return myIntake.complete();
+		return myDrivetrain.complete();
 	}
+
 }

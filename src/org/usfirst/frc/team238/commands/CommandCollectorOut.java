@@ -18,7 +18,7 @@ public class CommandCollectorOut implements Command {
 		myIntake.rotateCollectorIn();
 	}
 
-	@Override
+	//@Override
 	public void execute(double overRideValue) {
 		// TODO Auto-generated method stub
 
