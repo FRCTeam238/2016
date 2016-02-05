@@ -3,6 +3,7 @@ package org.usfirst.frc.team238.robot;
 
 import org.usfirst.frc.team238.core.AutonomousController;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.robot.Navigation;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -39,6 +40,7 @@ public class Robot extends IterativeRobot {
 	CommandController theMCP;
 	RobotDrive myRobotDrive;
 	Intake myIntake;
+	Navigation myNavigation;
 	
 	// Autonomous Mode Support
 	String autoMode;
@@ -157,6 +159,9 @@ public class Robot extends IterativeRobot {
 			autonomousDrive.init();
 			
 			myIntake = new Intake();
+			
+			myNavigation = new Navigation();
+			myNavigation.init();
 			
 			//Controller object for telop
 			theMCP = new CommandController();
