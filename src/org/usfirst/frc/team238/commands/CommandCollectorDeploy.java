@@ -19,7 +19,7 @@ public class CommandCollectorDeploy implements Command {
 		myIntake.deployCollector();
 	}
 
-	@Override
+	//@Override
 	public void execute(double overRideValue) {
 		// TODO Auto-generated method stub
 

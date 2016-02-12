@@ -1,28 +1,37 @@
-
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.robot.ControlBoard;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.Navigation;
 
-public class CommandDriveForward implements Command {
+public class CommandTurnLeft implements Command  {
 
 	Drivetrain myRobotDrive;
-
+	Navigation myNavigation; //Pass variable here
+	
 	double motorValue;
 	int targetValue;
-
-	public CommandDriveForward(Drivetrain robotDrive) {
-		this.myRobotDrive = robotDrive;
+	
+	public CommandTurnLeft(Drivetrain theRobotDrive)
+	{
+		
+		this.myRobotDrive = theRobotDrive;
 
 	}
-	public void execute() {
-		myRobotDrive.driveForward(motorValue, motorValue);
 
+
+	public void execute()  {
+		//Using -motorValues to spin the left motors backwards
+		//If that's how it works lol Maybe change this
+		myRobotDrive.turnLeft(-motorValue, motorValue);
+		
 	}
 	
 	public void setParams(String params[])
 	{
-
+		
 		if ((params[0] != null) || (!params[0].isEmpty())){
 			targetValue = Integer.parseInt(params[0]);
 		}
@@ -36,11 +45,15 @@ public class CommandDriveForward implements Command {
 		else {
 			motorValue = 1;
 		}
-
+		
 	}
-	 
+	
 	public boolean done()
 	{
+		
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		//put myNavigation.areWeThereYet() here
+		//CHANGE ALL OF DIS!
 		boolean isDone = false;
 		int amountOfTicks = myRobotDrive.getEncoderTicks();
 		if (amountOfTicks > targetValue){
@@ -52,5 +65,5 @@ public class CommandDriveForward implements Command {
 		}
 		return isDone;
 	}
-
+	
 }

@@ -8,14 +8,16 @@ public class Intake {
 
 	Encoder intakeEncoder;
 	CANTalon intakeMotor;
-	Solenoid intakeSolenoid;
+	Solenoid intakeDeploySolenoid;
+	Solenoid intakeWedgeSolenoid;
 	
 	
 	public void Init()
 	{
 		intakeEncoder = new Encoder(4,5);
-		intakeMotor = new CANTalon(5);
-		intakeSolenoid = new Solenoid(0);
+		intakeMotor = new CANTalon(10);
+		intakeDeploySolenoid = new Solenoid(1);
+		intakeWedgeSolenoid = new Solenoid(2);
 	}
 	//Starts the intake pulling balls in.
 	public void rotateCollectorIn()  
@@ -36,12 +38,22 @@ public class Intake {
 	
 	public void deployCollector() 
 	{
-		intakeSolenoid.set(true);
+		intakeDeploySolenoid.set(true);
 	}
 	//Closes intake to prevent aquiring more than one ball. Use as soon as you aquire a ball.
 	public void retractCollector() 
 	{
-		intakeSolenoid.set(false);
+		intakeDeploySolenoid.set(false);
+	}
+	//points the top of the wedge outwards
+	public void wedgeDeploy()
+	{
+		intakeWedgeSolenoid.set(true);
+	}
+	//points the top of the wedge inwards
+	public void wedgeRetract()
+	{
+		intakeWedgeSolenoid.set(false);
 	}
 	//Detects whether or not we have a ball in the holder.
 	public void detectBall() 

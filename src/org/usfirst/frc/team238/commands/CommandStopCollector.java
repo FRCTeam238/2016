@@ -18,7 +18,7 @@ public class CommandStopCollector implements Command {
 		myIntake.stopCollector();
 	}
 
-	@Override
+	//@Override
 	public void execute(double overRideValue) {
 		// TODO Auto-generated method stub
 

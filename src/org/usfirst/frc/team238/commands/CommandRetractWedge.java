@@ -3,11 +3,11 @@ package org.usfirst.frc.team238.commands;
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.robot.Intake;
 
-public class CommandCollectorIn implements Command {
+public class CommandRetractWedge implements Command {
 	
 	Intake myIntake;
 	
-	public CommandCollectorIn (Intake theIntake) {
+	public CommandRetractWedge (Intake theIntake) {
 		
 		this.myIntake = theIntake;
 	}
@@ -15,7 +15,7 @@ public class CommandCollectorIn implements Command {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		myIntake.rotateCollectorIn();
+		myIntake.wedgeRetract();
 		
 	}
 

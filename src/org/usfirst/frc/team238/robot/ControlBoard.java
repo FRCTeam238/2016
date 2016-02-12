@@ -49,7 +49,8 @@ public class ControlBoard {
 		
 		int interator = theJoyStick.getButtonCount(); 
 		
-		for(command = 1; command < interator; command++){
+		//interator = 11 and buttons do not count from zero
+		for(command = 1; command <= interator; command++){
 			jsButtonValue = theJoyStick.getRawButton(command);
 			if(jsButtonValue){
 				break;

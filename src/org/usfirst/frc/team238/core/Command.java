@@ -4,6 +4,6 @@ public interface Command {
 	
 	public void execute();
 	
-	public void execute(double overRideValue);
+	//public void execute(double overRideValue);
 
 }

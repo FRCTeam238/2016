@@ -13,11 +13,11 @@ public class CrusaderCommon {
 	public final static double ARM_ENCODER_MAX_VAL = 1.0;  //WILL BE CHANGED TO FIT
 	public final static double ARM_ENCODER_MIN_VAL = -1.0; //WILL BE CHANGED TO FIT
 	
-	public static final String PREFERENCE_OP_MODE = "mode";
-	public static final String PREFVALUE_OP_MODE_NORMAL = "normal";
-	public static final String PREFVALUE_OP_MODE_TEST = "test";
-	public static final String PREFVALUE_OP_AUTO = "auto";
-	public static final String PREFVALUE_OP_AUTO_DEFAULT = "1";
+	//public static final String PREFERENCE_OP_MODE = "mode";
+	//public static final String PREFVALUE_OP_MODE_NORMAL = "normal";
+	//public static final String PREFVALUE_OP_MODE_TEST = "test";
+	public static final String PREFVALUE_OP_AUTO = "Autonomous";
+	public static final String PREFVALUE_OP_AUTO_DEFAULT = "0";
 	
 	//two types of command lists
 	public static final int OPR_CMD_LIST = 1;
@@ -96,11 +96,11 @@ public class CrusaderCommon {
 	public static final double AUTO_DRIVE_IDLE = 0.0;
 
 	public static final int MAN_CMD_IDX_DONOTHING = 0;
-		
-	public static final int OPR_CMD_IDX_DONOTHING = 0;
+	
 	public static final int OPR_CMD_IDX_INTAKEMOTORFORWARD = 1;
 	public static final int OPR_CMD_IDX_INTAKEMOTORREVERSE = 2;
 	public static final int OPR_CMD_IDX_INTAKEMOTORSTOP = 3;
+	public static final int OPR_CMD_IDX_DONOTHING = 0;
 	//public static final int OPR_CMD_IDX_SETTOGROUND = 1;
 	//public static final int OPR_CMD_IDX_SETTOTRAVEL = 2;
 	//public static final int OPR_CMD_IDX_SETTOLIFT = 3;
@@ -134,20 +134,7 @@ public class CrusaderCommon {
 	
 	//Intake Motor Values
 	
-	public final static double INTAKE_MOTOR_ROTATE_IN = 1.0;
-	public final static double INTAKE_MOTOR_ROTATE_OUT = -1.0;
-	public final static double INTAKE_MOTOR_OFF = 0;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		public final static double INTAKE_MOTOR_ROTATE_IN = 1.0;
+		public final static double INTAKE_MOTOR_ROTATE_OUT = -1.0;
+		public final static double INTAKE_MOTOR_OFF = 0;
 }

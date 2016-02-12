@@ -9,6 +9,7 @@ public class AutonomousDrive {
 	RobotDrive autoRobotDrive;
 	Timer autonomousTimer;
 	Encoder autonomousDriveEncoder;
+	int param1 = 0;
 	
 	double autonomousDriveValue; 
 	
@@ -24,7 +25,7 @@ public class AutonomousDrive {
 		//autonomousTimer.start();
 		actionComplete = false;
 		autonomousDriveEncoder = new Encoder(8,9);
-		autonomousDriveValue = autonomousDriveEncoder.get();
+		//autonomousDriveValue = autonomousDriveEncoder.get();
 	}
 
 	/*CAT Need to plan for two types of actions:
@@ -36,31 +37,42 @@ public class AutonomousDrive {
 	 *   
 	 */
 	boolean actionComplete = false;
+	
 	public void resetAction()
 	{
 		actionComplete = false;
 	}
 	
+	public void setParam1(int value){
+		param1 = value;
+	}
 	public boolean isActionComplete()
 	{
 		if (!actionComplete)
 		{
-			actionComplete = autonomousTimer.get() > 3;
+			actionComplete = autonomousTimer.get() > param1;
 		}
+		
+		if(actionComplete){
+			idle();
+			killTimer();
+		}
+		
 		return actionComplete;
 	}
 	
 	public void killTimer()
 	{
 		autonomousTimer.stop();
-		//autonomousTimer.reset();
+		autonomousTimer.reset();
 	}
 	//Reset sets the encoder to zero. Get gets the current count
 	public void startTick()
 	{
-		autonomousDriveEncoder.reset();
-		autonomousDriveEncoder.get();
+		//autonomousDriveEncoder.reset();
+		//autonomousDriveEncoder.get();
 		
+		autonomousTimer.start();
 
 	}
 	
@@ -71,15 +83,19 @@ public class AutonomousDrive {
 		//CAT ... saying
 		
 	
-		if(autonomousDriveEncoder.get() < autonomousDriveValue + CrusaderCommon.AUTO_DRIVE_LIMIT )
-		{
-			SmartDashboard.putString("AutonomousDrive", "forward");
-			autoRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_FORWARD, CrusaderCommon.AUTO_DRIVE_FORWARD);
-		}
-		else
-		{
-			idle();
-		}
+//		if(autonomousDriveEncoder.get() < autonomousDriveValue + CrusaderCommon.AUTO_DRIVE_LIMIT )
+//		{
+//			SmartDashboard.putString("AutonomousDrive", "forward");
+//			autoRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_FORWARD, CrusaderCommon.AUTO_DRIVE_FORWARD);
+//		}
+//		else
+//		{
+//			idle();
+//		}
+		
+		SmartDashboard.putString("AutonomousDrive", "forward");
+		autoRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_FORWARD, CrusaderCommon.AUTO_DRIVE_FORWARD);
+		autoRobotDrive.setSafetyEnabled(false);
 	}
 
 	public void backward()

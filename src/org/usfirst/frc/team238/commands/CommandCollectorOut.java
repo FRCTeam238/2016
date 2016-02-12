@@ -15,10 +15,10 @@ public class CommandCollectorOut implements Command {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		myIntake.rotateCollectorIn();
+		myIntake.rotateCollectorOut();
 	}
 
-	@Override
+	//@Override
 	public void execute(double overRideValue) {
 		// TODO Auto-generated method stub
 

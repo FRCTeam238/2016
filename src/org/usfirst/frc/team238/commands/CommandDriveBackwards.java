@@ -1,22 +1,22 @@
-
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.robot.Drivetrain;
 
-public class CommandDriveForward implements Command {
+public class CommandDriveBackwards implements Command{
 
 	Drivetrain myRobotDrive;
 
 	double motorValue;
 	int targetValue;
 
-	public CommandDriveForward(Drivetrain robotDrive) {
+	public CommandDriveBackwards(Drivetrain robotDrive) {
 		this.myRobotDrive = robotDrive;
 
 	}
+	
 	public void execute() {
-		myRobotDrive.driveForward(motorValue, motorValue);
+		myRobotDrive.driveBackwards(motorValue, motorValue);
 
 	}
 	
@@ -38,9 +38,9 @@ public class CommandDriveForward implements Command {
 		}
 
 	}
-	 
-	public boolean done()
-	{
+
+	public boolean done(){
+
 		boolean isDone = false;
 		int amountOfTicks = myRobotDrive.getEncoderTicks();
 		if (amountOfTicks > targetValue){
@@ -52,5 +52,6 @@ public class CommandDriveForward implements Command {
 		}
 		return isDone;
 	}
-
+	
+	
 }
