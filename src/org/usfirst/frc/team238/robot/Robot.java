@@ -141,6 +141,9 @@ public class Robot extends IterativeRobot {
 		try {
 			System.out.println("RobotInit()");
 			SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
+			
+			SmartDashboard.putString("Debug", "0");
+			
 
 			//object that is the code representation for the physical control board
 			myControlBoard = new ControlBoard();
@@ -148,11 +151,11 @@ public class Robot extends IterativeRobot {
 
 			//Create robot core objects 
 			
-			
-			leftFrontDrive = new CANTalon(1);  //id = 1; 5
-			leftRearDrive = new CANTalon(2);   //id = 2;6
-			rightFrontDrive = new CANTalon(3); //id = 3;7
-			rightRearDrive = new CANTalon(4);  //id = 4;8
+												// Test Robot | Actual Robot
+			leftFrontDrive = new CANTalon(1);  //id =  1			 5
+			leftRearDrive = new CANTalon(2);   //id =  2			 6
+			rightFrontDrive = new CANTalon(3); //id =  3			 7
+			rightRearDrive = new CANTalon(4);  //id =  4			 8
 			
 			myRobotDrive = new RobotDrive(leftFrontDrive,leftRearDrive,rightFrontDrive,rightRearDrive);
 			myRobotDrive.setSafetyEnabled(false);
@@ -170,7 +173,7 @@ public class Robot extends IterativeRobot {
 			myDriveTrain.init();
 			//Controller object for telop
 			theMCP = new CommandController();
-			theMCP.init(myRobotDrive, autonomousDrive, myIntake, myDriveTrain);
+			theMCP.init(myRobotDrive, autonomousDrive, myIntake, myDriveTrain, myNavigation);
 
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 

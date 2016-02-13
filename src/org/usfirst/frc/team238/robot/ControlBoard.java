@@ -9,6 +9,7 @@ public class ControlBoard {
 	static Joystick operatorJs;  	// operator control board
 	private static Joystick driverLeftJs; 	// driveTrain left
 	private static Joystick driverRightJs; 	// driveTrain right
+	static Joystick xboxController;
 	
 	//look at using more sophisticated collection classes
 	static int commands[];
@@ -21,7 +22,7 @@ public class ControlBoard {
 			operatorJs = new Joystick(1);
 			setDriverLeftJs(new Joystick(2));
 			setDriverRightJs(new Joystick(3));
-			
+		
 			//array that holds the command sent by each control device
 			commands = new int[5];
 			

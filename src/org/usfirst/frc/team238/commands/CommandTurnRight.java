@@ -13,11 +13,14 @@ public class CommandTurnRight implements Command  {
 	
 	double motorValue;
 	int targetValue;
+	double newTargetYaw;
 	
-	public CommandTurnRight (Drivetrain robotDrive)
+	public CommandTurnRight (Drivetrain robotDrive, Navigation myNavigationForTarget)
 	{
 		
 		this.myRobotDrive = robotDrive;
+		this.myNavigation = myNavigationForTarget;
+		myNavigation.setTargetValues(newTargetYaw);
 		
 	}
 
@@ -45,23 +48,25 @@ public class CommandTurnRight implements Command  {
 			motorValue = 1;
 		}
 		
+		if((params[2] != null) || (!params[2].isEmpty())){
+			newTargetYaw = Integer.parseInt(params[2]);
+			
+		} else {
+			newTargetYaw = 0; //Don't turn if there's no input
+			
+		}
+		
 	}
 
 	public boolean done()
 	{
-		
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
-		//put myNavigation.areWeThereYet() here
-		//CHANGE ALL OF DIS!
-		boolean isDone = false;
-		int amountOfTicks = myRobotDrive.getEncoderTicks();
-		if (amountOfTicks > targetValue){
-			isDone = true;
+		if (myNavigation.areWeThereYet() == true){
+			return true;
 		}
 
 		else{
-			isDone = false;
+			return false;
 		}
-		return isDone;
+
 	}
 }

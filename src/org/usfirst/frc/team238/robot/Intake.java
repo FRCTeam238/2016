@@ -15,7 +15,7 @@ public class Intake {
 	public void Init()
 	{
 		intakeEncoder = new Encoder(4,5);
-		intakeMotor = new CANTalon(10);
+		intakeMotor = new CANTalon(9);
 		intakeDeploySolenoid = new Solenoid(1);
 		intakeWedgeSolenoid = new Solenoid(2);
 	}

@@ -23,7 +23,7 @@ public class StateDriveBackwards implements AutonomousState {
 	{
 		System.out.println("StateDriveForward = "+ String.valueOf(howfar));
 		//get specific  objects needed for creating the command object 
-		//driveBackwards = (CommandDriveBackward) theMcp.getAutoCmd("CommandDriveBackward");
+		driveBackwards = (CommandDriveBackwards) theMcp.getAutoCmd("CommandDriveBackwards");
 		driveBackwards.setParams(params);
 	}
 	

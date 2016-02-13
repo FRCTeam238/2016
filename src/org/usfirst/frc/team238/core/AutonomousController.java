@@ -183,7 +183,7 @@ public class AutonomousController implements AutonomousState {
 		
 		while(aModeIterator.hasNext()){
 			AutonomousState thisState = aModeIterator.next();
-			System.out.println(thisState.getClass().getName());
+			System.out.println("AUTONOMOUS DUMP " + thisState.getClass().getName());
 		}
 	}
 

@@ -15,7 +15,7 @@ public class StateTurnLeft implements AutonomousState {
 	
 	double currentYaw;
 	int count;
-	double turnLeftDegree = -45; //For turning Left however many degrees uses negatives
+	double newTargetYaw = -45; //For turning Left however many degrees uses negatives
 	
 	@Override
 	public void prepare()
@@ -30,7 +30,6 @@ public class StateTurnLeft implements AutonomousState {
 	@Override
 	public void init(String params[], CommandController theMcp) {
 		
-		myNavigation.setTargetValues(turnLeftDegree);
 		turnLeftCommand = (CommandTurnLeft) theMcp.getAutoCmd("CommandTurnLeft");
 		turnLeftCommand.setParams(params);
 		

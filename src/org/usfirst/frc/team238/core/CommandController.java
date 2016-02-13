@@ -6,6 +6,7 @@ import org.usfirst.frc.team238.robot.AutonomousDrive;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Intake;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.Navigation;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 
@@ -20,12 +21,12 @@ public class CommandController {
 	HashMap<Integer, Command> driverRightCmdList;
 	HashMap<Integer, Command> operatorCmdList;
 	
-	public void  init(RobotDrive myRobotDrive, AutonomousDrive autonomousDrive, Intake intakeMechanism, Drivetrain driveTrain)
+	public void  init(RobotDrive myRobotDrive, AutonomousDrive autonomousDrive, Intake intakeMechanism, Drivetrain driveTrain, Navigation myNavigation)
 	{
 		// populate the command lists
 		setupOperatorCommands(intakeMechanism);
 		setupDriverCommands(myRobotDrive, driveTrain);
-		setupAutonomousCommands(driveTrain);
+		setupAutonomousCommands(driveTrain, myNavigation);
 	}
 	
 	//gets an AutoCommand by key name
@@ -36,11 +37,11 @@ public class CommandController {
 	}
 	
 	//loads all the autonomous commands from the auto factory
-	private void setupAutonomousCommands(Drivetrain driveTrain)
+	private void setupAutonomousCommands(Drivetrain driveTrain, Navigation myNavigation)
 	{
 		theRouge = new AutonomousCmdFactory();
 		theRouge.init();
-		autoCmdList = theRouge.createAutonomousCommands(driveTrain);
+		autoCmdList = theRouge.createAutonomousCommands(driveTrain, myNavigation);
 		
 	}
 	

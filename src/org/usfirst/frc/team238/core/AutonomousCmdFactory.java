@@ -3,12 +3,20 @@ package org.usfirst.frc.team238.core;
 import java.util.HashMap;
 
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.commands.CommandDriveForward;
+import org.usfirst.frc.team238.commands.CommandDriveBackwards;
+import org.usfirst.frc.team238.commands.CommandTurnLeft;
+import org.usfirst.frc.team238.commands.CommandTurnRight;
 import org.usfirst.frc.team238.robot.AutonomousDrive;
 
 public class AutonomousCmdFactory {
 	
 	CommandDriveForward autoDriveForward;
+	CommandDriveBackwards autoDriveBackwards;
+	CommandTurnLeft autoTurnLeft;
+	CommandTurnRight autoTurnRight;
+	
 	HashMap <String, Command> autonomousCommands;
 	
 	public void init(){
@@ -16,10 +24,17 @@ public class AutonomousCmdFactory {
 	}
 	
 	
-	public HashMap<String, Command> createAutonomousCommands(Drivetrain robotDrive){
+	public HashMap<String, Command> createAutonomousCommands(Drivetrain robotDrive, Navigation myNavigation){
 		
 		autoDriveForward = new CommandDriveForward(robotDrive);
 		autonomousCommands.put("CommandDriveForward", autoDriveForward);
+		autoDriveBackwards = new CommandDriveBackwards(robotDrive);
+		autonomousCommands.put("CommandDriveBackwards", autoDriveBackwards);
+		autoTurnLeft = new CommandTurnLeft(robotDrive, myNavigation);
+		autonomousCommands.put("CommandTurnLeft", autoTurnLeft);
+		autoTurnRight = new CommandTurnRight(robotDrive, myNavigation);
+		autonomousCommands.put("CommandTurnRight", autoTurnRight);
+		
 		
 		return autonomousCommands;
 		

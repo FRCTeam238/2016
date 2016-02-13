@@ -19,6 +19,8 @@ public class Drivetrain {
 	int encoderLeft;
 	int encoderRight;
 	
+	int counter;
+	
 	// need turn left turn right
 	
 	public Drivetrain(RobotDrive theRobotDrive)
@@ -32,6 +34,7 @@ public class Drivetrain {
 		
 		shifterSolenoid = new Solenoid (0);
 		//did we change the encoder number??
+		counter = 0;
 
 
 
@@ -41,6 +44,13 @@ public class Drivetrain {
 		encoderLeft = leftFrontDrive.getEncPosition();
 		encoderRight = rightFrontDrive.getEncPosition();
 		return encoderLeft;
+		
+	}
+	
+	public int getEncoderCount(int count)
+	{
+		counter++;
+		return counter;
 		
 	}
 	
@@ -63,7 +73,7 @@ public class Drivetrain {
 	
 	public void driveBackwards(double leftMotorValue, double rightMotorValue)  {
 		
-		robotMotors.tankDrive(leftMotorValue, rightMotorValue);
+		robotMotors.tankDrive(leftMotorValue * -1, rightMotorValue * -1);
 	}
 	
 	public void turnLeft (double leftJsValue, double rightJsValue){
