@@ -12,20 +12,15 @@ public class CommandDriveForward implements Command {
 
 	double motorValue;
 	int targetValue;
-	int debug;
+	double debug;
 	
-	String debugFromDashboard;
-
 	public CommandDriveForward(Drivetrain robotDrive) {
 		this.myRobotDrive = robotDrive;
-		debugFromDashboard = SmartDashboard.getString("Debug");
-		debug = Integer.parseInt(debugFromDashboard);
-		
-
+		this.debug = SmartDashboard.getNumber("Debug");
 	}
+	
 	public void execute() {
 		myRobotDrive.driveForward(motorValue, motorValue);
-
 	}
 	
 	public void setParams(String params[])
@@ -52,22 +47,27 @@ public class CommandDriveForward implements Command {
 		boolean isDone = false;
 		int amountOfTicks;
 
-		//if(debug == 1)
-		//{
+		debug = SmartDashboard.getNumber("Debug");
+		
+		if(debug == 1)
+		{
 			amountOfTicks = myRobotDrive.getEncoderCount(1);
-		//}
-		/*else 
+		}
+		else 
 		{
 			amountOfTicks = myRobotDrive.getEncoderTicks();
-		}*/
-		
-		if (amountOfTicks > targetValue){
-			isDone = true;
 		}
-
-		else{
+		
+		if (amountOfTicks > targetValue)
+		{
+			isDone = true;
+			myRobotDrive.driveForward(0, 0);
+		}
+		else
+		{
 			isDone = false;
 		}
+		
 		return isDone;
 	}
 

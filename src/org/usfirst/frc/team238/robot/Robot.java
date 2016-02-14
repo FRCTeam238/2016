@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
-
+		double debug;
 		try {
 			if (count > 500) {
 
@@ -71,6 +71,9 @@ public class Robot extends IterativeRobot {
 
 				String automousModeFromDS = SmartDashboard.getString(CrusaderCommon.PREFVALUE_OP_AUTO);
 				System.out.println("disabledPeriodic:AmodeFromDS =  " + automousModeFromDS);
+				
+				debug = SmartDashboard.getNumber("Debug");
+				System.out.println("disabledPeriodic:Debug=  " + debug);
 				
 				if (automousModeFromDS != null) {
 					
@@ -142,7 +145,7 @@ public class Robot extends IterativeRobot {
 			System.out.println("RobotInit()");
 			SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
 			
-			SmartDashboard.putString("Debug", "0");
+			SmartDashboard.putNumber("Debug", 0);
 			
 
 			//object that is the code representation for the physical control board

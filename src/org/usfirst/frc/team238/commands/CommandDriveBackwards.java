@@ -3,15 +3,19 @@ package org.usfirst.frc.team238.commands;
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.robot.Drivetrain;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class CommandDriveBackwards implements Command{
 
 	Drivetrain myRobotDrive;
 
 	double motorValue;
 	int targetValue;
-
+	double debug;
+	
 	public CommandDriveBackwards(Drivetrain robotDrive) {
 		this.myRobotDrive = robotDrive;
+		this.debug = SmartDashboard.getNumber("Debug");
 
 	}
 	
@@ -42,14 +46,29 @@ public class CommandDriveBackwards implements Command{
 	public boolean done(){
 
 		boolean isDone = false;
-		int amountOfTicks = myRobotDrive.getEncoderTicks();
-		if (amountOfTicks > targetValue){
-			isDone = true;
+		int amountOfTicks;
+		
+		debug = SmartDashboard.getNumber("Debug");
+		
+		if(debug == 1)
+		{
+			amountOfTicks = myRobotDrive.getEncoderCount(1);
 		}
-
-		else{
+		else 
+		{
+			amountOfTicks = myRobotDrive.getEncoderTicks();
+		}
+		
+		if (amountOfTicks > targetValue)
+		{
+			isDone = true;
+			myRobotDrive.driveForward(0, 0);
+		}
+		else
+		{
 			isDone = false;
 		}
+		
 		return isDone;
 	}
 	

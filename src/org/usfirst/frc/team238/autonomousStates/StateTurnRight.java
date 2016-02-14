@@ -9,10 +9,10 @@ public class StateTurnRight implements AutonomousState {
 
 	CommandTurnRight turnRightCommand;
 	CommandController theMCP;
-	Navigation myNavigation;
+	//Navigation myNavigation;
 	
 	int count;
-	double newTargetYaw = 45; //For turning Right however many degrees uses positives
+	//double newTargetYaw = 45; //For turning Right however many degrees uses positives
 	
 	@Override
 	public void prepare()

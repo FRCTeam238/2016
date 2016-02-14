@@ -10,18 +10,18 @@ public class StateTurnLeft implements AutonomousState {
 
 	CommandTurnLeft turnLeftCommand;
 	CommandController theMCP;
-	Navigation myNavigation;
-	AHRS ahrs;
+	//Navigation myNavigation;
+	//AHRS ahrs;
 	
 	double currentYaw;
 	int count;
-	double newTargetYaw = -45; //For turning Left however many degrees uses negatives
+	//double newTargetYaw = -45; //For turning Left however many degrees uses negatives
 	
 	@Override
 	public void prepare()
 	{
 		
-		currentYaw = ahrs.getYaw();
+		//currentYaw = ahrs.getYaw();
 		//Get current nav coordinates
 		
 	}

@@ -6,6 +6,8 @@ import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class CommandTurnLeft implements Command  {
 
 	Drivetrain myRobotDrive;
@@ -14,6 +16,7 @@ public class CommandTurnLeft implements Command  {
 	double motorValue;
 	int targetValue;
 	double newTargetYaw;
+	int count;
 	
 	public CommandTurnLeft(Drivetrain theRobotDrive, Navigation myNavigationForTarget)
 	{
@@ -21,6 +24,7 @@ public class CommandTurnLeft implements Command  {
 		this.myRobotDrive = theRobotDrive;
 		this.myNavigation = myNavigationForTarget;
 		myNavigation.setTargetValues(newTargetYaw);
+		count = 0;
 
 	}
 
@@ -61,6 +65,19 @@ public class CommandTurnLeft implements Command  {
 	
 	public boolean done()
 	{
+		
+		double debug = SmartDashboard.getNumber("Debug");
+		 if ( debug == 1){
+			 count++;
+			 if (count < targetValue){
+				 return false;
+			 }
+			 else
+			 {
+				 count = 0;
+				 return true;
+			 }
+		 }
 		if (myNavigation.areWeThereYet() == true){
 			return true;
 		}
