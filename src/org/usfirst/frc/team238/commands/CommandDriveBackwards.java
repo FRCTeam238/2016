@@ -10,7 +10,7 @@ public class CommandDriveBackwards implements Command{
 	Drivetrain myRobotDrive;
 
 	double motorValue;
-	int targetValue;
+	double targetValue;
 	double debug;
 	
 	public CommandDriveBackwards(Drivetrain robotDrive) {
@@ -19,8 +19,15 @@ public class CommandDriveBackwards implements Command{
 
 	}
 	
+	public void prepare(){
+		
+		myRobotDrive.resetEncoders();
+		
+	}
+	
 	public void execute() {
 		myRobotDrive.driveBackwards(motorValue, motorValue);
+	
 
 	}
 	
@@ -28,14 +35,14 @@ public class CommandDriveBackwards implements Command{
 	{
 
 		if ((params[0] != null) || (!params[0].isEmpty())){
-			targetValue = Integer.parseInt(params[0]);
+			targetValue = Double.parseDouble(params[0])*4560;
 		}
 		else {
 			targetValue = 0;
 		}
 
 		if ((params[1] != null) || (!params[1].isEmpty())){
-			motorValue = Integer.parseInt(params[1]);
+			motorValue = Double.parseDouble(params[1]);
 		}
 		else {
 			motorValue = 1;
@@ -46,7 +53,8 @@ public class CommandDriveBackwards implements Command{
 	public boolean done(){
 
 		boolean isDone = false;
-		int amountOfTicks;
+		double amountOfTicks;
+		
 		
 		debug = SmartDashboard.getNumber("Debug");
 		
@@ -58,11 +66,14 @@ public class CommandDriveBackwards implements Command{
 		{
 			amountOfTicks = myRobotDrive.getEncoderTicks();
 		}
-		
-		if (amountOfTicks > targetValue)
+		System.out.println("Target Value = " + targetValue + " Amount Of Ticks = " + amountOfTicks);
+
+		if (amountOfTicks < targetValue)
 		{
+		
 			isDone = true;
 			myRobotDrive.driveForward(0, 0);
+
 		}
 		else
 		{

@@ -12,6 +12,12 @@ public class CommandCollectorDeploy implements Command {
 		this.myIntake = theIntake;
 		
 	}
+	
+	public void prepare(){
+		
+		
+		
+	}
 
 	@Override
 	public void execute() {

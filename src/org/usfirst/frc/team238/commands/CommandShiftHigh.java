@@ -12,7 +12,11 @@ public class CommandShiftHigh implements Command {
 		this.myDrivetrain = driveTrain;
 	}
 	
-	
+	public void prepare(){
+		
+		
+		
+	}
 	
 	@Override
 	public void execute() {

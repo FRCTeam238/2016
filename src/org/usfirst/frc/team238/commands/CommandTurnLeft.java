@@ -14,7 +14,7 @@ public class CommandTurnLeft implements Command  {
 	Navigation myNavigation; //Pass variable here
 	
 	double motorValue;
-	int targetValue;
+	double targetValue;
 	double newTargetYaw;
 	int count;
 	
@@ -23,12 +23,16 @@ public class CommandTurnLeft implements Command  {
 		
 		this.myRobotDrive = theRobotDrive;
 		this.myNavigation = myNavigationForTarget;
-		myNavigation.setTargetValues(newTargetYaw);
 		count = 0;
 
 	}
 
-
+	public void prepare(){
+		
+		myNavigation.resetNAVX();
+		
+	}
+	
 	public void execute()  {
 		//Using -motorValues to spin the left motors backwards
 		//If that's how it works lol Maybe change this
@@ -38,9 +42,10 @@ public class CommandTurnLeft implements Command  {
 	
 	public void setParams(String params[])
 	{
+		System.out.println("!!!!!DEBUG!!!!!!!!PARAMETERS!!!!" + params[0]);
 		
 		if ((params[0] != null) || (!params[0].isEmpty())){
-			targetValue = Integer.parseInt(params[0]);
+			targetValue = Double.parseDouble(params[0]);
 		}
 		else {
 			targetValue = 0;
@@ -61,13 +66,17 @@ public class CommandTurnLeft implements Command  {
 			
 		}
 		
+		myNavigation.setTargetValues(targetValue);
+		
 	}
+	
+	
 	
 	public boolean done()
 	{
 		
 		double debug = SmartDashboard.getNumber("Debug");
-		 if ( debug == 1){
+		/* if ( debug == 1){
 			 count++;
 			 if (count < targetValue){
 				 return false;
@@ -78,6 +87,7 @@ public class CommandTurnLeft implements Command  {
 				 return true;
 			 }
 		 }
+		 */
 		if (myNavigation.areWeThereYet() == true){
 			return true;
 		}

@@ -8,12 +8,13 @@ public class StateDriveForward implements AutonomousState {
 
 	CommandDriveForward DriveForwardCommand;
 	int count = 0;
+	String parameters[];
 	
 	@Override
 	public void prepare()
 	{
-		
-		
+		DriveForwardCommand.setParams(parameters);
+		DriveForwardCommand.prepare();
 		
 	}
 	
@@ -24,7 +25,7 @@ public class StateDriveForward implements AutonomousState {
 		//		+ String.valueOf(howfar));
 		//get specific  objects needed for creating the command object 
 		DriveForwardCommand = (CommandDriveForward) theMcp.getAutoCmd("CommandDriveForward");
-		DriveForwardCommand.setParams(params);
+		parameters = params;
 	}
 	
 	@Override
@@ -39,6 +40,7 @@ public class StateDriveForward implements AutonomousState {
 	public boolean done() {
 		if(DriveForwardCommand.done())
 		{
+			count=0;
 			return true;
 		}
 		

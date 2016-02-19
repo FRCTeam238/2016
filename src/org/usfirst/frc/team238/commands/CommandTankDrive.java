@@ -13,6 +13,12 @@ public class CommandTankDrive implements Command {
 		this.myRobotDrive = robotDrive;
 	}
 	
+	public void prepare(){
+		
+		
+		
+	}
+	
 	@Override
 	public void execute() {
 		double leftJsValue = 0;

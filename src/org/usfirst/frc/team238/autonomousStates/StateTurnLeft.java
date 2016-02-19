@@ -10,8 +10,7 @@ public class StateTurnLeft implements AutonomousState {
 
 	CommandTurnLeft turnLeftCommand;
 	CommandController theMCP;
-	//Navigation myNavigation;
-	//AHRS ahrs;
+	String parameters[];
 	
 	double currentYaw;
 	int count;
@@ -20,9 +19,8 @@ public class StateTurnLeft implements AutonomousState {
 	@Override
 	public void prepare()
 	{
-		
-		//currentYaw = ahrs.getYaw();
-		//Get current nav coordinates
+		turnLeftCommand.setParams(parameters);
+		turnLeftCommand.prepare();
 		
 	}
 	
@@ -31,8 +29,8 @@ public class StateTurnLeft implements AutonomousState {
 	public void init(String params[], CommandController theMcp) {
 		
 		turnLeftCommand = (CommandTurnLeft) theMcp.getAutoCmd("CommandTurnLeft");
-		turnLeftCommand.setParams(params);
-		
+		parameters = params;
+	
 	}
 	
 	@Override
@@ -49,7 +47,7 @@ public class StateTurnLeft implements AutonomousState {
 		
 		if(turnLeftCommand.done())
 		{
-			
+			count=0;
 			return true;
 		
 		}

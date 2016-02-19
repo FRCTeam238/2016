@@ -20,11 +20,18 @@ public class Navigation {
 		currentRoll = ahrs.getRoll();
 		
 	}
+	
+	public void resetNAVX(){
+		
+		ahrs.reset();
+		
+	}
+	
 	//NOTE: make a set target for yaw and roll	
-	public void setTargetValues(double newTargetYaw)
+	public void setTargetValues(double targetValue)
 	{
 		
-		targetYaw = newTargetYaw;
+		targetYaw = targetValue;
 		
 	}
 	
@@ -51,9 +58,12 @@ public class Navigation {
 	//Tells us if we are at our target yaw
 	public boolean areWeThereYet()
 	{
-		if(currentYaw > targetYaw - 5 && currentYaw < targetYaw + 5)
+		
+		
+		System.out.println("Current yaw is " + currentYaw + "\n  Target is " + targetYaw);
+		
+		if(currentYaw > (targetYaw - 5) && currentYaw < (targetYaw + 5))
 		{
-
 			return true;
 		}
 		else

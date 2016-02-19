@@ -4,6 +4,11 @@ import org.usfirst.frc.team238.core.Command;
 
 public class NoDriverCommand implements Command {
 	
+	public void prepare(){
+		
+		
+		
+	}
 	
 	public NoDriverCommand(){
 		

@@ -20,6 +20,12 @@ public class CommandCollectorRetract implements Command {
 		myIntake.retractCollector();
 		
 	}
+	
+	public void prepare(){
+		
+		
+		
+	}
 
 	//@Override
 	public void execute(double overRideValue) {

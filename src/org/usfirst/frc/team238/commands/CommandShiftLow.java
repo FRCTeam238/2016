@@ -15,6 +15,12 @@ public class CommandShiftLow implements Command {
 		// TODO Auto-generated method stub
 		myDrivetrain.shiftLow();
 	}
+	
+	public void prepare(){
+		
+		
+		
+	}
 
 	//@Override
 	public void execute(double overRideValue) {

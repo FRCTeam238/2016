@@ -12,6 +12,12 @@ public class CommandRetractWedge implements Command {
 		this.myIntake = theIntake;
 	}
 	
+	public void prepare(){
+		
+		
+		
+	}
+	
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub

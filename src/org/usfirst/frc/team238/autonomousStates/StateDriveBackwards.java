@@ -9,12 +9,13 @@ public class StateDriveBackwards implements AutonomousState {
 	CommandDriveBackwards driveBackwards;
 	int count = 0;
 	double howfar = 1.0; //This is probably not right, lol
+	String parameters[];
 	
 	@Override
 	public void prepare()
 	{
-		
-		
+		driveBackwards.setParams(parameters);
+		driveBackwards.prepare();
 		
 	}
 	
@@ -24,7 +25,7 @@ public class StateDriveBackwards implements AutonomousState {
 		System.out.println("StateDriveForward = "+ String.valueOf(howfar));
 		//get specific  objects needed for creating the command object 
 		driveBackwards = (CommandDriveBackwards) theMcp.getAutoCmd("CommandDriveBackwards");
-		driveBackwards.setParams(params);
+		parameters = params;
 	}
 	
 	@Override
@@ -38,6 +39,7 @@ public class StateDriveBackwards implements AutonomousState {
 	public boolean done() {
 		if(driveBackwards.done())
 		{
+			count=0;
 			return true;
 		}
 		

@@ -9,17 +9,16 @@ public class StateTurnRight implements AutonomousState {
 
 	CommandTurnRight turnRightCommand;
 	CommandController theMCP;
-	//Navigation myNavigation;
+	String parameters[];
 	
 	int count;
-	//double newTargetYaw = 45; //For turning Right however many degrees uses positives
+	
 	
 	@Override
 	public void prepare()
 	{
-	
-		//Get current nav coordinates
-		//Give nav the turnleftdegrees
+		turnRightCommand.setParams(parameters);
+		turnRightCommand.prepare();
 		
 	}
 	
@@ -28,7 +27,7 @@ public class StateTurnRight implements AutonomousState {
 		
 
 		turnRightCommand = (CommandTurnRight) theMcp.getAutoCmd("CommandTurnRight");
-		turnRightCommand.setParams(params);
+		parameters = params;
 		
 	}
 	
@@ -44,7 +43,7 @@ public class StateTurnRight implements AutonomousState {
 		
 		if(turnRightCommand.done())
 		{
-			
+			count = 0;
 			return true;
 			
 		}

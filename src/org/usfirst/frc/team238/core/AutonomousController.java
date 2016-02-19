@@ -64,6 +64,7 @@ public class AutonomousController implements AutonomousState {
 	{
 		this.currentState = state;
 		state.prepare();
+		System.out.println("State: " + currentState);
 	}
 	
 	@Override

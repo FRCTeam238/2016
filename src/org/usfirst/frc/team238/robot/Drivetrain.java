@@ -28,14 +28,23 @@ public class Drivetrain {
 		this.robotMotors = theRobotDrive;
 	}
 	
-	public void init()
+	public void init(CANTalon leftFrontDriveTalon, CANTalon rightFrontDriveTalon)
 	{
 		//Have to find the values for Encoders- HS
 		
+		leftFrontDrive = leftFrontDriveTalon;
+		rightFrontDrive = rightFrontDriveTalon;
 		shifterSolenoid = new Solenoid (0);
+		
+		//leftFrontDrive.enable();
+		//rightFrontDrive.enable();
+		
+		//leftFrontDrive.clearIAccum();
+		//rightFrontDrive.clearIAccum();
 		//did we change the encoder number??
 		counter = 0;
-
+		leftFrontDrive.configEncoderCodesPerRev(256);
+		rightFrontDrive.configEncoderCodesPerRev(256);
 
 
 	}
@@ -43,8 +52,14 @@ public class Drivetrain {
 	{
 		encoderLeft = leftFrontDrive.getEncPosition();
 		encoderRight = rightFrontDrive.getEncPosition();
-		return encoderLeft;
+		return encoderRight;
 		
+	}
+	
+	public void resetEncoders(){
+		counter=0;
+		leftFrontDrive.setEncPosition(0);
+		rightFrontDrive.setEncPosition(0);
 	}
 	
 	public int getEncoderCount(int count)
@@ -68,12 +83,12 @@ public class Drivetrain {
 	
 	public void driveForward(double leftMotorValue, double rightMotorValue)  {
 		
-		robotMotors.tankDrive(leftMotorValue, rightMotorValue);	
+		robotMotors.tankDrive(leftMotorValue * -1, rightMotorValue * -1);	
 	}
 	
 	public void driveBackwards(double leftMotorValue, double rightMotorValue)  {
 		
-		robotMotors.tankDrive(leftMotorValue * -1, rightMotorValue * -1);
+		robotMotors.tankDrive(leftMotorValue, rightMotorValue);
 	}
 	
 	public void turnLeft (double leftJsValue, double rightJsValue){

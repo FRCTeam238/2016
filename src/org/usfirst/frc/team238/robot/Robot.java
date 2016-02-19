@@ -10,7 +10,10 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -48,7 +51,9 @@ public class Robot extends IterativeRobot {
 	String autoMode;
 	AutonomousDrive autonomousDrive;
 	private AutonomousController theMACP;
-
+	SendableChooser autonomousChooser;
+	
+	
 	public void disabledInit() {
 		try {
 			// only use checkForSmartDashboardChanges function in init methods
@@ -69,11 +74,14 @@ public class Robot extends IterativeRobot {
 
 				count = 0;
 
-				String automousModeFromDS = SmartDashboard.getString(CrusaderCommon.PREFVALUE_OP_AUTO);
-				System.out.println("disabledPeriodic:AmodeFromDS =  " + automousModeFromDS);
+				//String automousModeFromDS = SmartDashboard.getString(CrusaderCommon.PREFVALUE_OP_AUTO);
+				//System.out.println("disabledPeriodic:AmodeFromDS =  " + automousModeFromDS);
 				
 				debug = SmartDashboard.getNumber("Debug");
 				System.out.println("disabledPeriodic:Debug=  " + debug);
+				
+				String automousModeFromDS = (String) autonomousChooser.getSelected();
+				System.out.println("The chosen One =  " + automousModeFromDS);
 				
 				if (automousModeFromDS != null) {
 					
@@ -116,8 +124,8 @@ public class Robot extends IterativeRobot {
 			// or you will
 			// smoke the roborio into a useless pile of silicon
 			try {
-				checkForSmartDashboardChanges(CrusaderCommon.PREFVALUE_OP_AUTO, CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
-				System.out.println("AutononousInit:");
+				//checkForSmartDashboardChanges(CrusaderCommon.PREFVALUE_OP_AUTO, CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
+				//System.out.println("AutononousInit:");
 			} catch (Exception ex) {
 				System.out.println("AutononousInit:CMDB Exception");
 			}
@@ -128,11 +136,13 @@ public class Robot extends IterativeRobot {
 			
 				autoMode = SmartDashboard.getString(CrusaderCommon.PREFVALUE_OP_AUTO); 
 						//myPreferences.getString(CrusaderCommon.PREFVALUE_OP_AUTO, "3");
-				theMACP.pickAMode(Integer.parseInt(autoMode));
+				String automousModeFromDS = (String) autonomousChooser.getSelected();
+				System.out.println("The chosen One =  " + automousModeFromDS);
+				theMACP.pickAMode(Integer.parseInt(automousModeFromDS));
 				System.out.println("AutononousInit:Amode =  " + autoMode);
 				
 			} catch (Exception ex) {
-				System.out.println("AutononousInit:Timer");
+				System.out.println("AutononousInit:Timer Exception");
 			}
 		} catch (Exception ex) {
 			System.out.println("AutononousInit:Exception");
@@ -155,10 +165,10 @@ public class Robot extends IterativeRobot {
 			//Create robot core objects 
 			
 												// Test Robot | Actual Robot
-			leftFrontDrive = new CANTalon(1);  //id =  1			 5
-			leftRearDrive = new CANTalon(2);   //id =  2			 6
-			rightFrontDrive = new CANTalon(3); //id =  3			 7
-			rightRearDrive = new CANTalon(4);  //id =  4			 8
+			leftFrontDrive = new CANTalon(5);  //id =  1			 5
+			leftRearDrive = new CANTalon(6);   //id =  2			 6
+			rightFrontDrive = new CANTalon(7); //id =  3			 7
+			rightRearDrive = new CANTalon(8);  //id =  4			 8
 			
 			myRobotDrive = new RobotDrive(leftFrontDrive,leftRearDrive,rightFrontDrive,rightRearDrive);
 			myRobotDrive.setSafetyEnabled(false);
@@ -173,15 +183,38 @@ public class Robot extends IterativeRobot {
 			myNavigation.init();
 			
 			myDriveTrain = new Drivetrain(myRobotDrive);
-			myDriveTrain.init();
+			myDriveTrain.init(leftFrontDrive, rightFrontDrive);
 			//Controller object for telop
+			
+			leftFrontDrive.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+			rightFrontDrive.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+			
+			leftFrontDrive.enableBrakeMode(true);
+			rightFrontDrive.enableBrakeMode(true);
+			leftRearDrive.enableBrakeMode(true);
+			rightRearDrive.enableBrakeMode(true);
+			
+			/*
+			leftFrontDrive.configEncoderCodesPerRev(256);
+			leftFrontDrive.setPosition(0);
+		
+			rightFrontDrive.configEncoderCodesPerRev(256);
+			rightFrontDrive.setPosition(0);
+			*/
 			theMCP = new CommandController();
 			theMCP.init(myRobotDrive, autonomousDrive, myIntake, myDriveTrain, myNavigation);
 
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 
 			theMACP.init(theMCP);
-		
+			
+			autonomousChooser = new SendableChooser();
+			autonomousChooser.addDefault("0 Do nothing", "0");
+			autonomousChooser.addObject("1 - Mostly Everything", "1");
+			autonomousChooser.addObject("2 - Moat", "2");
+			//autonomousChooser.addDefault("3 - NAMEHERE", "3");
+			SmartDashboard.putData("Choose Autonomous", autonomousChooser);
+			
 			System.out.println("Fully Initialized");
 
 		} catch (Exception ex) {
@@ -201,10 +234,12 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-
+		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
+		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
 		try {
 			
 			theMACP.process();
+			myNavigation.navxValues();
 			
 			
 		} catch (Exception ex) {
@@ -220,6 +255,8 @@ public class Robot extends IterativeRobot {
 
 		int commandValue[];
 		SmartDashboard.putString("Is this working","Yep");
+		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
+		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
 		try {
 			System.out.println("PAST TRY");
 			//get the buttons (commands) that were pressed on the control board

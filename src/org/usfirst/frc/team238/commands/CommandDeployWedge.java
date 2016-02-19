@@ -18,6 +18,12 @@ public class CommandDeployWedge implements Command {
 		myIntake.wedgeDeploy();
 		
 	}
+	
+	public void prepare(){
+		
+		
+		
+	}
 
 	//@Override
 	public void execute(double overRideValue) {
