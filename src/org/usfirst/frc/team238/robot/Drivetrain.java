@@ -36,12 +36,7 @@ public class Drivetrain {
 		rightFrontDrive = rightFrontDriveTalon;
 		shifterSolenoid = new Solenoid (0);
 		
-		//leftFrontDrive.enable();
-		//rightFrontDrive.enable();
 		
-		//leftFrontDrive.clearIAccum();
-		//rightFrontDrive.clearIAccum();
-		//did we change the encoder number??
 		counter = 0;
 		leftFrontDrive.configEncoderCodesPerRev(256);
 		rightFrontDrive.configEncoderCodesPerRev(256);

@@ -74,9 +74,6 @@ public class Robot extends IterativeRobot {
 
 				count = 0;
 
-				//String automousModeFromDS = SmartDashboard.getString(CrusaderCommon.PREFVALUE_OP_AUTO);
-				//System.out.println("disabledPeriodic:AmodeFromDS =  " + automousModeFromDS);
-				
 				debug = SmartDashboard.getNumber("Debug");
 				System.out.println("disabledPeriodic:Debug=  " + debug);
 				
@@ -104,11 +101,6 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		try {
 			System.out.println("TeleopInit()");
-			// only use checkForSmartDashboardChanges function in init methods
-			// or you will
-			// smoke the roborio into a useless pile of silicon
-			//checkForSmartDashboardChanges("mode", CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
-			System.out.println("TeleopInit:");
 		} catch (Exception ex) {
 			System.out.println("TeleopInit:Exception");
 		}
@@ -120,29 +112,14 @@ public class Robot extends IterativeRobot {
 
 			System.out.println("AutononousInit()");
 
-			// only use checkForSmartDashboardChanges function in init methods
-			// or you will
-			// smoke the roborio into a useless pile of silicon
-			try {
-				//checkForSmartDashboardChanges(CrusaderCommon.PREFVALUE_OP_AUTO, CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
-				//System.out.println("AutononousInit:");
-			} catch (Exception ex) {
-				System.out.println("AutononousInit:CMDB Exception");
-			}
-
-			// Note: Command objects for autonomous are initialized in
-			// RobotInit
 			try {
 			
-				autoMode = SmartDashboard.getString(CrusaderCommon.PREFVALUE_OP_AUTO); 
-						//myPreferences.getString(CrusaderCommon.PREFVALUE_OP_AUTO, "3");
 				String automousModeFromDS = (String) autonomousChooser.getSelected();
 				System.out.println("The chosen One =  " + automousModeFromDS);
 				theMACP.pickAMode(Integer.parseInt(automousModeFromDS));
-				System.out.println("AutononousInit:Amode =  " + autoMode);
 				
 			} catch (Exception ex) {
-				System.out.println("AutononousInit:Timer Exception");
+				System.out.println("AutononousInit:Something BAD happened");
 			}
 		} catch (Exception ex) {
 			System.out.println("AutononousInit:Exception");
@@ -172,7 +149,6 @@ public class Robot extends IterativeRobot {
 			
 			myRobotDrive = new RobotDrive(leftFrontDrive,leftRearDrive,rightFrontDrive,rightRearDrive);
 			myRobotDrive.setSafetyEnabled(false);
-			
 			autonomousDrive = new AutonomousDrive(myRobotDrive);
 			autonomousDrive.init();
 			
@@ -184,7 +160,6 @@ public class Robot extends IterativeRobot {
 			
 			myDriveTrain = new Drivetrain(myRobotDrive);
 			myDriveTrain.init(leftFrontDrive, rightFrontDrive);
-			//Controller object for telop
 			
 			leftFrontDrive.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 			rightFrontDrive.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -194,13 +169,7 @@ public class Robot extends IterativeRobot {
 			leftRearDrive.enableBrakeMode(true);
 			rightRearDrive.enableBrakeMode(true);
 			
-			/*
-			leftFrontDrive.configEncoderCodesPerRev(256);
-			leftFrontDrive.setPosition(0);
-		
-			rightFrontDrive.configEncoderCodesPerRev(256);
-			rightFrontDrive.setPosition(0);
-			*/
+			//Controller object for telop
 			theMCP = new CommandController();
 			theMCP.init(myRobotDrive, autonomousDrive, myIntake, myDriveTrain, myNavigation);
 

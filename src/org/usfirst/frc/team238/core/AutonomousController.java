@@ -139,9 +139,9 @@ public class AutonomousController implements AutonomousState {
             	while (iterator.hasNext()) {
             		JSONObject aCommand = iterator.next();
             		String cmdName = (String) aCommand.get("Name");
-            		System.out.println(cmdName);
+            		System.out.println("	Name = " + cmdName);
             		String cmdClass = classPath + cmdName; 
-            		System.out.println(cmdClass);
+            		System.out.println("	Class = " + cmdClass);
 
             		JSONArray paramList = (JSONArray) aCommand.get("Parameters");
             		Iterator<String> paramIterator = paramList.iterator();
@@ -150,7 +150,7 @@ public class AutonomousController implements AutonomousState {
             		int i = 0;
             		while (paramIterator.hasNext()) {
             			params[i++] = (String) paramIterator.next();
-            			System.out.println(params[i -1]);
+            			System.out.println("	Param:" + i + " = " + params[i -1]);
             		}
             		try {
     					//use reflection to create state object
@@ -177,7 +177,7 @@ public class AutonomousController implements AutonomousState {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void dump(){
 		
 		Iterator<AutonomousState> aModeIterator = steps.iterator();
