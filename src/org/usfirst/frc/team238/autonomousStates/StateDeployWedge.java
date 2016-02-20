@@ -1,35 +1,46 @@
+/**
+ * 
+ */
 package org.usfirst.frc.team238.autonomousStates;
 
-import org.usfirst.frc.team238.commands.CommandCollectorOut;
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.commands.CommandCollectorOut;
+import org.usfirst.frc.team238.commands.CommandDeployWedge;
 
-public class StateCollectorOut implements AutonomousState {
+/**
+ * @author Crusader
+ *
+ */
+public class StateDeployWedge implements AutonomousState {
 	
-	CommandCollectorOut collectorOut;
+	
+	CommandDeployWedge deployWedge;
 	String parameters[];
-	
+	/**
+	 * 
+	 */
 	public void init(String params[], CommandController theMcp)
 	{
 		
 		//get specific  objects needed for creating the command object 
-		collectorOut = (CommandCollectorOut) theMcp.getOperatorCmd(3);
+		deployWedge = (CommandDeployWedge) theMcp.getOperatorCmd(10);
 		parameters = params;
 	}
 	
 	//@Override
 		public void process () {
 
-			collectorOut.execute();
+			deployWedge.execute();
 			
 		}
 		
 		//@Override
 		public boolean done() {
 			
-			if(collectorOut.complete()){
+			if(deployWedge.complete()){
 				
-				System.out.println("The Ball's away!");
+				System.out.println("The Wedge Is Deployed");
 				
 				return true;
 				

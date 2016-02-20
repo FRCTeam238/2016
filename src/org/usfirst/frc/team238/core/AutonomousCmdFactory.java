@@ -8,6 +8,7 @@ import org.usfirst.frc.team238.commands.CommandDriveForward;
 import org.usfirst.frc.team238.commands.CommandDriveBackwards;
 import org.usfirst.frc.team238.commands.CommandTurnLeft;
 import org.usfirst.frc.team238.commands.CommandTurnRight;
+import org.usfirst.frc.team238.commands.CommandDelay;
 import org.usfirst.frc.team238.robot.AutonomousDrive;
 
 public class AutonomousCmdFactory {
@@ -16,6 +17,7 @@ public class AutonomousCmdFactory {
 	CommandDriveBackwards autoDriveBackwards;
 	CommandTurnLeft autoTurnLeft;
 	CommandTurnRight autoTurnRight;
+	CommandDelay delayCommand;
 	
 	HashMap <String, Command> autonomousCommands;
 	
@@ -34,6 +36,8 @@ public class AutonomousCmdFactory {
 		autonomousCommands.put("CommandTurnLeft", autoTurnLeft);
 		autoTurnRight = new CommandTurnRight(robotDrive, myNavigation);
 		autonomousCommands.put("CommandTurnRight", autoTurnRight);
+		delayCommand = new CommandDelay();
+		autonomousCommands.put("CommandDelay", delayCommand);
 		
 		
 		return autonomousCommands;

@@ -62,7 +62,7 @@ public class CommandController {
 	}
 	
 	//gets Operator Commands by name
-	public Command getOperatorCmd(String cmdName)
+	public Command getOperatorCmd(int cmdName)
 	{
 		return operatorCmdList.get(cmdName);
 	}

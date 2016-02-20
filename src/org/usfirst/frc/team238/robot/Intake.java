@@ -68,7 +68,7 @@ public class Intake {
 	 // The autonomous query will check and see if the action is completed.
 	public boolean complete()
 	{
-		 return false;
+		 return true;
 	}
 
 	

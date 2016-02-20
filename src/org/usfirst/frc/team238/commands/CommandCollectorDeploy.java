@@ -6,6 +6,7 @@ import org.usfirst.frc.team238.robot.Intake;
 public class CommandCollectorDeploy implements Command {
 	
 	Intake myIntake;
+	int deploy;
 	
 	public CommandCollectorDeploy(Intake theIntake)
 	{
@@ -16,13 +17,20 @@ public class CommandCollectorDeploy implements Command {
 	public void prepare(){
 		
 		
-		
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		myIntake.deployCollector();
+		System.out.println("CommandCollecter.execute deploy = : " + deploy);
+		if(deploy == 1)
+		{
+			myIntake.deployCollector();
+		}
+		else
+		{
+			myIntake.retractCollector();
+		}
 	}
 
 	//@Override
@@ -30,9 +38,9 @@ public class CommandCollectorDeploy implements Command {
 		// TODO Auto-generated method stub
 
 	}
-	public void setParams()
+	public void setParams(int param)
 	{
-		
+		deploy = param;
 	}
 	 
 	public boolean complete()
