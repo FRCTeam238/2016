@@ -3,25 +3,30 @@ package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.Navigation;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CommandDriveForward implements Command {
 
 	Drivetrain myRobotDrive;
+	Navigation myNavigation;
 
 	double motorValue;
 	double targetValue;
 	double debug;
+	double rollValue;
 	
-	public CommandDriveForward(Drivetrain robotDrive) {
+	public CommandDriveForward(Drivetrain robotDrive, Navigation myNav) {
 		this.myRobotDrive = robotDrive;
+		this.myNavigation = myNav;
 		this.debug = SmartDashboard.getNumber("Debug");
 	}
 	
 	public void prepare(){
 		
 		myRobotDrive.resetEncoders();
+		System.out.println("CommandDriveForward.prepare");
 		
 	}
 	
@@ -45,6 +50,13 @@ public class CommandDriveForward implements Command {
 		else {
 			motorValue = 1;
 		}
+		
+		if ((params[2] != null) || (!params[2].isEmpty())){
+			rollValue = Double.parseDouble(params[2]);
+		}
+		else {
+			rollValue = 0;
+		}
 
 	}
 	 
@@ -55,26 +67,45 @@ public class CommandDriveForward implements Command {
 
 		debug = SmartDashboard.getNumber("Debug");
 		
-		if(debug == 1)
+		/*if(debug == 1)
 		{
 			amountOfTicks = myRobotDrive.getEncoderCount(1);
 		}
 		else 
 		{
-			amountOfTicks = myRobotDrive.getEncoderTicks();
-		}
+			
+		}*/
+		double currnetRollValue = myNavigation.roll();
+		amountOfTicks = myRobotDrive.getEncoderTicks();
 		System.out.println("Target Value = " + targetValue + " Amount Of Ticks = " + amountOfTicks);
-		if (amountOfTicks > targetValue)
+		System.out.println("RollValue : " + rollValue + "CurrentRollValue : " + currnetRollValue);
+		
+		if (rollValue > 0)
 		{
-			isDone = true;
-			myRobotDrive.driveForward(0, 0);
-
+			if ( (currnetRollValue >= rollValue) && (amountOfTicks > 9000))
+			{
+				isDone = true;
+				myRobotDrive.driveForward(0, 0);
+	
+			}
+			else
+			{
+				isDone = false;
+			}
 		}
 		else
 		{
-			isDone = false;
+			if (amountOfTicks > targetValue)
+			{
+				isDone = true;
+				myRobotDrive.driveForward(0, 0);
+	
+			}
+			else
+			{
+				isDone = false;
+			}
 		}
-		
 		return isDone;
 	}
 

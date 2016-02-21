@@ -55,6 +55,11 @@ public class Drivetrain {
 		counter=0;
 		leftFrontDrive.setEncPosition(0);
 		rightFrontDrive.setEncPosition(0);
+		
+		encoderLeft = leftFrontDrive.getEncPosition();
+		encoderRight = rightFrontDrive.getEncPosition();
+		
+		System.out.println("ENCODER LEFT : " + encoderLeft + "ENCODER RIGHT : " + encoderRight);
 	}
 	
 	public int getEncoderCount(int count)

@@ -11,6 +11,8 @@ public class Intake {
 	Solenoid intakeDeploySolenoid;
 	Solenoid intakeWedgeSolenoid;
 	
+	public boolean intakeIsDown;
+	
 	
 	public void Init()
 	{
@@ -20,15 +22,7 @@ public class Intake {
 		intakeWedgeSolenoid = new Solenoid(2);
 	}
 	//Starts the intake pulling balls in.
-	public void rotateCollectorIn()  
-	{
-		intakeMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
-	}
-	//Starts the intake pushing balls out.
-	public void rotateCollectorOut() 
-	{
-		intakeMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
-	}
+	
 	
 	//Stops the intake motor.
 	public void stopCollector() 
@@ -39,11 +33,13 @@ public class Intake {
 	public void deployCollector() 
 	{
 		intakeDeploySolenoid.set(true);
+		intakeIsDown = true;
 	}
 	//Closes intake to prevent aquiring more than one ball. Use as soon as you aquire a ball.
 	public void retractCollector() 
 	{
 		intakeDeploySolenoid.set(false);
+		intakeIsDown = false;
 	}
 	//points the top of the wedge outwards
 	public void wedgeDeploy()
@@ -54,6 +50,21 @@ public class Intake {
 	public void wedgeRetract()
 	{
 		intakeWedgeSolenoid.set(false);
+	}
+	public void rotateCollectorIn()  
+	{
+		if (intakeIsDown == true)
+		{
+			intakeMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+		}
+	}
+	//Starts the intake pushing balls out.
+	public void rotateCollectorOut() 
+	{
+		if (intakeIsDown == true)
+		{
+			intakeMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
+		}
 	}
 	//Detects whether or not we have a ball in the holder.
 	public void detectBall() 

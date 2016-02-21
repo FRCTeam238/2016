@@ -28,7 +28,7 @@ public class AutonomousCmdFactory {
 	
 	public HashMap<String, Command> createAutonomousCommands(Drivetrain robotDrive, Navigation myNavigation){
 		
-		autoDriveForward = new CommandDriveForward(robotDrive);
+		autoDriveForward = new CommandDriveForward(robotDrive, myNavigation);
 		autonomousCommands.put("CommandDriveForward", autoDriveForward);
 		autoDriveBackwards = new CommandDriveBackwards(robotDrive);
 		autonomousCommands.put("CommandDriveBackwards", autoDriveBackwards);

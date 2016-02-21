@@ -8,6 +8,7 @@ public class CommandCollectorRetractTeleop implements Command {
 
 	Intake myIntake;
 	
+	
 	public CommandCollectorRetractTeleop (Intake theIntake) {
 		
 		this.myIntake = theIntake;

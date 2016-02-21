@@ -27,6 +27,13 @@ public class Navigation {
 		
 	}
 	
+	public double roll()
+	{
+		currentRoll = ahrs.getRoll();
+		
+		return currentRoll;
+	}
+	
 	//NOTE: make a set target for yaw and roll	
 	public void setTargetValues(double targetValue)
 	{
@@ -40,7 +47,7 @@ public class Navigation {
 	{
 		Timer.delay(0.020);
 		
-		SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
+		/*SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
         SmartDashboard.putBoolean(  "IMU_IsCalibrating",    ahrs.isCalibrating());
         
 		SmartDashboard.putNumber("Gyro_X", ahrs.getRawGyroX());
@@ -49,7 +56,7 @@ public class Navigation {
 		
 		SmartDashboard.putNumber("Accel_X", ahrs.getRawAccelX());
 		SmartDashboard.putNumber("Accel_Y", ahrs.getRawAccelY());
-		SmartDashboard.putNumber("Accel_Z", ahrs.getRawAccelZ());
+		SmartDashboard.putNumber("Accel_Z", ahrs.getRawAccelZ());*/
 		
         SmartDashboard.putNumber("IMU_Yaw", ahrs.getYaw());
         SmartDashboard.putNumber("IMU_Pitch", ahrs.getPitch());

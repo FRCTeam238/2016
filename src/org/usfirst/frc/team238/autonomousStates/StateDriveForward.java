@@ -15,6 +15,7 @@ public class StateDriveForward implements AutonomousState {
 	{
 		DriveForwardCommand.setParams(parameters);
 		DriveForwardCommand.prepare();
+		//System.out.println(parameters);
 		
 	}
 	
