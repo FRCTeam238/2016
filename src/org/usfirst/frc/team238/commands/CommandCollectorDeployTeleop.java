@@ -1,41 +1,37 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
-
 import org.usfirst.frc.team238.robot.Intake;
 
-public class CommandCollectorRetract implements Command {
-
+public class CommandCollectorDeployTeleop implements Command {
+	
 	Intake myIntake;
 	
-	public CommandCollectorRetract (Intake theIntake) {
-		
-		this.myIntake = theIntake;
-		
-	}
 	
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		myIntake.retractCollector();
+	public CommandCollectorDeployTeleop(Intake theIntake)
+	{
+		this.myIntake = theIntake;
 		
 	}
 	
 	public void prepare(){
 		
 		
-		
 	}
+
+	@Override
+	public void execute() {
+		// TODO Auto-generated method stub
+		myIntake.deployCollector();
+	}
+
 
 	//@Override
 	public void execute(double overRideValue) {
 		// TODO Auto-generated method stub
 
 	}
-	public void setParams()
-	{
-		
-	}
+
 	 
 	public boolean complete()
 	{

@@ -182,6 +182,7 @@ public class Robot extends IterativeRobot {
 			autonomousChooser.addObject("1 - Mostly Everything", "1");
 			autonomousChooser.addObject("2 - Moat", "2");
 			autonomousChooser.addObject("3 - Cheval de Friese", "3");
+			autonomousChooser.addObject("4 - Low Bar", "4");
 			//autonomousChooser.addDefault("3 - NAMEHERE", "3");
 			SmartDashboard.putData("Choose Autonomous", autonomousChooser);
 			

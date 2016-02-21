@@ -15,7 +15,7 @@ public class StateCollectorDeploy implements AutonomousState {
 	{
 		
 		//get specific  objects needed for creating the command object 
-		deployIntake = (CommandCollectorDeploy) theMcp.getOperatorCmd(6);
+		deployIntake = (CommandCollectorDeploy) theMcp.getOperatorCmd(8);
 		parameters = params;
 		
 	}

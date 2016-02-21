@@ -1,7 +1,7 @@
 package org.usfirst.frc.team238.autonomousStates;
 
 import org.usfirst.frc.team238.commands.CommandCollectorDeploy;
-import org.usfirst.frc.team238.commands.CommandCollectorRetract;
+import org.usfirst.frc.team238.commands.CommandCollectorRetractTeleop;
 import org.usfirst.frc.team238.commands.CommandCollectorIn;
 
 public class StateCollectorIn {
@@ -11,7 +11,7 @@ public class StateCollectorIn {
 		Start up the wheels and take in a ball.
 		When done, it'll stop the wheels and Retract the "loader".
 	*/
-	CommandCollectorRetract collectorRetract;
+	CommandCollectorRetractTeleop collectorRetract;
 	CommandCollectorDeploy collectorDeploy;
 	CommandCollectorIn collectorIntake;
 	
