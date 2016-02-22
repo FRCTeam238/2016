@@ -64,7 +64,7 @@ public class AutonomousController implements AutonomousState {
 	{
 		this.currentState = state;
 		state.prepare();
-		System.out.println("State: " + currentState);
+		Logger.logString("State: " + currentState);
 	}
 	
 	@Override
@@ -87,7 +87,7 @@ public class AutonomousController implements AutonomousState {
 
 	private AutonomousState getNextState()
 	{
-		System.out.println("getNextState:index = " + index);
+		Logger.logInt("getNextState:index = " , index);
 		AutonomousState nextState = steps.get(++index);
 		
 		return(nextState);
@@ -116,7 +116,7 @@ public class AutonomousController implements AutonomousState {
 
 			Iterator<JSONObject> aModeIterator = autonomousModes.iterator();
 			int numModes = autonomousModes.size();
-			System.out.println("NumModes : " + numModes);
+			Logger.logInt("NumModes : " , numModes);
 			
 			//create a list of commandsteps for each mode
 			autonomousModeList = new ArrayList[numModes];
@@ -131,7 +131,7 @@ public class AutonomousController implements AutonomousState {
             	JSONObject autoModeX = aModeIterator.next();
             
             	String name = (String) autoModeX.get("Name");
-            	System.out.println("Name: " + name);
+            	Logger.logString("Name: " + name);
 
             	JSONArray companyList = (JSONArray) autoModeX.get("Commands");
 
@@ -139,9 +139,9 @@ public class AutonomousController implements AutonomousState {
             	while (iterator.hasNext()) {
             		JSONObject aCommand = iterator.next();
             		String cmdName = (String) aCommand.get("Name");
-            		System.out.println("	Name = " + cmdName);
+            		Logger.logTwoString("	Name = " , cmdName);
             		String cmdClass = classPath + cmdName; 
-            		System.out.println("	Class = " + cmdClass);
+            		Logger.logTwoString("	Class = " , cmdClass);
 
             		JSONArray paramList = (JSONArray) aCommand.get("Parameters");
             		Iterator<String> paramIterator = paramList.iterator();
@@ -150,7 +150,7 @@ public class AutonomousController implements AutonomousState {
             		int i = 0;
             		while (paramIterator.hasNext()) {
             			params[i++] = (String) paramIterator.next();
-            			System.out.println("	Param:" + i + " = " + params[i -1]);
+            			Logger.logStringIntString("	Param:" , i , " = " + params[i -1]);
             		}
             		try {
     					//use reflection to create state object
@@ -184,7 +184,7 @@ public class AutonomousController implements AutonomousState {
 		
 		while(aModeIterator.hasNext()){
 			AutonomousState thisState = aModeIterator.next();
-			System.out.println("AUTONOMOUS DUMP " + thisState.getClass().getName());
+			Logger.logString("AUTONOMOUS DUMP " + thisState.getClass().getName());
 		}
 	}
 

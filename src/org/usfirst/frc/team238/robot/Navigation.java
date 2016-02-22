@@ -1,9 +1,12 @@
 package org.usfirst.frc.team238.robot;
 
+import org.usfirst.frc.team238.core.Logger;
+
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class Navigation {
 	
@@ -11,6 +14,9 @@ public class Navigation {
 	double currentYaw;
 	double currentRoll;
 	double targetYaw;
+	double ultrasonicDistance;
+	
+	Ultrasonic myUltrasonic;
 	
 	public void init()
 	{
@@ -18,7 +24,18 @@ public class Navigation {
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		currentYaw = ahrs.getYaw();
 		currentRoll = ahrs.getRoll();
+		myUltrasonic = new Ultrasonic(9,8);
 		
+	}
+	
+	public double ultrasonicSensor()
+	{
+		
+		ultrasonicDistance = myUltrasonic.getRangeInches();
+		SmartDashboard.putNumber("Ultrasonic Distance", ultrasonicDistance);
+		
+		return ultrasonicDistance;
+	
 	}
 	
 	public void resetNAVX(){
@@ -27,11 +44,17 @@ public class Navigation {
 		
 	}
 	
-	public double roll()
+	public double getRoll()
 	{
 		currentRoll = ahrs.getRoll();
 		
 		return currentRoll;
+	}
+	public double getYaw()
+	{
+		currentYaw = ahrs.getYaw();
+		
+		return currentYaw;
 	}
 	
 	//NOTE: make a set target for yaw and roll	
@@ -65,9 +88,9 @@ public class Navigation {
 	//Tells us if we are at our target yaw
 	public boolean areWeThereYet()
 	{
+		currentYaw = ahrs.getYaw();
 		
-		
-		System.out.println("Current yaw is " + currentYaw + "\n  Target is " + targetYaw);
+		Logger.logTwoDouble("Current Yaw is : ", currentYaw, " \n Target is : ", targetYaw);
 		
 		if(currentYaw > (targetYaw - 5) && currentYaw < (targetYaw + 5))
 		{

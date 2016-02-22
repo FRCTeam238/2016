@@ -36,7 +36,7 @@ public class AutonomousCmdFactory {
 		autonomousCommands.put("CommandTurnLeft", autoTurnLeft);
 		autoTurnRight = new CommandTurnRight(robotDrive, myNavigation);
 		autonomousCommands.put("CommandTurnRight", autoTurnRight);
-		delayCommand = new CommandDelay();
+		delayCommand = new CommandDelay(robotDrive);
 		autonomousCommands.put("CommandDelay", delayCommand);
 		
 		

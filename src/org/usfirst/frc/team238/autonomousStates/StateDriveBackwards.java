@@ -2,6 +2,7 @@ package org.usfirst.frc.team238.autonomousStates;
 
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.commands.CommandDriveBackwards;
 
 public class StateDriveBackwards implements AutonomousState {
@@ -22,7 +23,7 @@ public class StateDriveBackwards implements AutonomousState {
 	@Override
 	public void init(String params[], CommandController theMcp)
 	{
-		System.out.println("StateDriveForward = "+ String.valueOf(howfar));
+		Logger.logDouble("StateDriveForward = ", howfar);
 		//get specific  objects needed for creating the command object 
 		driveBackwards = (CommandDriveBackwards) theMcp.getAutoCmd("CommandDriveBackwards");
 		parameters = params;
@@ -30,7 +31,7 @@ public class StateDriveBackwards implements AutonomousState {
 	
 	@Override
 	public void process() {
-		System.out.println("StateDriveBackwards.Process()  "+ String.valueOf(count));
+		Logger.logInt("StateDriveBackwards.Process()  ", count);
 		count++;
 		driveBackwards.execute();
 	}

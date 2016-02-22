@@ -3,6 +3,7 @@ package org.usfirst.frc.team238.robot;
 
 import org.usfirst.frc.team238.core.AutonomousController;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Drivetrain;
 
@@ -11,9 +12,9 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -52,6 +53,7 @@ public class Robot extends IterativeRobot {
 	AutonomousDrive autonomousDrive;
 	private AutonomousController theMACP;
 	SendableChooser autonomousChooser;
+	Logger myLogger;
 	
 	
 	public void disabledInit() {
@@ -60,25 +62,26 @@ public class Robot extends IterativeRobot {
 			// or you will smoke the roborio into a useless pile of silicon
 			checkForSmartDashboardChanges(CrusaderCommon.PREFVALUE_OP_AUTO, CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
 			
-			System.out.println("disabledInit:");
+			Logger.logString("disabledInit:");
 		
 		} catch (Exception ex) {
-			System.out.println("disabledInit exception");
+			Logger.logString("disabledInit exception");
 		}
 	}
 
 	public void disabledPeriodic() {
-		double debug;
+		boolean debug;
 		try {
 			if (count > 500) {
 
 				count = 0;
 
-				debug = SmartDashboard.getNumber("Debug");
-				System.out.println("disabledPeriodic:Debug=  " + debug);
+				debug = SmartDashboard.getBoolean("Debug");
+				Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
 				
 				String automousModeFromDS = (String) autonomousChooser.getSelected();
-				System.out.println("The chosen One =  " + automousModeFromDS);
+				Logger.logString("The chosen One =  " + automousModeFromDS);
+				
 				
 				if (automousModeFromDS != null) {
 					
@@ -92,7 +95,7 @@ public class Robot extends IterativeRobot {
 			}
 			count++;
 		} catch (Exception ex) {
-			System.out.println("disabledPriodic exception" );
+			Logger.logString("disabledPriodic exception" );
 			ex.printStackTrace();
 		}
 
@@ -100,9 +103,9 @@ public class Robot extends IterativeRobot {
 
 	public void teleopInit() {
 		try {
-			System.out.println("TeleopInit()");
+			Logger.logString("TeleopInit()");
 		} catch (Exception ex) {
-			System.out.println("TeleopInit:Exception");
+			Logger.logString("TeleopInit:Exception");
 		}
 
 	}
@@ -110,31 +113,32 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		try {
 
-			System.out.println("AutononousInit()");
+			Logger.logString("AutononousInit()");
 
 			try {
 			
 				String automousModeFromDS = (String) autonomousChooser.getSelected();
-				System.out.println("The chosen One =  " + automousModeFromDS);
+				Logger.logString("The chosen One =  " + automousModeFromDS);
 				theMACP.pickAMode(Integer.parseInt(automousModeFromDS));
 				
 			} catch (Exception ex) {
-				System.out.println("AutononousInit:Something BAD happened");
+				Logger.logString("AutononousInit:Something BAD happened");
 			}
 		} catch (Exception ex) {
-			System.out.println("AutononousInit:Exception");
+			Logger.logString("AutononousInit:Exception");
 		}
 	}
 
 	public void robotInit() {
 
 		try {
-			System.out.println("RobotInit()");
+			Logger.logString("RobotInit()");
 			SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
 			
-			SmartDashboard.putNumber("Debug", 0);
+			SmartDashboard.putBoolean("Debug", false);
 			
-
+			myLogger = new Logger();
+			
 			//object that is the code representation for the physical control board
 			myControlBoard = new ControlBoard();
 			myControlBoard.controlBoardInit();
@@ -183,14 +187,16 @@ public class Robot extends IterativeRobot {
 			autonomousChooser.addObject("2 - Moat", "2");
 			autonomousChooser.addObject("3 - Cheval de Friese", "3");
 			autonomousChooser.addObject("4 - Low Bar", "4");
+			autonomousChooser.addObject("5 - Turn Left Test", "5");
+			autonomousChooser.addObject("6 - Turn Right Test", "6");
 			//autonomousChooser.addDefault("3 - NAMEHERE", "3");
 			SmartDashboard.putData("Choose Autonomous", autonomousChooser);
 			
-			System.out.println("Fully Initialized");
+			Logger.logString("Fully Initialized");
 
 		} catch (Exception ex) {
 
-			System.out.println(ex.getMessage());
+			Logger.logString(ex.getMessage());
 			ex.printStackTrace();
 
 		}
@@ -211,10 +217,10 @@ public class Robot extends IterativeRobot {
 			
 			theMACP.process();
 			myNavigation.navxValues();
-			
+			myNavigation.ultrasonicSensor();
 			
 		} catch (Exception ex) {
-			System.out.println("Autonomous exception");
+			Logger.logString("Autonomous exception");
 			ex.printStackTrace();
 		}
 	}
@@ -225,22 +231,23 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 
 		int commandValue[];
+		
 		SmartDashboard.putString("Is this working","Yep");
 		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
 		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
+		
 		try {
-			System.out.println("PAST TRY");
+
 			//get the buttons (commands) that were pressed on the control board
 			commandValue = myControlBoard.getCommands();
 			//pass the array with the commands coming form the control to the Controller object 
 			theMCP.buttonPressed(commandValue);
-			System.out.println("BEFORE NAVIGATION");
 			myNavigation.navxValues();
-			System.out.println("AFTER NAVIGATION");
-			
+			myNavigation.ultrasonicSensor();
 
 		} catch (Exception e) {
-			System.out.println("telopperiodic: ");
+			
+			Logger.logString("telopperiodic: ");
 			e.printStackTrace();
 		}
 	}
@@ -260,7 +267,7 @@ public class Robot extends IterativeRobot {
 
 		String valueFromPrefs = myPreferences.getString(key, value);
 		if (valueFromPrefs != null) {
-			System.out.println("CheckSDChanges:valueFromPrefs : " + key + " = " + valueFromPrefs);
+			Logger.logFourString("CheckSDChanges:valueFromPrefs : " , key , " = " , valueFromPrefs);
 			String valueFromDS = null;
 			
 			try {
@@ -270,7 +277,7 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.putString(key, valueFromPrefs);
 			}
 
-			System.out.println("CheckSDChanges.ValFromDS : " + key + " = " + valueFromDS);
+			Logger.logFourString("CheckSDChanges.ValFromDS : " , key , " = " , valueFromDS);
 
 			// check for null and also if it's empty don't overwrite what's in
 			// the preferences table
@@ -278,13 +285,16 @@ public class Robot extends IterativeRobot {
 								// if they are not the same then update the preferences
 				if (!valueFromPrefs.equalsIgnoreCase(valueFromDS)) {
 					
-					System.out.println("CheckSDChanges.UpdatePrefs" + key + " = " + valueFromDS);
+					Logger.logFourString("CheckSDChanges.UpdatePrefs" , key , " = " , valueFromDS);
 					myPreferences.putString(key, valueFromDS);
 
 					// NEVER NEVER use this save() in a periodic function or you
 					// will destroy your RoboRio
 					// making it an expensive chunk of useless plastic and
 					// silicon
+					
+					//Thanks for the heads up bro!
+					
 					myPreferences.save();
 				}
 			}

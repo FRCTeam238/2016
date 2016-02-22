@@ -4,6 +4,7 @@ import org.usfirst.frc.team238.commands.CommandDelay;
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.core.Logger;
 
 public class StateDelay implements AutonomousState
 {
@@ -23,7 +24,7 @@ public class StateDelay implements AutonomousState
 	public void process() 
 	{
 		delay.execute();
-		System.out.println("delaying");
+		Logger.logString("delaying");
 	}
 	public boolean done()  
 	{
@@ -46,6 +47,7 @@ public class StateDelay implements AutonomousState
 	public void prepare() {
 		// TODO Auto-generated method stub
 		delay.setParams(Integer.parseInt(parameters[0]));
+		delay.prepare();
 	}
 	@Override
 	public void reset() {

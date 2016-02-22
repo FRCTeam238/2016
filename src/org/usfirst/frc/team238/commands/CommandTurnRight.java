@@ -36,7 +36,7 @@ public class CommandTurnRight implements Command  {
 	public void execute()   {
 		//Using -motorValues to spin the right motors backwards
 		//If that's how it works lol Maybe change this
-		myRobotDrive.turnRight(motorValue, -motorValue);
+		myRobotDrive.turnRight(motorValue, motorValue);
 	}
 	
 	public void setParams(String params[])
@@ -50,7 +50,7 @@ public class CommandTurnRight implements Command  {
 		}
 
 		if ((params[1] != null) || (!params[1].isEmpty())){
-			motorValue = Integer.parseInt(params[1]);
+			motorValue = Double.parseDouble(params[1]);
 		}
 		else {
 			motorValue = 1;
@@ -71,7 +71,7 @@ public class CommandTurnRight implements Command  {
 	public boolean done()
 	{
 		
-		double debug = SmartDashboard.getNumber("Debug");
+		boolean debug = SmartDashboard.getBoolean("Debug");
 		/* if ( debug == 1){
 			 count++;
 			 if (count < targetValue){
@@ -85,6 +85,7 @@ public class CommandTurnRight implements Command  {
 		 }
 		*/
 		if (myNavigation.areWeThereYet() == true){
+			myRobotDrive.driveForward(0, 0);
 			return true;
 		}
 

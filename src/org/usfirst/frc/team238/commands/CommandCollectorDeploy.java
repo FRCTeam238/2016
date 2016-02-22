@@ -1,6 +1,7 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Intake;
 
 public class CommandCollectorDeploy implements Command {
@@ -22,7 +23,7 @@ public class CommandCollectorDeploy implements Command {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		System.out.println("CommandCollecter.execute deploy = : " + deploy);
+		Logger.logInt("CommandCollecter.execute deploy = : " , deploy);
 		if(deploy == 1)
 		{
 			myIntake.deployCollector();

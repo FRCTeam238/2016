@@ -2,15 +2,11 @@ package org.usfirst.frc.team238.autonomousStates;
 
 import org.usfirst.frc.team238.commands.CommandCollectorDeploy;
 import org.usfirst.frc.team238.commands.CommandCollectorRetractTeleop;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.commands.CommandCollectorIn;
 
 public class StateCollectorIn {
 
-	/*
-		This code is meant to deploy the Intake/"loader".
-		Start up the wheels and take in a ball.
-		When done, it'll stop the wheels and Retract the "loader".
-	*/
 	CommandCollectorRetractTeleop collectorRetract;
 	CommandCollectorDeploy collectorDeploy;
 	CommandCollectorIn collectorIntake;
@@ -18,9 +14,8 @@ public class StateCollectorIn {
 	//@Override
 	public void process () {
 		
-		collectorDeploy.execute();
 		collectorIntake.execute();
-		System.out.println("Rotating In.....");
+		Logger.logString("Rotating In.....");
 		
 	}
 	
@@ -29,9 +24,7 @@ public class StateCollectorIn {
 		
 		if(collectorIntake.complete()){
 			
-			System.out.println("Rotating In: DONE//Ball received?");
-			System.out.println("Retracting.....");
-			collectorRetract.execute();
+			Logger.logString("Rotating In: DONE");
 			
 			return true;
 			

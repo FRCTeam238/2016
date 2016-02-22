@@ -2,6 +2,7 @@ package org.usfirst.frc.team238.autonomousStates;
 
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.commands.CommandTurnLeft;
 import org.usfirst.frc.team238.robot.Navigation;
 import com.kauailabs.navx.frc.AHRS;
@@ -12,7 +13,6 @@ public class StateTurnLeft implements AutonomousState {
 	CommandController theMCP;
 	String parameters[];
 	
-	double currentYaw;
 	int count;
 	//double newTargetYaw = -45; //For turning Left however many degrees uses negatives
 	
@@ -36,7 +36,7 @@ public class StateTurnLeft implements AutonomousState {
 	@Override
 	public void process() {
 		
-		System.out.println("StateTurnLeft.Process()" + String.valueOf(count));
+		Logger.logInt("StateTurnLeft.Process()" , count);
 		count++;
 		turnLeftCommand.execute();
 		

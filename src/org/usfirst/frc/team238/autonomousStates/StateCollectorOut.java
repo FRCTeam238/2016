@@ -3,6 +3,7 @@ package org.usfirst.frc.team238.autonomousStates;
 import org.usfirst.frc.team238.commands.CommandCollectorOut;
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.core.Logger;
 
 public class StateCollectorOut implements AutonomousState {
 	
@@ -21,6 +22,7 @@ public class StateCollectorOut implements AutonomousState {
 		public void process () {
 
 			collectorOut.execute();
+			Logger.logString("Rotating Out.....");
 			
 		}
 		
@@ -29,7 +31,7 @@ public class StateCollectorOut implements AutonomousState {
 			
 			if(collectorOut.complete()){
 				
-				System.out.println("The Ball's away!");
+				Logger.logString("The Ball's away!");
 				
 				return true;
 				

@@ -5,6 +5,7 @@ package org.usfirst.frc.team238.autonomousStates;
 
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.commands.CommandCollectorOut;
 import org.usfirst.frc.team238.commands.CommandDeployWedge;
 
@@ -40,7 +41,7 @@ public class StateDeployWedge implements AutonomousState {
 			
 			if(deployWedge.complete()){
 				
-				System.out.println("The Wedge Is Deployed");
+				Logger.logString("The Wedge Is Deployed");
 				
 				return true;
 				

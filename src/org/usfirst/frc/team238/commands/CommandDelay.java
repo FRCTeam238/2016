@@ -4,6 +4,7 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.robot.Drivetrain;
 
 /**
  * @author Crusader
@@ -13,12 +14,14 @@ public class CommandDelay implements Command {
 
 	int count;
 	int targetValue;
+	Drivetrain myRobotdrive;
 	
 	/**
 	 * 
 	 */
-	public CommandDelay() {
+	public CommandDelay(Drivetrain myRobotDrive) {
 		// TODO Auto-generated constructor stub
+		myRobotdrive = myRobotDrive;
 	}
 
 	/* (non-Javadoc)
@@ -35,7 +38,8 @@ public class CommandDelay implements Command {
 	@Override
 	public void prepare() {
 		// TODO Auto-generated method stub
-
+		myRobotdrive.resetEncoders();
+		count = 0;
 	}
 	
 	public void setParams(int params)

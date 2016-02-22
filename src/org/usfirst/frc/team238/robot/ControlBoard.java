@@ -1,4 +1,6 @@
 package org.usfirst.frc.team238.robot;
+import org.usfirst.frc.team238.core.Logger;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -32,7 +34,7 @@ public class ControlBoard {
 		
 		catch(Exception ex)
 		{
-			System.out.println("ControlBoard Init Failed");
+			Logger.logString("ControlBoard Init Failed");
 		}
 	}
 	
@@ -154,7 +156,7 @@ public class ControlBoard {
 	public static boolean resetEncoderValue()
 	{
 		boolean resetEncoderValue = operatorJs.getRawButton(8);
-		System.out.println("Reset Encoder = " + resetEncoderValue);
+		Logger.logString("Reset Encoder = " + resetEncoderValue);
 		return resetEncoderValue;
 	}
 	

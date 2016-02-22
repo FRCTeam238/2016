@@ -3,6 +3,9 @@ package org.usfirst.frc.team238.autonomousStates;
 import org.usfirst.frc.team238.commands.CommandDriveForward;
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.core.Logger;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class StateDriveForward implements AutonomousState {
 
@@ -15,15 +18,13 @@ public class StateDriveForward implements AutonomousState {
 	{
 		DriveForwardCommand.setParams(parameters);
 		DriveForwardCommand.prepare();
-		//System.out.println(parameters);
+		//Logger.logString(parameters);
 		
 	}
 	
 	@Override
 	public void init(String params[], CommandController theMcp)
 	{
-		//System.out.println("StateDriveForward = "
-		//		+ String.valueOf(howfar));
 		//get specific  objects needed for creating the command object 
 		DriveForwardCommand = (CommandDriveForward) theMcp.getAutoCmd("CommandDriveForward");
 		parameters = params;
@@ -31,11 +32,18 @@ public class StateDriveForward implements AutonomousState {
 	
 	@Override
 	public void process() {
-		System.out.println("StateDriveForward.Process()  "
-				+ String.valueOf(count));
+		Logger.logInt("StateDriveForward.Process()  ",
+				count);
 		count++;
 		DriveForwardCommand.execute();
 	}
+	
+	/*public void dumpToDashboard()
+	{
+		SmartDashboard.putString("DriveFwdParam1", parameters[0]);
+		SmartDashboard.putString("DriveFwdParam2", parameters[1]);
+		SmartDashboard.putString("DriveFwdParam3", parameters[2]);
+	}*/
 
 	@Override
 	public boolean done() {

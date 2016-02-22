@@ -3,6 +3,7 @@ package org.usfirst.frc.team238.autonomousStates;
 import org.usfirst.frc.team238.commands.CommandCollectorDeploy;
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.core.Logger;
 
 public class StateCollectorDeploy implements AutonomousState {
 
@@ -34,7 +35,7 @@ public class StateCollectorDeploy implements AutonomousState {
 			
 			if(deployIntake.complete()){
 				
-				System.out.println("The Intake Is Deployed");
+				Logger.logString("The Intake Is Deployed");
 				
 				return true;
 				

@@ -2,6 +2,7 @@ package org.usfirst.frc.team238.autonomousStates;
 
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.core.Logger;
 
 public class StateFinished implements AutonomousState {
 
@@ -33,7 +34,7 @@ public class StateFinished implements AutonomousState {
 
 	@Override
 	public void process() {
-		System.out.println("AutonomousMode Done ");
+		Logger.logString("AutonomousMode Done ");
 
 	}
 

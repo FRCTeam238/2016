@@ -1,6 +1,7 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Drivetrain;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,11 +12,11 @@ public class CommandDriveBackwards implements Command{
 
 	double motorValue;
 	double targetValue;
-	double debug;
+	boolean debug;
 	
 	public CommandDriveBackwards(Drivetrain robotDrive) {
 		this.myRobotDrive = robotDrive;
-		this.debug = SmartDashboard.getNumber("Debug");
+		this.debug = SmartDashboard.getBoolean("Debug");
 
 	}
 	
@@ -56,17 +57,17 @@ public class CommandDriveBackwards implements Command{
 		double amountOfTicks;
 		
 		
-		debug = SmartDashboard.getNumber("Debug");
+		debug = SmartDashboard.getBoolean("Debug");
 		
-		if(debug == 1)
+		/*if(debug == true)
 		{
 			amountOfTicks = myRobotDrive.getEncoderCount(1);
-		}
-		else 
-		{
+		}*/
+		//else 
+		//{
 			amountOfTicks = myRobotDrive.getEncoderTicks();
-		}
-		System.out.println("Target Value = " + targetValue + " Amount Of Ticks = " + amountOfTicks);
+		//}
+			Logger.logTwoDouble("Target Value = " , targetValue , " Amount Of Ticks = " , amountOfTicks);
 
 		if (amountOfTicks < targetValue)
 		{

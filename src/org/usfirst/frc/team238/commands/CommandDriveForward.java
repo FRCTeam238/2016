@@ -2,6 +2,7 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 
@@ -14,24 +15,45 @@ public class CommandDriveForward implements Command {
 
 	double motorValue;
 	double targetValue;
-	double debug;
+	boolean debug;
 	double rollValue;
+	double yawValue;
+	double ultrasonicTarget;
 	
 	public CommandDriveForward(Drivetrain robotDrive, Navigation myNav) {
 		this.myRobotDrive = robotDrive;
 		this.myNavigation = myNav;
-		this.debug = SmartDashboard.getNumber("Debug");
+		this.debug = SmartDashboard.getBoolean("Debug");
 	}
 	
 	public void prepare(){
 		
 		myRobotDrive.resetEncoders();
-		System.out.println("CommandDriveForward.prepare");
+		Logger.logString("CommandDriveForward.prepare");
+		yawValue = myNavigation.getYaw();
 		
 	}
 	
 	public void execute() {
+
+		/*double currentYaw;
+		double differential = 0;
+		double newMotorValue = 0;
+		double amountOfTicks;
+		
+		amountOfTicks = myRobotDrive.getEncoderTicks();
+		
+		currentYaw = myNavigation.getYaw();
+		if(amountOfTicks > 5000)
+		{
+			differential = currentYaw - yawValue;
+			newMotorValue = motorValue + Math.abs(differential);
+		}*/
+		
 		myRobotDrive.driveForward(motorValue, motorValue);
+		
+		/*Logger.logTwoDouble("Current Yaw : ", currentYaw, "Differential : ", differential);
+		Logger.logDouble("New Motor Value : ", newMotorValue);*/
 	}
 	
 	public void setParams(String params[])
@@ -57,15 +79,24 @@ public class CommandDriveForward implements Command {
 		else {
 			rollValue = 0;
 		}
+		if ((params[3] != null) || (!params[3].isEmpty())){
+			ultrasonicTarget = Double.parseDouble(params[3]);
+		}
+		else {
+			ultrasonicTarget = 0;
+		}
 
 	}
+	
+	
 	 
 	public boolean done()
 	{
 		boolean isDone = false;
 		double amountOfTicks;
+		double currentUltrasonicDistance;
 
-		debug = SmartDashboard.getNumber("Debug");
+		debug = SmartDashboard.getBoolean("Debug");
 		
 		/*if(debug == 1)
 		{
@@ -75,14 +106,29 @@ public class CommandDriveForward implements Command {
 		{
 			
 		}*/
-		double currnetRollValue = myNavigation.roll();
+		double currnetRollValue = myNavigation.getRoll();
 		amountOfTicks = myRobotDrive.getEncoderTicks();
-		System.out.println("Target Value = " + targetValue + " Amount Of Ticks = " + amountOfTicks);
-		System.out.println("RollValue : " + rollValue + "CurrentRollValue : " + currnetRollValue);
+		currentUltrasonicDistance = myNavigation.ultrasonicSensor();
+		Logger.logTwoDouble("Target Value = " , targetValue , " Amount Of Ticks = " , amountOfTicks);
+		Logger.logTwoDouble("RollValue : " , rollValue , "CurrentRollValue : " , currnetRollValue);
+		Logger.logTwoDouble("Ultrasonic Target Distance", ultrasonicTarget, "Ultrasonic Current Distance", currentUltrasonicDistance);
 		
 		if (rollValue > 0)
 		{
 			if ( (currnetRollValue >= rollValue) && (amountOfTicks > 9000))
+			{
+				isDone = true;
+				myRobotDrive.driveForward(0, 0);
+	
+			}
+			else
+			{
+				isDone = false;
+			}
+		}
+		else if (ultrasonicTarget > 0)
+		{
+			if (currentUltrasonicDistance < ultrasonicTarget)
 			{
 				isDone = true;
 				myRobotDrive.driveForward(0, 0);

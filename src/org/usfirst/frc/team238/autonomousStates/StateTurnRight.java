@@ -2,6 +2,7 @@ package org.usfirst.frc.team238.autonomousStates;
 
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.commands.CommandTurnRight;
 import org.usfirst.frc.team238.robot.Navigation;
 
@@ -33,7 +34,7 @@ public class StateTurnRight implements AutonomousState {
 	
 	@Override
 	public void process() {
-		System.out.println("StateTurnRight.Process()" + String.valueOf(count));
+		Logger.logInt("StateTurnRight.Process()" , count);
 		count++;
 		turnRightCommand.execute();
 	}

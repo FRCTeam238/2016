@@ -1,6 +1,7 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.ControlBoard;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
@@ -36,23 +37,23 @@ public class CommandTurnLeft implements Command  {
 	public void execute()  {
 		//Using -motorValues to spin the left motors backwards
 		//If that's how it works lol Maybe change this
-		myRobotDrive.turnLeft(-motorValue, motorValue);
+		myRobotDrive.turnLeft(motorValue, motorValue);
 		
 	}
 	
 	public void setParams(String params[])
 	{
-		System.out.println("!!!!!DEBUG!!!!!!!!PARAMETERS!!!!" + params[0]);
+		Logger.logTwoString("!!!!!DEBUG!!!!!!!!PARAMETERS!!!!" , params[0]);
 		
 		if ((params[0] != null) || (!params[0].isEmpty())){
-			targetValue = Double.parseDouble(params[0]);
+			targetValue = Double.parseDouble(params[0])* -1;
 		}
 		else {
 			targetValue = 0;
 		}
 
 		if ((params[1] != null) || (!params[1].isEmpty())){
-			motorValue = Integer.parseInt(params[1]);
+			motorValue = Double.parseDouble(params[1]);
 		}
 		else {
 			motorValue = 1;
@@ -75,7 +76,7 @@ public class CommandTurnLeft implements Command  {
 	public boolean done()
 	{
 		
-		double debug = SmartDashboard.getNumber("Debug");
+		boolean debug = SmartDashboard.getBoolean("Debug");
 		/* if ( debug == 1){
 			 count++;
 			 if (count < targetValue){
@@ -89,6 +90,7 @@ public class CommandTurnLeft implements Command  {
 		 }
 		 */
 		if (myNavigation.areWeThereYet() == true){
+			myRobotDrive.driveForward(0, 0);
 			return true;
 		}
 

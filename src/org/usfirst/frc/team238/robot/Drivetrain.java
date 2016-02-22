@@ -1,6 +1,8 @@
 package org.usfirst.frc.team238.robot;
 
 
+import org.usfirst.frc.team238.core.Logger;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -53,13 +55,13 @@ public class Drivetrain {
 	
 	public void resetEncoders(){
 		counter=0;
-		leftFrontDrive.setEncPosition(0);
-		rightFrontDrive.setEncPosition(0);
+		leftFrontDrive.setPosition(0);
+		rightFrontDrive.setPosition(0);
 		
 		encoderLeft = leftFrontDrive.getEncPosition();
 		encoderRight = rightFrontDrive.getEncPosition();
 		
-		System.out.println("ENCODER LEFT : " + encoderLeft + "ENCODER RIGHT : " + encoderRight);
+		Logger.logTwoInt("ENCODER LEFT : " , encoderLeft , "ENCODER RIGHT : " , encoderRight);
 	}
 	
 	public int getEncoderCount(int count)
@@ -72,13 +74,13 @@ public class Drivetrain {
 	public void shiftHigh()
 	{
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_HIGH_GEAR);
-		System.out.println("!!!!!!!!!!DEBUGHIGH!!!!!!!!!!");
+		Logger.logString("!!!!!!!!!!DEBUGHIGH!!!!!!!!!!");
 	}
 	
 	public void shiftLow()
 	{
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_LOW_GEAR);
-		System.out.println("!!!!!!!!!!DEBUGLOW!!!!!!!!!!");
+		Logger.logString("!!!!!!!!!!DEBUGLOW!!!!!!!!!!");
 	}
 	
 	public void driveForward(double leftMotorValue, double rightMotorValue)  {
@@ -93,12 +95,12 @@ public class Drivetrain {
 	
 	public void turnLeft (double leftJsValue, double rightJsValue){
 		
-		robotMotors.tankDrive(leftJsValue, rightJsValue);
+		robotMotors.tankDrive(leftJsValue, rightJsValue * -1);
 	}
 	
 	public void turnRight(double leftJsValue, double rightJsValue){
 		
-		robotMotors.tankDrive(leftJsValue, rightJsValue);
+		robotMotors.tankDrive(leftJsValue * -1, rightJsValue);
 	}
 	
 	public boolean complete() {
