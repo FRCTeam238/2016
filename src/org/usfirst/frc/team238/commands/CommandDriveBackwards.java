@@ -23,12 +23,13 @@ public class CommandDriveBackwards implements Command{
 	public void prepare(){
 		
 		myRobotDrive.resetEncoders();
+		Logger.logString("CommandDriveBackwards.prepare");
 		
 	}
 	
 	public void execute() {
+		
 		myRobotDrive.driveBackwards(motorValue, motorValue);
-	
 
 	}
 	

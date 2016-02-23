@@ -25,15 +25,15 @@ public class StateDriveForward implements AutonomousState {
 	@Override
 	public void init(String params[], CommandController theMcp)
 	{
-		//get specific  objects needed for creating the command object 
+		
 		DriveForwardCommand = (CommandDriveForward) theMcp.getAutoCmd("CommandDriveForward");
 		parameters = params;
+	
 	}
 	
 	@Override
 	public void process() {
-		Logger.logInt("StateDriveForward.Process()  ",
-				count);
+		Logger.logInt("StateDriveForward.Process()  ", count);
 		count++;
 		DriveForwardCommand.execute();
 	}

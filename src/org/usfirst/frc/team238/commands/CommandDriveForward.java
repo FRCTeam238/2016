@@ -80,7 +80,7 @@ public class CommandDriveForward implements Command {
 			rollValue = 0;
 		}
 		if ((params[3] != null) || (!params[3].isEmpty())){
-			ultrasonicTarget = Double.parseDouble(params[3]);
+			ultrasonicTarget = Double.parseDouble(params[3]) * 12;
 		}
 		else {
 			ultrasonicTarget = 0;

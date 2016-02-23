@@ -23,10 +23,10 @@ public class StateDriveBackwards implements AutonomousState {
 	@Override
 	public void init(String params[], CommandController theMcp)
 	{
-		Logger.logDouble("StateDriveForward = ", howfar);
-		//get specific  objects needed for creating the command object 
+		
 		driveBackwards = (CommandDriveBackwards) theMcp.getAutoCmd("CommandDriveBackwards");
 		parameters = params;
+		
 	}
 	
 	@Override
