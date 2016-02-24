@@ -2,7 +2,7 @@ package org.usfirst.frc.team238.core;
 
 
 import java.util.HashMap;
-import org.usfirst.frc.team238.robot.AutonomousDrive;
+//import org.usfirst.frc.team238.robot.AutonomousDrive;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Intake;
 import org.usfirst.frc.team238.robot.Drivetrain;
@@ -21,7 +21,7 @@ public class CommandController {
 	HashMap<Integer, Command> driverRightCmdList;
 	HashMap<Integer, Command> operatorCmdList;
 	
-	public void  init(RobotDrive myRobotDrive, AutonomousDrive autonomousDrive, Intake intakeMechanism, Drivetrain driveTrain, Navigation myNavigation)
+	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Intake intakeMechanism, Drivetrain driveTrain, Navigation myNavigation)
 	{
 		// populate the command lists
 		setupOperatorCommands(intakeMechanism);

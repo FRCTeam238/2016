@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
 	
 	// Autonomous Mode Support
 	String autoMode;
-	AutonomousDrive autonomousDrive;
+	/*AutonomousDrive autonomousDrive;*/
 	private AutonomousController theMACP;
 	SendableChooser autonomousChooser;
 	Logger myLogger;
@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot {
 				Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
 				
 				String automousModeFromDS = (String) autonomousChooser.getSelected();
-				Logger.logString("The chosen One =  " + automousModeFromDS);
+				Logger.logTwoString("The chosen One =  " , automousModeFromDS);
 				
 				
 				if (automousModeFromDS != null) {
@@ -132,11 +132,11 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 
 		try {
-			Logger.logString("RobotInit()");
+			System.out.println("RobotInit()");
+			
 			SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
 			
-			SmartDashboard.putBoolean("Debug", false);
-			
+			SmartDashboard.putBoolean("Debug", true);
 			myLogger = new Logger();
 			
 			//object that is the code representation for the physical control board
@@ -153,8 +153,8 @@ public class Robot extends IterativeRobot {
 			
 			myRobotDrive = new RobotDrive(leftFrontDrive,leftRearDrive,rightFrontDrive,rightRearDrive);
 			myRobotDrive.setSafetyEnabled(false);
-			autonomousDrive = new AutonomousDrive(myRobotDrive);
-			autonomousDrive.init();
+			/*autonomousDrive = new AutonomousDrive(myRobotDrive);
+			autonomousDrive.init();*/
 			
 			myIntake = new Intake();
 			myIntake.Init();
@@ -175,20 +175,22 @@ public class Robot extends IterativeRobot {
 			
 			//Controller object for telop
 			theMCP = new CommandController();
-			theMCP.init(myRobotDrive, autonomousDrive, myIntake, myDriveTrain, myNavigation);
+			theMCP.init(myRobotDrive, /*autonomousDrive,*/ myIntake, myDriveTrain, myNavigation);
 
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 
 			theMACP.init(theMCP);
 			
 			autonomousChooser = new SendableChooser();
-			autonomousChooser.addDefault("0 Do nothing", "0");
-			autonomousChooser.addObject("1 - Mostly Everything", "1");
+			autonomousChooser.addObject("0 Do nothing", "0");
+			autonomousChooser.addDefault("1 - Mostly Everything", "1");
 			autonomousChooser.addObject("2 - Moat", "2");
 			autonomousChooser.addObject("3 - Cheval de Friese", "3");
 			autonomousChooser.addObject("4 - Low Bar", "4");
-			autonomousChooser.addObject("5 - Turn Left Test", "5");
-			autonomousChooser.addObject("6 - Turn Right Test", "6");
+			autonomousChooser.addObject("5 - Low Bar Score", "5");
+			autonomousChooser.addObject("6 - Rock Wall Score Left", "6");
+			autonomousChooser.addObject("7 - Rock Wall Score Right", "7");
+			autonomousChooser.addObject("8 - CDF Score Right", "8");
 			//autonomousChooser.addDefault("3 - NAMEHERE", "3");
 			SmartDashboard.putData("Choose Autonomous", autonomousChooser);
 			

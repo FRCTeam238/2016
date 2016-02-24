@@ -25,6 +25,8 @@ public class Navigation {
 		currentYaw = ahrs.getYaw();
 		currentRoll = ahrs.getRoll();
 		myUltrasonic = new Ultrasonic(9,8);
+		//myUltrasonic.setEnabled(true);
+		myUltrasonic.setAutomaticMode(true);
 		
 	}
 	
