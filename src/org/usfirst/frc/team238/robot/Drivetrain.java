@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -47,19 +48,46 @@ public class Drivetrain {
 	}
 	public int getEncoderTicks()
 	{
-		encoderLeft = leftFrontDrive.getEncPosition();
-		encoderRight = rightFrontDrive.getEncPosition();
-		return encoderRight;
+		boolean debug;
+		
+		debug = SmartDashboard.getBoolean("Debug");
+		
+		if(debug == false)
+		{
+			encoderLeft = leftFrontDrive.getEncPosition();
+			encoderRight = rightFrontDrive.getEncPosition();
+			return encoderRight;
+		}
+		else 
+		{
+			return 0;
+		}
+		
 		
 	}
 	
 	public void resetEncoders(){
 		counter=0;
-		leftFrontDrive.setPosition(0);
-		rightFrontDrive.setPosition(0);
 		
-		encoderLeft = leftFrontDrive.getEncPosition();
-		encoderRight = rightFrontDrive.getEncPosition();
+		boolean debug;
+		
+			debug = SmartDashboard.getBoolean("Debug");
+		
+			if(debug == false)
+			{
+				leftFrontDrive.setPosition(0);
+				rightFrontDrive.setPosition(0);
+				
+				encoderLeft = leftFrontDrive.getEncPosition();
+				encoderRight = rightFrontDrive.getEncPosition();
+			}
+			else 
+			{
+				encoderLeft = 0;
+				encoderRight = 0;
+			}
+		
+
 		
 		Logger.logTwoInt("ENCODER LEFT : " , encoderLeft , "ENCODER RIGHT : " , encoderRight);
 	}

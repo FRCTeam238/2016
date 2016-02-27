@@ -59,7 +59,7 @@ public class StateDelay implements AutonomousState
 	@Override
 	public void showParams() {
 		
-		SmartDashboard.putString("Param 1", parameters[0]);
+		SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
 	}
 	@Override
 	public void updateParams() {

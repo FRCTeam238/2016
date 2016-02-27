@@ -16,7 +16,7 @@ public class ControlBoard {
 	boolean isXBoxController;
 	//look at using more sophisticated collection classes
 	static int commands[];
-	static int [] xBoxToJsCmdMapping= { 0, 6, 7, 10, 11, 2, 3};
+	static int [] xBoxToJsCmdMapping= { 0, 11, 10, 2, 3, 7, 6};
 	
 	public void controlBoardInit()
 	{

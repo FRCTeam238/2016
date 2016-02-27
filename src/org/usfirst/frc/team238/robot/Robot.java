@@ -255,8 +255,9 @@ public class Robot extends IterativeRobot {
 		int commandValue[];
 		
 		SmartDashboard.putString("Is this working","Yep");
-		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
-		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
+		
+		//SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
+		//SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
 		
 		try {
 
