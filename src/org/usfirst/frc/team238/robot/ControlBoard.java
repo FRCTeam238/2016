@@ -13,8 +13,10 @@ public class ControlBoard {
 	private static Joystick driverRightJs; 	// driveTrain right
 	static Joystick xboxController;
 	
+	boolean isXBoxController;
 	//look at using more sophisticated collection classes
 	static int commands[];
+	static int [] xBoxToJsCmdMapping= { 0, 6, 7, 10, 11, 2, 3};
 	
 	public void controlBoardInit()
 	{
@@ -27,6 +29,9 @@ public class ControlBoard {
 		
 			//array that holds the command sent by each control device
 			commands = new int[5];
+			
+			
+			
 			
 			SmartDashboard.putString("operatorJs", "operatorJs Is Intialized");
 			
@@ -61,6 +66,11 @@ public class ControlBoard {
 		}
 		if(!jsButtonValue){
 			command = 0;
+		}
+		
+		if(isXBoxController)
+		{
+			command =  xBoxToJsCmdMapping[command];
 		}
 		
 		SmartDashboard.putNumber("Opperator Command", command);
@@ -192,6 +202,11 @@ public class ControlBoard {
 
 	public static void setDriverRightJs(Joystick driverRightJs) {
 		ControlBoard.driverRightJs = driverRightJs;
+	}
+	
+	public void checkXboxController()
+	{
+		isXBoxController = operatorJs.getIsXbox();
 	}
 	
 	

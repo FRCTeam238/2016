@@ -9,4 +9,7 @@ public interface AutonomousState {
 	public void process();
 	public boolean done();
 	public void reset();
+	public void showParams();
+	public void updateParams();
+	
 }

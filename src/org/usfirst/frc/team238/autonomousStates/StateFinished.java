@@ -10,8 +10,6 @@ public class StateFinished implements AutonomousState {
 	public void prepare()
 	{
 		
-		
-		
 	}
 	
 	@Override
@@ -42,6 +40,18 @@ public class StateFinished implements AutonomousState {
 	public boolean done() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void showParams() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateParams() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

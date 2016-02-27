@@ -7,6 +7,8 @@ import org.usfirst.frc.team238.commands.CommandTurnLeft;
 import org.usfirst.frc.team238.robot.Navigation;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class StateTurnLeft implements AutonomousState {
 
 	CommandTurnLeft turnLeftCommand;
@@ -66,6 +68,22 @@ public class StateTurnLeft implements AutonomousState {
 	public void init() {
 		// TODO Auto-generated method stub
 		
+		
+	}
+
+
+	@Override
+	public void showParams() {
+		// TODO Auto-generated method stub
+		SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
+		SmartDashboard.putString("Param 2 - motorSpeed", parameters[1]);
+		SmartDashboard.putString("Param 3 - newTargetYaw", parameters[2]);
+	}
+
+
+	@Override
+	public void updateParams() {
+		// TODO Auto-generated method stub
 		
 	}
 

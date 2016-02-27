@@ -1,6 +1,5 @@
 package org.usfirst.frc.team238.core;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,6 +12,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.usfirst.frc.team238.robot.Robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class AutonomousController implements AutonomousState {
 
 	private AutonomousState currentState;
@@ -20,24 +21,14 @@ public class AutonomousController implements AutonomousState {
 	private int index = 0;
 	Robot the238Robot;
 	ArrayList<AutonomousState> steps;
-	
-//	This is a copy of what's in the file amode238.txt 
-//		{"org.usfirst.frc.team238.autonomousStates.StateLoadBin",""},
-//		{"org.usfirst.frc.team238.autonomousStates.StateDriveForward","24"},
-//		{"org.usfirst.frc.team238.autonomousStates.StateFinished",""}
 
-	
 	@Override
 	public void prepare()
 	{
-		
-		
-		
 	}
 	
 	public AutonomousController()
 	{
-		
 	}
 	
 	public void init(CommandController theMCP)
@@ -178,14 +169,60 @@ public class AutonomousController implements AutonomousState {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void dump(){
 		
+		int index = SmartDashboard.getInt("aModeStateIndex");
+		int count = 0;
+
 		Iterator<AutonomousState> aModeIterator = steps.iterator();
 		
 		while(aModeIterator.hasNext()){
+			
 			AutonomousState thisState = aModeIterator.next();
 			Logger.logString("AUTONOMOUS DUMP " + thisState.getClass().getName());
+			if ( count == index)
+			{
+				thisState.showParams();
+				
+			}
+			
+			count++;
 		}
 	}
+
+	@Override
+	public void showParams() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void updateStateParameters()
+	{
+		int index = SmartDashboard.getInt("aModeStateIndex");
+		int count = 0;
+
+		Iterator<AutonomousState> aModeIterator = steps.iterator();
+		
+		while(aModeIterator.hasNext()){
+			
+			AutonomousState thisState = aModeIterator.next();
+			Logger.logString("AUTONOMOUS DUMP " + thisState.getClass().getName());
+			if ( count == index)
+			{
+				thisState.updateParams();
+				
+			}
+			
+			count++;
+		}
+	}
+
+	@Override
+	public void updateParams() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 
 }

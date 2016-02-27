@@ -54,6 +54,8 @@ public class Robot extends IterativeRobot {
 	private AutonomousController theMACP;
 	SendableChooser autonomousChooser;
 	Logger myLogger;
+	SendableChooser autonomousStateParamsUpdate;
+	
 	
 	
 	public void disabledInit() {
@@ -89,6 +91,14 @@ public class Robot extends IterativeRobot {
 						automousModeFromDS =  CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT; 
 					}
 					
+					//see if we need to modify the params on a state
+					String updateParams = (String) autonomousStateParamsUpdate.getSelected();
+					int update = Integer.parseInt(updateParams);
+					if(update != 0)
+					{
+						theMACP.updateStateParameters();
+					}
+					
 					theMACP.pickAMode(Integer.parseInt(automousModeFromDS));
 					theMACP.dump();
 				}
@@ -104,6 +114,8 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		try {
 			Logger.logString("TeleopInit()");
+			myControlBoard.checkXboxController();
+			
 		} catch (Exception ex) {
 			Logger.logString("TeleopInit:Exception");
 		}
@@ -129,6 +141,7 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void robotInit() {
 
 		try {
@@ -137,6 +150,13 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
 			
 			SmartDashboard.putBoolean("Debug", true);
+			
+			SmartDashboard.putInt("aModeStateIndex", 0);
+			autonomousStateParamsUpdate = new SendableChooser();
+			autonomousStateParamsUpdate.addDefault("As Received", "0");
+			autonomousStateParamsUpdate.addObject("UPDATE", "1");
+			SmartDashboard.putData("Edit State Params", autonomousStateParamsUpdate);
+			
 			myLogger = new Logger();
 			
 			//object that is the code representation for the physical control board

@@ -38,13 +38,6 @@ public class StateDriveForward implements AutonomousState {
 		DriveForwardCommand.execute();
 	}
 	
-	/*public void dumpToDashboard()
-	{
-		SmartDashboard.putString("DriveFwdParam1", parameters[0]);
-		SmartDashboard.putString("DriveFwdParam2", parameters[1]);
-		SmartDashboard.putString("DriveFwdParam3", parameters[2]);
-	}*/
-
 	@Override
 	public boolean done() {
 		if(DriveForwardCommand.done())
@@ -64,6 +57,21 @@ public class StateDriveForward implements AutonomousState {
 
 	@Override
 	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showParams() {
+		// TODO Auto-generated method stub
+		SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
+		SmartDashboard.putString("Param 2 - motorSpeed", parameters[1]);
+		SmartDashboard.putString("Param 3 - rollValue", parameters[2]);
+		SmartDashboard.putString("Param 4 - ultrasonicTarget", parameters[3]);
+	}
+
+	@Override
+	public void updateParams() {
 		// TODO Auto-generated method stub
 		
 	}

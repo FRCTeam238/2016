@@ -27,8 +27,14 @@ public class CommandDriveForward implements Command {
 	}
 	
 	public void prepare(){
+		boolean debug;
+		debug = SmartDashboard.getBoolean("Debug");
 		
-		myRobotDrive.resetEncoders();
+		if(debug == false)
+		{
+			myRobotDrive.resetEncoders();
+		}
+		
 		Logger.logString("CommandDriveForward.prepare");
 		yawValue = myNavigation.getYaw();
 		

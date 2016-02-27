@@ -5,6 +5,8 @@ import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
 import org.usfirst.frc.team238.core.Logger;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class StateCollectorDeploy implements AutonomousState {
 
 	CommandCollectorDeploy deployIntake;
@@ -23,11 +25,8 @@ public class StateCollectorDeploy implements AutonomousState {
 	
 	//@Override
 		public void process () {
-			
-			
+	
 			deployIntake.execute();
-			
-			
 		}
 		
 		//@Override
@@ -62,6 +61,18 @@ public class StateCollectorDeploy implements AutonomousState {
 
 		@Override
 		public void reset() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void showParams() {
+			// TODO Auto-generated method stub
+			SmartDashboard.putString("Param 1 - deployUp/Down", parameters[0]);
+		}
+
+		@Override
+		public void updateParams() {
 			// TODO Auto-generated method stub
 			
 		}

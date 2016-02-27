@@ -21,15 +21,13 @@ public class CommandDeployWedge implements Command {
 	
 	public void prepare(){
 		
-		
-		
 	}
 
 	//@Override
 	public void execute(double overRideValue) {
-		// TODO Auto-generated method stub
-
+		
 	}
+	
 	public void setParams()
 	{
 		

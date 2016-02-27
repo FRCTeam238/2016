@@ -6,6 +6,8 @@ import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
 import org.usfirst.frc.team238.core.Logger;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class StateDelay implements AutonomousState
 {
 	
@@ -51,6 +53,16 @@ public class StateDelay implements AutonomousState
 	}
 	@Override
 	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void showParams() {
+		
+		SmartDashboard.putString("Param 1", parameters[0]);
+	}
+	@Override
+	public void updateParams() {
 		// TODO Auto-generated method stub
 		
 	}

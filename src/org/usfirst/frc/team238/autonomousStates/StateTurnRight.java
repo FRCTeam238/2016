@@ -6,6 +6,8 @@ import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.commands.CommandTurnRight;
 import org.usfirst.frc.team238.robot.Navigation;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class StateTurnRight implements AutonomousState {
 
 	CommandTurnRight turnRightCommand;
@@ -63,6 +65,20 @@ public class StateTurnRight implements AutonomousState {
 	public void init() {
 		// TODO Auto-generated method stub
 			
+		
+	}
+
+	@Override
+	public void showParams() {
+		// TODO Auto-generated method stub
+		SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
+		SmartDashboard.putString("Param 2 - motorSpeed", parameters[1]);
+		SmartDashboard.putString("Param 3 - newTargetYaw", parameters[2]);
+	}
+
+	@Override
+	public void updateParams() {
+		// TODO Auto-generated method stub
 		
 	}
 

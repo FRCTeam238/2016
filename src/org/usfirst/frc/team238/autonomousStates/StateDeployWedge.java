@@ -72,4 +72,16 @@ public class StateDeployWedge implements AutonomousState {
 			
 		}
 
+		@Override
+		public void showParams() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void updateParams() {
+			// TODO Auto-generated method stub
+			
+		}
+
 }
