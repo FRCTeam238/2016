@@ -41,7 +41,8 @@ public class CommandDriveForward implements Command {
 	}
 	
 	public void execute() {
-
+		
+		/*PURGE*/
 		/*double currentYaw;
 		double differential = 0;
 		double newMotorValue = 0;
@@ -57,7 +58,7 @@ public class CommandDriveForward implements Command {
 		}*/
 		
 		myRobotDrive.driveForward(motorValue, motorValue);
-		
+		/*PURGE*/
 		/*Logger.logTwoDouble("Current Yaw : ", currentYaw, "Differential : ", differential);
 		Logger.logDouble("New Motor Value : ", newMotorValue);*/
 	}

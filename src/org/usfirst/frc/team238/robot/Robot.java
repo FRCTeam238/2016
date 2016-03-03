@@ -94,12 +94,13 @@ public class Robot extends IterativeRobot {
 					//see if we need to modify the params on a state
 					String updateParams = (String) autonomousStateParamsUpdate.getSelected();
 					int update = Integer.parseInt(updateParams);
+					theMACP.pickAMode(Integer.parseInt(automousModeFromDS));
 					if(update != 0)
 					{
 						theMACP.updateStateParameters();
 					}
 					
-					theMACP.pickAMode(Integer.parseInt(automousModeFromDS));
+					
 					theMACP.dump();
 				}
 			}
@@ -253,8 +254,6 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 
 		int commandValue[];
-		
-		SmartDashboard.putString("Is this working","Yep");
 		
 		//SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
 		//SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());

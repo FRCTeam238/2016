@@ -31,10 +31,6 @@ public class ControlBoard {
 			commands = new int[5];
 			
 			
-			
-			
-			SmartDashboard.putString("operatorJs", "operatorJs Is Intialized");
-			
 		}
 		
 		catch(Exception ex)
@@ -73,7 +69,6 @@ public class ControlBoard {
 			command =  xBoxToJsCmdMapping[command];
 		}
 		
-		SmartDashboard.putNumber("Opperator Command", command);
 		return command;
 	}
 	
@@ -103,11 +98,11 @@ public class ControlBoard {
 			command = 4;
 		}
 		
-		SmartDashboard.putNumber("Driver Command", command);
-		SmartDashboard.putNumber("ZPOS", zPos);
+
 		
 		return command;
 	}
+	/*PURGE*/
 	/* //CAT removed this function which used the joystick z-axis to determine ...
 	 * //CAT ... the rotation of the claw wheels
 	 
@@ -138,8 +133,6 @@ public class ControlBoard {
 			command = 4;
 		}
 		
-		SmartDashboard.putNumber("Driver Command", command);
-		SmartDashboard.putNumber("ZPOS", zPos);
 		
 		return command;
 	}

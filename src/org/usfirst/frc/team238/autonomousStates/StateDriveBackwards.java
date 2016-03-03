@@ -12,6 +12,7 @@ public class StateDriveBackwards implements AutonomousState {
 
 	CommandDriveBackwards driveBackwards;
 	int count = 0;
+	/*PURGE*/
 	double howfar = 1.0; //This is probably not right, lol
 	String parameters[];
 	
