@@ -45,17 +45,23 @@ public class OperatorCmdFactory {
 	
 		operatorCollectorIn = new CommandCollectorIn(theIntake);
 		operatorCommands.put(2, operatorCollectorIn);
+		
 		operatorCollectorOut = new CommandCollectorOut(theIntake);
 		operatorCommands.put(3, operatorCollectorOut);
+		
 		operatorStopCollector = new CommandStopCollector(theIntake);
 		operatorCommands.put(0, operatorStopCollector);
+		
 		operatorDeployCollectorTeleop = new CommandCollectorDeployTeleop(theIntake);
 		operatorCommands.put(6, operatorDeployCollectorTeleop);
+		
 		operatorRetractCollectorTeleop = new CommandCollectorRetractTeleop(theIntake);
 		operatorCommands.put(7, operatorRetractCollectorTeleop);
+		
 		commandDeployWedge = new CommandDeployWedge(theIntake);
 		operatorCommands.put(10, commandDeployWedge);
-		commandRetractWedge = new CommandRetractWedge(theIntake);
+		
+		 commandRetractWedge = new CommandRetractWedge(theIntake);
 		operatorCommands.put(11, commandRetractWedge);
 		
 		operatorDeployCollector = new CommandCollectorDeploy(theIntake);

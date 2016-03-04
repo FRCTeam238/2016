@@ -240,7 +240,7 @@ public class Robot extends IterativeRobot {
 			
 			theMACP.process();
 			myNavigation.navxValues();
-			myNavigation.ultrasonicSensor();
+			//myNavigation.ultrasonicSensor();
 			
 		} catch (Exception ex) {
 			Logger.logString("Autonomous exception");
@@ -265,7 +265,7 @@ public class Robot extends IterativeRobot {
 			//pass the array with the commands coming form the control to the Controller object 
 			theMCP.buttonPressed(commandValue);
 			myNavigation.navxValues();
-			myNavigation.ultrasonicSensor();
+			//myNavigation.ultrasonicSensor();
 
 		} catch (Exception e) {
 			

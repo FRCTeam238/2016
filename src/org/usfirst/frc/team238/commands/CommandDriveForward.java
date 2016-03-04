@@ -101,7 +101,7 @@ public class CommandDriveForward implements Command {
 	{
 		boolean isDone = false;
 		double amountOfTicks;
-		double currentUltrasonicDistance;
+		//double currentUltrasonicDistance;
 
 		debug = SmartDashboard.getBoolean("Debug");
 		
@@ -115,10 +115,10 @@ public class CommandDriveForward implements Command {
 		}*/
 		double currnetRollValue = myNavigation.getRoll();
 		amountOfTicks = myRobotDrive.getEncoderTicks();
-		currentUltrasonicDistance = myNavigation.ultrasonicSensor();
+		//currentUltrasonicDistance = myNavigation.ultrasonicSensor();
 		Logger.logTwoDouble("Target Value = " , targetValue , " Amount Of Ticks = " , amountOfTicks);
 		Logger.logTwoDouble("RollValue : " , rollValue , "CurrentRollValue : " , currnetRollValue);
-		Logger.logTwoDouble("Ultrasonic Target Distance", ultrasonicTarget, "Ultrasonic Current Distance", currentUltrasonicDistance);
+		//Logger.logTwoDouble("Ultrasonic Target Distance", ultrasonicTarget, "Ultrasonic Current Distance", currentUltrasonicDistance);
 		
 		if (rollValue > 0)
 		{
@@ -133,19 +133,19 @@ public class CommandDriveForward implements Command {
 				isDone = false;
 			}
 		}
-		else if (ultrasonicTarget > 0)
-		{
-			if (currentUltrasonicDistance < ultrasonicTarget)
-			{
-				isDone = true;
-				myRobotDrive.driveForward(0, 0);
-	
-			}
-			else
-			{
-				isDone = false;
-			}
-		}
+//		else if (ultrasonicTarget > 0)
+//		{
+//			if (currentUltrasonicDistance < ultrasonicTarget)
+//			{
+//				isDone = true;
+//				myRobotDrive.driveForward(0, 0);
+//	
+//			}
+//			else
+//			{
+//				isDone = false;
+//			}
+//		}
 		else
 		{
 			if (amountOfTicks > targetValue)
