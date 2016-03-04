@@ -212,6 +212,8 @@ public class Robot extends IterativeRobot {
 			autonomousChooser.addObject("6 - Rock Wall Score Left", "6");
 			autonomousChooser.addObject("7 - Rock Wall Score Right", "7");
 			autonomousChooser.addObject("8 - CDF Score Right", "8");
+			autonomousChooser.addObject("9 - CDF Score Left", "9");
+			autonomousChooser.addObject("10 - Low Bar Close", "10");
 			//autonomousChooser.addDefault("3 - NAMEHERE", "3");
 			SmartDashboard.putData("Choose Autonomous", autonomousChooser);
 			
