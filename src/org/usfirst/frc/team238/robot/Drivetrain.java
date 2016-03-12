@@ -113,12 +113,12 @@ public class Drivetrain {
 	
 	public void driveForward(double leftMotorValue, double rightMotorValue)  {
 		
-		robotMotors.tankDrive(leftMotorValue * -1, rightMotorValue * -1);	
+		robotMotors.tankDrive(leftMotorValue, rightMotorValue);	
 	}
 	
 	public void driveBackwards(double leftMotorValue, double rightMotorValue)  {
 		
-		robotMotors.tankDrive(leftMotorValue, rightMotorValue);
+		robotMotors.tankDrive(leftMotorValue * -1, rightMotorValue * -1);
 	}
 	
 	public void turnLeft (double leftJsValue, double rightJsValue){

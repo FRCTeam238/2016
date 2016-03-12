@@ -26,7 +26,7 @@ public class CommandTankDrive implements Command {
 		leftJsValue = ControlBoard.getDriverLeftJs().getY();
 		rightJsValue = ControlBoard.getDriverRightJs().getY();
 
-		myRobotDrive.tankDrive(leftJsValue, rightJsValue);
+		myRobotDrive.tankDrive(-leftJsValue, -rightJsValue);
 		
 	}
 

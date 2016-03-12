@@ -150,7 +150,7 @@ public class Robot extends IterativeRobot {
 			
 			SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
 			
-			SmartDashboard.putBoolean("Debug", true);
+			SmartDashboard.putBoolean("Debug", false);
 			
 			SmartDashboard.putInt("aModeStateIndex", 0);
 			autonomousStateParamsUpdate = new SendableChooser();
@@ -214,6 +214,7 @@ public class Robot extends IterativeRobot {
 			autonomousChooser.addObject("8 - CDF Score Right", "8");
 			autonomousChooser.addObject("9 - CDF Score Left", "9");
 			autonomousChooser.addObject("10 - Low Bar Close", "10");
+			autonomousChooser.addObject("11 - Realign Test", "11");
 			//autonomousChooser.addDefault("3 - NAMEHERE", "3");
 			SmartDashboard.putData("Choose Autonomous", autonomousChooser);
 			

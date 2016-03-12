@@ -10,6 +10,7 @@ import org.usfirst.frc.team238.commands.CommandTurnLeft;
 import org.usfirst.frc.team238.commands.CommandTurnRight;
 import org.usfirst.frc.team238.commands.CommandDelay;
 import org.usfirst.frc.team238.robot.AutonomousDrive;
+import org.usfirst.frc.team238.commands.CommandRealign;
 
 public class AutonomousCmdFactory {
 	
@@ -18,6 +19,7 @@ public class AutonomousCmdFactory {
 	CommandTurnLeft autoTurnLeft;
 	CommandTurnRight autoTurnRight;
 	CommandDelay delayCommand;
+	CommandRealign realignCommand;
 	
 	HashMap <String, Command> autonomousCommands;
 	
@@ -38,6 +40,8 @@ public class AutonomousCmdFactory {
 		autonomousCommands.put("CommandTurnRight", autoTurnRight);
 		delayCommand = new CommandDelay(robotDrive);
 		autonomousCommands.put("CommandDelay", delayCommand);
+		realignCommand = new CommandRealign(robotDrive, myNavigation);
+		autonomousCommands.put("CommandRealign", realignCommand);
 		
 		
 		return autonomousCommands;
