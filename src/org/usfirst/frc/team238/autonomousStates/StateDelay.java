@@ -60,6 +60,9 @@ public class StateDelay implements AutonomousState
 	public void showParams() {
 		
 		SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
+		SmartDashboard.putString("Param 2 - motorSpeed", "0");
+		SmartDashboard.putString("Param 3 - rollValue", "0");
+		SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
 	}
 	@Override
 	public void updateParams() {

@@ -75,20 +75,6 @@ public class CommandTurnLeft implements Command  {
 	
 	public boolean done()
 	{
-		
-		boolean debug = SmartDashboard.getBoolean("Debug");
-		/* if ( debug == 1){
-			 count++;
-			 if (count < targetValue){
-				 return false;
-			 }
-			 else
-			 {
-				 count = 0;
-				 return true;
-			 }
-		 }
-		 */
 		if (myNavigation.areWeThereYet() == true){
 			myRobotDrive.driveForward(0, 0);
 			return true;

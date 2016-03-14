@@ -6,6 +6,7 @@ import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CommandDriveForward implements Command {
@@ -15,52 +16,38 @@ public class CommandDriveForward implements Command {
 
 	double motorValue;
 	double targetValue;
-	boolean debug;
+	//boolean debug;
 	double rollValue;
 	double yawValue;
 	double ultrasonicTarget;
 	
+	PowerDistributionPanel myPowerDistributionPanel;
+	double CurrentDrawLimit = 20.0; //Limit for CurrentDraw
+	
 	public CommandDriveForward(Drivetrain robotDrive, Navigation myNav) {
 		this.myRobotDrive = robotDrive;
 		this.myNavigation = myNav;
-		this.debug = SmartDashboard.getBoolean("Debug");
+		//this.debug = SmartDashboard.getBoolean("Debug");
+		this.myPowerDistributionPanel = new PowerDistributionPanel();
+		
 	}
 	
 	public void prepare(){
-		boolean debug;
-		debug = SmartDashboard.getBoolean("Debug");
-		
-		if(debug == false)
-		{
-			myRobotDrive.resetEncoders();
-		}
-		
-		Logger.logString("CommandDriveForward.prepare");
+
+		myRobotDrive.resetEncoders();
 		yawValue = myNavigation.getYaw();
+		Logger.logString("CommandDriveForward.prepare");
 		
 	}
 	
 	public void execute() {
 		
-		/*PURGE*/
-		/*double currentYaw;
-		double differential = 0;
-		double newMotorValue = 0;
-		double amountOfTicks;
 		
-		amountOfTicks = myRobotDrive.getEncoderTicks();
-		
-		currentYaw = myNavigation.getYaw();
-		if(amountOfTicks > 5000)
-		{
-			differential = currentYaw - yawValue;
-			newMotorValue = motorValue + Math.abs(differential);
-		}*/
 		
 		myRobotDrive.driveForward(motorValue, motorValue);
-		/*PURGE*/
-		/*Logger.logTwoDouble("Current Yaw : ", currentYaw, "Differential : ", differential);
-		Logger.logDouble("New Motor Value : ", newMotorValue);*/
+		
+		
+		
 	}
 	
 	public void setParams(String params[])
@@ -101,28 +88,15 @@ public class CommandDriveForward implements Command {
 	{
 		boolean isDone = false;
 		double amountOfTicks;
-		//double currentUltrasonicDistance;
-
-		debug = SmartDashboard.getBoolean("Debug");
-		
-		/*if(debug == 1)
-		{
-			amountOfTicks = myRobotDrive.getEncoderCount(1);
-		}
-		else 
-		{
-			
-		}*/
 		double currnetRollValue = myNavigation.getRoll();
+		
 		amountOfTicks = myRobotDrive.getEncoderTicks();
-		//currentUltrasonicDistance = myNavigation.ultrasonicSensor();
 		Logger.logTwoDouble("Target Value = " , targetValue , " Amount Of Ticks = " , amountOfTicks);
 		Logger.logTwoDouble("RollValue : " , rollValue , "CurrentRollValue : " , currnetRollValue);
-		//Logger.logTwoDouble("Ultrasonic Target Distance", ultrasonicTarget, "Ultrasonic Current Distance", currentUltrasonicDistance);
 		
 		if (rollValue > 0)
 		{
-			if ( (currnetRollValue >= rollValue) && (amountOfTicks > 9000))
+			if ( (currnetRollValue >= rollValue) && (amountOfTicks > 9000)) //why is this && here? MJF?
 			{
 				isDone = true;
 				myRobotDrive.driveForward(0, 0);
@@ -133,19 +107,13 @@ public class CommandDriveForward implements Command {
 				isDone = false;
 			}
 		}
-//		else if (ultrasonicTarget > 0)
-//		{
-//			if (currentUltrasonicDistance < ultrasonicTarget)
-//			{
-//				isDone = true;
-//				myRobotDrive.driveForward(0, 0);
-//	
-//			}
-//			else
-//			{
-//				isDone = false;
-//			}
-//		}
+		else if(currentOverLoad()){
+			
+			Logger.logString("COMMANDDRIVEFORWARD: We must've hit a wall, stopping...");
+			isDone = true;
+			myRobotDrive.driveForward(0, 0);
+			
+		}
 		else
 		{
 			if (amountOfTicks > targetValue)
@@ -160,6 +128,58 @@ public class CommandDriveForward implements Command {
 			}
 		}
 		return isDone;
+	}
+	
+	private boolean currentOverLoad(){
+		boolean currentOverload = false;
+		
+		double totalCurrentDraw; //CurrentDraw of all Talons below
+		double leftFrontCurrentDraw = myPowerDistributionPanel.getCurrent(5); //CurrentDraw of Left Front Talon CurrentDraw
+		double leftRearCurrentDraw = myPowerDistributionPanel.getCurrent(6); //CurrentDraw of Left Rear Talon CurrentDraw
+		double rightFrontCurrentDraw = myPowerDistributionPanel.getCurrent(7); //CurrentDraw of Right Front Talon CurrentDraw
+		double rightRearCurrentDraw = myPowerDistributionPanel.getCurrent(8); //CurrentDraw of Right Rear Talon CurrentDraw
+		
+		
+		totalCurrentDraw = (leftFrontCurrentDraw+leftRearCurrentDraw+rightFrontCurrentDraw+rightRearCurrentDraw)/4;
+		
+		Logger.logString("COMMANDDRIVEFORWARD: leftFrontCurrentDraw: "+ leftFrontCurrentDraw);
+		Logger.logString("COMMANDDRIVEFORWARD: leftRearCurrentDraw: "+ leftRearCurrentDraw);
+		Logger.logString("COMMANDDRIVEFORWARD: rightFrontCurrentDraw: "+ rightFrontCurrentDraw);
+		Logger.logString("COMMANDDRIVEFORWARD: rightRearCurrentDraw: "+ rightRearCurrentDraw);
+		Logger.logString("COMMANDDRIVEFORWARD: Total CurrentDraw is = "+ totalCurrentDraw);
+		
+		if( totalCurrentDraw > CurrentDrawLimit)
+		{
+			currentOverload = true;
+		}
+		
+		return currentOverload;
+	}
+	
+	private double checkForDrift(double motorValueIn){
+		double motorvalue = motorValueIn;
+		
+		
+		/*double currentYaw;
+		double differential = 0;
+		double newMotorValue = 0;
+		double amountOfTicks;
+		
+		amountOfTicks = myRobotDrive.getEncoderTicks();
+		
+		currentYaw = myNavigation.getYaw();
+		if(amountOfTicks > 5000)
+		{
+			differential = currentYaw - yawValue;
+			newMotorValue = motorValue + Math.abs(differential);
+		}*/
+		
+		/*PURGE*/
+		/*Logger.logTwoDouble("Current Yaw : ", currentYaw, "Differential : ", differential);
+		Logger.logDouble("New Motor Value : ", newMotorValue);*/
+		
+		
+		return motorvalue;
 	}
 
 }

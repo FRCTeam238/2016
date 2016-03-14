@@ -1,17 +1,20 @@
 package org.usfirst.frc.team238.core;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
+
 import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Robot;
 
+//import edu.wpi.first.wpilibj.buttons.NetworkButton;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutonomousController implements AutonomousState {
@@ -21,7 +24,11 @@ public class AutonomousController implements AutonomousState {
 	private int index = 0;
 	Robot the238Robot;
 	ArrayList<AutonomousState> steps;
-
+	SendableChooser aModeChooser; 
+	//NetworkButton testBtn;
+	int MAX_NUM_IN_A_LIST =  20;
+	 
+	
 	@Override
 	public void prepare()
 	{
@@ -33,6 +40,8 @@ public class AutonomousController implements AutonomousState {
 	
 	public void init(CommandController theMCP)
 	{
+		aModeChooser = new SendableChooser();
+		
 		readJson(theMCP);
 	}
 	
@@ -116,21 +125,33 @@ public class AutonomousController implements AutonomousState {
 				autonomousModeList [i]= new ArrayList<AutonomousState>();
 			}
 			
+			
+			//testBtn = new NetworkButton("SmartDashboard","UPDATEPARAM");
+			
 			int aModeIndexCounter = 0;
 			while (aModeIterator.hasNext()) {
             	
             	JSONObject autoModeX = aModeIterator.next();
             
             	String name = (String) autoModeX.get("Name");
-            	Logger.logString("Name: " + name);
-
+            	Logger.logString("Autonmous Name: " + name);
+            	
+            	//Start building the list of Amodes available that will get pushed to the dashboard
+            	if(aModeIndexCounter == 1){
+            		aModeChooser.addDefault(name, String.valueOf(aModeIndexCounter));
+            	}
+            	else{
+            		aModeChooser.addObject(name,String.valueOf(aModeIndexCounter));
+            	}
+            	
+            	
             	JSONArray companyList = (JSONArray) autoModeX.get("Commands");
 
             	Iterator<JSONObject> iterator = companyList.iterator();
             	while (iterator.hasNext()) {
             		JSONObject aCommand = iterator.next();
             		String cmdName = (String) aCommand.get("Name");
-            		Logger.logTwoString("	Name = " , cmdName);
+            		Logger.logTwoString("	Command Name = " , cmdName);
             		String cmdClass = classPath + cmdName; 
             		Logger.logTwoString("	Class = " , cmdClass);
 
@@ -164,6 +185,9 @@ public class AutonomousController implements AutonomousState {
             	aModeIndexCounter++;
             }
 			
+			//Push the list of Amodes to the dashboard
+			SmartDashboard.putData("Choose Auto", aModeChooser);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -172,21 +196,37 @@ public class AutonomousController implements AutonomousState {
 	@SuppressWarnings("deprecation")
 	public void dump(){
 		
-		int index = SmartDashboard.getInt("aModeStateIndex");
+		int index = SmartDashboard.getInt("AutoStateCmdIndex");
 		int count = 0;
-
+		String name;
+		String statesList = String.valueOf(getAutonomousSelection() + ": ");
 		Iterator<AutonomousState> aModeIterator = steps.iterator();
 		
 		while(aModeIterator.hasNext()){
 			
 			AutonomousState thisState = aModeIterator.next();
-			Logger.logString("AUTONOMOUS DUMP " + thisState.getClass().getName());
+			name =  thisState.getClass().getName();
+			name = name.substring(41);
+			statesList = "AutoStateList " + count + " ";
+			SmartDashboard.putString( statesList, name);
+			
+			
+			Logger.logString("AUTONOMOUS DUMP " + name);
+		
+			
 			if ( count == index)
 			{
+				SmartDashboard.putString("AutoStateName", name);
 				thisState.showParams();
 				
 			}
 			
+			count++;
+		}
+		
+		while(count < MAX_NUM_IN_A_LIST){
+			statesList = "AutoStateList " + count + " ";
+			SmartDashboard.putString( statesList, " ");
 			count++;
 		}
 	}
@@ -199,15 +239,15 @@ public class AutonomousController implements AutonomousState {
 	
 	public void updateStateParameters()
 	{
-		int index = SmartDashboard.getInt("aModeStateIndex");
+		int index = SmartDashboard.getInt("AutoStateCmdIndex");
 		int count = 0;
-
+		
 		Iterator<AutonomousState> aModeIterator = steps.iterator();
 		
 		while(aModeIterator.hasNext()){
 			
 			AutonomousState thisState = aModeIterator.next();
-			Logger.logString("AUTONOMOUS DUMP " + thisState.getClass().getName());
+			Logger.logString("AUTONOMOUS Update State Params " + thisState.getClass().getName());
 			if ( count == index)
 			{
 				thisState.updateParams();
@@ -224,5 +264,12 @@ public class AutonomousController implements AutonomousState {
 		
 	}
 	
+	public int getAutonomousSelection(){
+		
+		String automousModeFromDashBoard = (String) aModeChooser.getSelected();
+		Logger.logTwoString("The chosen One =  " , automousModeFromDashBoard);
+		
+		return Integer.parseInt(automousModeFromDashBoard);
+	}
 
 }

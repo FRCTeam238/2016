@@ -65,22 +65,29 @@ public class StateDriveBackwards implements AutonomousState {
 	@Override
 	public void showParams() {
 
-		for (int i = 0; i < parameters.length; i++)
-		{		
-			String params = "Parameter" + String.valueOf(i);
-			SmartDashboard.putString(params, parameters[i]);
-		}
+		SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
+		SmartDashboard.putString("Param 2 - motorSpeed", parameters[1]);
+		SmartDashboard.putString("Param 3 - rollValue", parameters[2]);
+		SmartDashboard.putString("Param 4 - ultrasonicTarget", parameters[3]);
 		
 	}
 
 	@Override
 	public void updateParams() {
 		
-		for (int i = 0; i < parameters.length; i++)
-		{		
-			String params = "Parameter" + String.valueOf(i);
-			parameters[i] = SmartDashboard.getString(params);
-		}
+		String param1;
+		String param2;
+		String param3;
+		String param4;
+		
+		param1 = SmartDashboard.getString("Param 1 - targetValue");
+		parameters[0] = param1;
+		param2 = SmartDashboard.getString("Param 2 - motorSpeed");
+		parameters[1] = param2;
+		param3 = SmartDashboard.getString("Param 3 - rollValue");
+		parameters[2] = param3;
+		param4 = SmartDashboard.getString("Param 4 - ultrasonicTarget");
+		parameters[3] = param4;
 	}
 
 }

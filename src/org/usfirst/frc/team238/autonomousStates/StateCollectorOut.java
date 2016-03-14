@@ -5,6 +5,8 @@ import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.CommandController;
 import org.usfirst.frc.team238.core.Logger;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class StateCollectorOut implements AutonomousState {
 	
 	CommandCollectorOut collectorOut;
@@ -64,7 +66,10 @@ public class StateCollectorOut implements AutonomousState {
 
 		@Override
 		public void showParams() {
-			// TODO Auto-generated method stub
+			SmartDashboard.putString("Param 1 - targetValue","0");
+			SmartDashboard.putString("Param 2 - motorSpeed", "0");
+			SmartDashboard.putString("Param 3 - rollValue", "0");
+			SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
 			
 		}
 

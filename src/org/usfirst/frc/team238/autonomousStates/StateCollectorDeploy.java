@@ -68,7 +68,10 @@ public class StateCollectorDeploy implements AutonomousState {
 		@Override
 		public void showParams() {
 			// TODO Auto-generated method stub
-			SmartDashboard.putString("Param 1 - deployUp/Down", parameters[0]);
+			SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
+			SmartDashboard.putString("Param 2 - motorSpeed", "0");
+			SmartDashboard.putString("Param 3 - rollValue", "0");
+			SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
 		}
 
 		@Override

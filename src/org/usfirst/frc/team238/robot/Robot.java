@@ -62,7 +62,7 @@ public class Robot extends IterativeRobot {
 		try {
 			// only use checkForSmartDashboardChanges function in init methods
 			// or you will smoke the roborio into a useless pile of silicon
-			checkForSmartDashboardChanges(CrusaderCommon.PREFVALUE_OP_AUTO, CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
+			//checkForSmartDashboardChanges(CrusaderCommon.PREFVALUE_OP_AUTO, CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
 			
 			Logger.logString("disabledInit:");
 		
@@ -74,35 +74,31 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		boolean debug;
 		try {
-			if (count > 500) {
+			if (count > 250) {
 
 				count = 0;
 
 				debug = SmartDashboard.getBoolean("Debug");
 				Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
 				
-				String automousModeFromDS = (String) autonomousChooser.getSelected();
-				Logger.logTwoString("The chosen One =  " , automousModeFromDS);
+				int automousModeFromDS =  theMACP.getAutonomousSelection();//  autonomousChooser.getSelected();
+				Logger.logTwoString("The chosen One =  " , String.valueOf(automousModeFromDS));
+			
+				//see if we need to modify the params on a state
+				String updateParams = (String) autonomousStateParamsUpdate.getSelected();
+				int update = Integer.parseInt(updateParams);
 				
 				
-				if (automousModeFromDS != null) {
-					
-					if (automousModeFromDS.isEmpty()){
-						automousModeFromDS =  CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT; 
-					}
-					
-					//see if we need to modify the params on a state
-					String updateParams = (String) autonomousStateParamsUpdate.getSelected();
-					int update = Integer.parseInt(updateParams);
-					theMACP.pickAMode(Integer.parseInt(automousModeFromDS));
-					if(update != 0)
-					{
-						theMACP.updateStateParameters();
-					}
-					
-					
-					theMACP.dump();
+				theMACP.pickAMode(automousModeFromDS);
+				
+				if(update != 0)
+				{
+					theMACP.updateStateParameters();
 				}
+
+
+				theMACP.dump();
+
 			}
 			count++;
 		} catch (Exception ex) {
@@ -130,10 +126,9 @@ public class Robot extends IterativeRobot {
 
 			try {
 			
-				String automousModeFromDS = (String) autonomousChooser.getSelected();
-				Logger.logString("The chosen One =  " + automousModeFromDS);
-				theMACP.pickAMode(Integer.parseInt(automousModeFromDS));
-				
+				int automousModeFromDS =  theMACP.getAutonomousSelection();//  autonomousChooser.getSelected();
+				Logger.logTwoString("The chosen One =  " , String.valueOf(automousModeFromDS));
+				theMACP.pickAMode(automousModeFromDS);
 			} catch (Exception ex) {
 				Logger.logString("AutononousInit:Something BAD happened");
 			}
@@ -148,11 +143,11 @@ public class Robot extends IterativeRobot {
 		try {
 			System.out.println("RobotInit()");
 			
-			SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
+			//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
 			
-			SmartDashboard.putBoolean("Debug", false);
+			SmartDashboard.putBoolean("Debug", true);
 			
-			SmartDashboard.putInt("aModeStateIndex", 0);
+			SmartDashboard.putInt("AutoStateCmdIndex", 0);
 			autonomousStateParamsUpdate = new SendableChooser();
 			autonomousStateParamsUpdate.addDefault("As Received", "0");
 			autonomousStateParamsUpdate.addObject("UPDATE", "1");
@@ -201,23 +196,7 @@ public class Robot extends IterativeRobot {
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 
 			theMACP.init(theMCP);
-			
-			autonomousChooser = new SendableChooser();
-			autonomousChooser.addObject("0 Do nothing", "0");
-			autonomousChooser.addDefault("1 - Mostly Everything", "1");
-			autonomousChooser.addObject("2 - Moat", "2");
-			autonomousChooser.addObject("3 - Cheval de Friese", "3");
-			autonomousChooser.addObject("4 - Low Bar", "4");
-			autonomousChooser.addObject("5 - Low Bar Score", "5");
-			autonomousChooser.addObject("6 - Rock Wall Score Left", "6");
-			autonomousChooser.addObject("7 - Rock Wall Score Right", "7");
-			autonomousChooser.addObject("8 - CDF Score Right", "8");
-			autonomousChooser.addObject("9 - CDF Score Left", "9");
-			autonomousChooser.addObject("10 - Low Bar Close", "10");
-			autonomousChooser.addObject("11 - Realign Test", "11");
-			//autonomousChooser.addDefault("3 - NAMEHERE", "3");
-			SmartDashboard.putData("Choose Autonomous", autonomousChooser);
-			
+
 			Logger.logString("Fully Initialized");
 
 		} catch (Exception ex) {

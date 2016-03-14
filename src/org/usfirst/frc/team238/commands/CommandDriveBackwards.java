@@ -12,11 +12,11 @@ public class CommandDriveBackwards implements Command{
 
 	double motorValue;
 	double targetValue;
-	boolean debug;
+	//boolean debug;
 	
 	public CommandDriveBackwards(Drivetrain robotDrive) {
 		this.myRobotDrive = robotDrive;
-		this.debug = SmartDashboard.getBoolean("Debug");
+		//this.debug = SmartDashboard.getBoolean("Debug");
 
 	}
 	
@@ -57,18 +57,8 @@ public class CommandDriveBackwards implements Command{
 		boolean isDone = false;
 		double amountOfTicks;
 		
-		
-		debug = SmartDashboard.getBoolean("Debug");
-		
-		/*if(debug == true)
-		{
-			amountOfTicks = myRobotDrive.getEncoderCount(1);
-		}*/
-		//else 
-		//{
-			amountOfTicks = myRobotDrive.getEncoderTicks();
-		//}
-			Logger.logTwoDouble("Target Value = " , targetValue , " Amount Of Ticks = " , amountOfTicks);
+		amountOfTicks = myRobotDrive.getEncoderTicks();
+		Logger.logTwoDouble("Target Value = " , targetValue , " Amount Of Ticks = " , amountOfTicks);
 
 		if (amountOfTicks < targetValue)
 		{
