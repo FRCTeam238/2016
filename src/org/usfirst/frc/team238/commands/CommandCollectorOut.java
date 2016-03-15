@@ -6,6 +6,7 @@ import org.usfirst.frc.team238.robot.Intake;
 public class CommandCollectorOut implements Command {
 
 	Intake myIntake;
+	int counter;
 	
 	public CommandCollectorOut (Intake theIntake)
 	{
@@ -22,6 +23,7 @@ public class CommandCollectorOut implements Command {
 	public void execute() {
 		// TODO Auto-generated method stub
 		myIntake.rotateCollectorOut();
+		counter++;
 	}
 
 	//@Override
@@ -36,6 +38,14 @@ public class CommandCollectorOut implements Command {
 	 
 	public boolean complete()
 	{
-		return myIntake.complete();
+		if(counter == 10)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
 	}
 }

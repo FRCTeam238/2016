@@ -107,13 +107,13 @@ public class CommandDriveForward implements Command {
 				isDone = false;
 			}
 		}
-		else if(currentOverLoad()){
+		/*else if(currentOverLoad()){
 			
 			Logger.logString("COMMANDDRIVEFORWARD: We must've hit a wall, stopping...");
 			isDone = true;
 			myRobotDrive.driveForward(0, 0);
 			
-		}
+		}*/
 		else
 		{
 			if (amountOfTicks > targetValue)

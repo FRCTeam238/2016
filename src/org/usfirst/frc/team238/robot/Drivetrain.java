@@ -60,7 +60,11 @@ public class Drivetrain {
 		}
 		else 
 		{
-			return 0;
+			
+			counter++;
+			encoderRight = counter * 1000;
+			return encoderRight;
+			
 		}
 		
 		

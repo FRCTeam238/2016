@@ -74,12 +74,25 @@ public class StateTurnRight implements AutonomousState {
 		SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
 		SmartDashboard.putString("Param 2 - motorSpeed", parameters[1]);
 		SmartDashboard.putString("Param 3 - newTargetYaw", parameters[2]);
+		SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
 	}
 
 	@Override
 	public void updateParams() {
 		// TODO Auto-generated method stub
+		String param1;
+		String param2;
+		String param3;
+		String param4;
 		
+		param1 = SmartDashboard.getString("Param 1 - targetValue");
+		parameters[0] = param1;
+		param2 = SmartDashboard.getString("Param 2 - motorSpeed");
+		parameters[1] = param2;
+		param3 = SmartDashboard.getString("Param 3 - rollValue");
+		parameters[2] = param3;
+		param4 = SmartDashboard.getString("Param 4 - ultrasonicTarget");
+		parameters[3] = param4;
 	}
 
 }
