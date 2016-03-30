@@ -23,22 +23,23 @@ public class Navigation {
 		
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		currentYaw = ahrs.getYaw();
+		
 		currentRoll = ahrs.getRoll();
-		//myUltrasonic = new Ultrasonic(9,8);
-		//myUltrasonic.setEnabled(true);
-		//myUltrasonic.setAutomaticMode(true);
+		myUltrasonic = new Ultrasonic(9,8);
+		myUltrasonic.setEnabled(true);
+		myUltrasonic.setAutomaticMode(true);
 		
 	}
 	
-//	public double ultrasonicSensor()
-//	{
-//		
-//		ultrasonicDistance =  0; //myUltrasonic.getRangeInches();
-//		//SmartDashboard.putNumber("Ultrasonic Distance", ultrasonicDistance);
-//		
-//		return ultrasonicDistance;
-//	
-//	}
+	public double getDistanceFromUltrasonic()
+	{
+		
+		ultrasonicDistance = myUltrasonic.getRangeInches();
+		SmartDashboard.putNumber("Ultrasonic Distance", ultrasonicDistance);
+		
+		return ultrasonicDistance;
+	
+	}
 	
 	public void resetNAVX(){
 		

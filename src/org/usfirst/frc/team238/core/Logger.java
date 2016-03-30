@@ -100,4 +100,12 @@ public class Logger {
 		
 	}
 	
+	public static void logThreeDoubles(String comment, double value, String comment2, double value2, String comment3, double value3)
+	{
+		if(isDebug())
+		{
+			System.out.println(comment + value + comment2 + value2 + comment3 + value3);
+		}
+	}
+	
 }

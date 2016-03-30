@@ -19,10 +19,15 @@ public class CommandDriveForward implements Command {
 	//boolean debug;
 	double rollValue;
 	double yawValue;
+	double yawErrorTotal;
 	double ultrasonicTarget;
 	
 	PowerDistributionPanel myPowerDistributionPanel;
 	double CurrentDrawLimit = 20.0; //Limit for CurrentDraw
+	
+	double yawPConstant = 0.015; //Proportional constant for drive straight controller
+	double yawIConstant = 0;
+	double yawCorrectionMaxPercent = 0.1; // percent of motorValue for max yaw correction
 	
 	public CommandDriveForward(Drivetrain robotDrive, Navigation myNav) {
 		this.myRobotDrive = robotDrive;
@@ -30,23 +35,46 @@ public class CommandDriveForward implements Command {
 		//this.debug = SmartDashboard.getBoolean("Debug");
 		this.myPowerDistributionPanel = new PowerDistributionPanel();
 		
+		
 	}
 	
 	public void prepare(){
 
 		myRobotDrive.resetEncoders();
 		yawValue = myNavigation.getYaw();
+		SmartDashboard.putNumber("Starting Yaw", yawValue);
+		yawErrorTotal = 0;
 		Logger.logString("CommandDriveForward.prepare");
 		
 	}
 	
 	public void execute() {
 		
+		double currentYaw = myNavigation.getYaw();
+		double yawError = currentYaw - yawValue;		//Positive yaw is right turn so positive error is right turn
+		//yawErrorTotal += yawError;
+		
+		double yawCorrection = yawPConstant*yawError*motorValue;// + yawIConstant*yawErrorTotal*motorValue;
+		yawCorrection = Math.min(yawCorrection, yawCorrectionMaxPercent*motorValue); //Constrain yaw correction factor to max value
+		
+		double finalMotorValueLeft = motorValue + yawCorrection;
+		double finalMotorValueRight = motorValue - yawCorrection;
+		
+		myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight);	//If yaw error is positive, slow down left side to turn yaw back to left
+		
+		SmartDashboard.putNumber("YawError", yawError);
+		SmartDashboard.putNumber("CurrenTYaw", currentYaw);
+		//SmartDashboard.putNumber("YawErrorTotal", yawErrorTotal);
+		SmartDashboard.putNumber("YawCorrection", yawCorrection);
+		SmartDashboard.putNumber("finalMotorValueLeft", finalMotorValueLeft);
+		SmartDashboard.putNumber("finalMotorValueRight", finalMotorValueRight);
 		
 		
-		myRobotDrive.driveForward(motorValue, motorValue);
+		Logger.logThreeDoubles("CurrentYaw: ", currentYaw, "  YawError: ", yawError, "  YawCorrection: ", yawCorrection);
 		
 		
+		
+		//myRobotDrive.driveForward(motorValue, motorValue);
 		
 	}
 	
@@ -89,6 +117,8 @@ public class CommandDriveForward implements Command {
 		boolean isDone = false;
 		double amountOfTicks;
 		double currnetRollValue = myNavigation.getRoll();
+		
+		ultrasonicTarget = myNavigation.getDistanceFromUltrasonic();
 		
 		amountOfTicks = myRobotDrive.getEncoderTicks();
 		Logger.logTwoDouble("Target Value = " , targetValue , " Amount Of Ticks = " , amountOfTicks);

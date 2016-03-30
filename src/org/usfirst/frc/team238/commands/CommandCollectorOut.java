@@ -40,6 +40,8 @@ public class CommandCollectorOut implements Command {
 	{
 		if(counter == 10)
 		{
+			myIntake.stopCollector();
+			counter = 0;
 			return true;
 		}
 		else

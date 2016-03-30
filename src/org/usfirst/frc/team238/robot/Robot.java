@@ -6,6 +6,7 @@ import org.usfirst.frc.team238.core.CommandController;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.Hanger;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -47,6 +48,7 @@ public class Robot extends IterativeRobot {
 	Intake myIntake;
 	Navigation myNavigation;
 	Drivetrain myDriveTrain;
+	Hanger myHanger;
 	
 	// Autonomous Mode Support
 	String autoMode;
@@ -74,10 +76,16 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		boolean debug;
 		try {
-			if (count > 250) {
+			if (count > 150) {
 
 				count = 0;
-
+				
+				//myNavigation.getDistanceFromUltrasonic();
+				
+				//SmartDashboard.putNumber("yawValue", myNavigation.getYaw());
+				
+				//testDrivestraight();
+				
 				debug = SmartDashboard.getBoolean("Debug");
 				Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
 				
@@ -145,7 +153,7 @@ public class Robot extends IterativeRobot {
 			
 			//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
 			
-			SmartDashboard.putBoolean("Debug", true);
+			SmartDashboard.putBoolean("Debug", false);
 			
 			SmartDashboard.putInt("AutoStateCmdIndex", 0);
 			autonomousStateParamsUpdate = new SendableChooser();
@@ -177,6 +185,11 @@ public class Robot extends IterativeRobot {
 			
 			myNavigation = new Navigation();
 			myNavigation.init();
+			
+			myHanger = new Hanger();
+			myHanger.init();
+		
+			SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
 			
 			myDriveTrain = new Drivetrain(myRobotDrive);
 			myDriveTrain.init(leftFrontDrive, rightFrontDrive);
@@ -237,8 +250,8 @@ public class Robot extends IterativeRobot {
 
 		int commandValue[];
 		
-		//SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
-		//SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
+		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
+		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
 		
 		try {
 
@@ -262,7 +275,8 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 
 	}
-
+	
+	
 	/**
 	 * This should ONLY be called from an init function
 	 */
