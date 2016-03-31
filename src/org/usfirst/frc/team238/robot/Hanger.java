@@ -13,11 +13,10 @@ public class Hanger {
 	DriverStation theDriverstation;
 	
 	boolean matchTimeTest;
-
+	boolean houndsOnTheLoose;
 	public Hanger() {
+
 		theDriverstation = DriverStation.getInstance();
-		
-		
 	}
 	
 	public void init()
@@ -25,27 +24,30 @@ public class Hanger {
 		hangTalonOne = new CANTalon(3);
 		hangTalonTwo = new CANTalon(4);
 		deploySolenoid = new Solenoid(3);
+		houndsOnTheLoose = false;
+		matchTimeTest = false;
 	}
 	
 	public void releaseTheHounds()
 	{
-		
-		
 		matchTimeTest = SmartDashboard.getBoolean("Match Time Flag");
 		
 		if(matchTimeTest == false)
 		{
-			if(theDriverstation.getMatchTime() < 30)
+			if((theDriverstation.getMatchTime() < 30) && (ControlBoard.canWeReleaseTheHounds())) 
 			{
 				deploySolenoid.set(true);
+				houndsOnTheLoose = true;
 			}
 		}
 		else
 		{
-			deploySolenoid.set(true);
+			if(ControlBoard.canWeReleaseTheHounds())
+			{
+				deploySolenoid.set(true);
+				houndsOnTheLoose = true;
+			}
 		}
-		
-		
 	
 	}
 	
@@ -54,22 +56,48 @@ public class Hanger {
 		
 		matchTimeTest = SmartDashboard.getBoolean("Match Time Flag");
 		
-		if(matchTimeTest == false)
+		if(houndsOnTheLoose == true)
 		{
-			if(theDriverstation.getMatchTime() < 30)
+			if(matchTimeTest == false)
 			{
+				//mjf since there is a check in release the hounds for getMatchTime and we don't execute unless the hounds are loose so we don't need one here
+				
+				//Code for no JS
 				hangTalonOne.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
-				hangTalonTwo.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+				hangTalonTwo.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
+				
+				//code for two JS
+				//hangTalonOne.set(ControlBoard.getOperatorLeftJs().getY());
+				//hangTalonTwo.set(ControlBoard.getOperatorRightJs().getY());
+				
+				//code for one JS
+				//hangTalonOne.set(ControlBoard.getOperatorRightJs().getY());
+				//hangTalonTwo.set(ControlBoard.getOperatorRightJs().getX());
+				
+				//alternative code for one JS
+				//hangTalonOne.set(ControlBoard.getHangerLeftSide());
+				//hangTalonTwo.set(ControlBoard.getHangerRightide());
+				
+			}
+			else
+			{
+				//Code for no JS
+				hangTalonOne.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+				hangTalonTwo.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
+			
+				//code for two JS
+				//hangTalonOne.set(ControlBoard.getOperatorLeftJs().getY());
+				//hangTalonTwo.set(ControlBoard.getOperatorRightJs().getY());
+				
+				//code for one JS
+				//hangTalonOne.set(ControlBoard.getOperatorRightJs().getY());
+				//hangTalonTwo.set(ControlBoard.getOperatorRightJs().getX());
+				
+				//alternative code for one JS
+				//hangTalonOne.set(ControlBoard.getHangerLeftSide());
+				//hangTalonTwo.set(ControlBoard.getHangerRightide());
 			}
 		}
-		else
-		{
-			hangTalonOne.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
-			hangTalonTwo.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
-		}
-		
-		
-		
 	}
 	
 	public void pauseTheBeamingScotty()

@@ -44,7 +44,7 @@ public class OperatorCmdFactory {
 	
 	public void init(){
 	
-	operatorCommands = new HashMap<Integer, Command>(11);
+	operatorCommands = new HashMap<Integer, Command>(16);
 	
 	}
 	
@@ -72,7 +72,7 @@ public class OperatorCmdFactory {
 		operatorCommands.put(11, commandRetractWedge);
 		
 		operatorDeployCollector = new CommandCollectorDeploy(theIntake);
-		operatorCommands.put(23, operatorDeployCollector);
+		operatorCommands.put(15, operatorDeployCollector);
 		
 		commandReleaseTheHounds = new CommandReleaseTheHounds(theHanger);
 		operatorCommands.put(1, commandReleaseTheHounds);

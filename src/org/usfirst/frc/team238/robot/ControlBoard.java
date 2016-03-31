@@ -102,43 +102,8 @@ public class ControlBoard {
 		
 		return command;
 	}
-	/*PURGE*/
-	/* //CAT removed this function which used the joystick z-axis to determine ...
-	 * //CAT ... the rotation of the claw wheels
-	 
-	public int getDriverCommand(Joystick theJoyStick){
-		int command = 0;
-		double zPos =  0.0;
-		
-		boolean jsButtonValue = theJoyStick.getRawButton(1);
-		
-		//if the triggers is pressed get the z axis  for direction to spin the wheel
-		if(jsButtonValue)
-		{
-			zPos = theJoyStick.getZ(); 
-
-			if( zPos > .10)
-			{
-				command = 1;
-			}
-			else if(zPos < -.10)
-			{
-				command = 2;
-			}			
-		}
-		else if(theJoyStick.getRawButton(3)){
-			command = 3;
-		}
-		else if(theJoyStick.getRawButton(4)){
-			command = 4;
-		}
-		
-		
-		return command;
-	}
-	*/
 	
-	//populates each array element with the corresponding value for the joys stick
+	//populates each array element with the corresponding value for the joy stick
 	public int[] getCommands(){
 		
 		commands[0] = getCommand(manualOverrideJs);
@@ -154,6 +119,12 @@ public class ControlBoard {
 	public static double getManualCommandValue()
 	{
 		return manualOverrideJs.getY();
+	}
+	
+	public static boolean canWeReleaseTheHounds()
+	{
+		boolean  secondButton = operatorJs.getRawButton(8); //this button may need to change
+		return secondButton;
 	}
 	
 	public static boolean resetEncoderValue()
@@ -173,25 +144,18 @@ public class ControlBoard {
 					
 	}
 
-
-
 	public static Joystick getDriverLeftJs() {
 		return driverLeftJs;
 	}
-
-
 
 	public static void setDriverLeftJs(Joystick driverLeftJs) {
 		ControlBoard.driverLeftJs = driverLeftJs;
 	}
 
 
-
 	public static Joystick getDriverRightJs() {
 		return driverRightJs;
 	}
-
-
 
 	public static void setDriverRightJs(Joystick driverRightJs) {
 		ControlBoard.driverRightJs = driverRightJs;
@@ -201,6 +165,36 @@ public class ControlBoard {
 	{
 		isXBoxController = operatorJs.getIsXbox();
 	}
+
+	public static Joystick getOperatorLeftJs() {
+		return manualOverrideJs;
+	}
 	
+	public static Joystick getOperatorRightJs() {
+		return operatorJs;
+	}
 	
+	public static double getHangerRightSide() {
+		
+		double value = 0;
+		
+		if(operatorJs.getRawButton(5))
+		{
+			value = operatorJs.getY();
+		}
+			
+		return value;
+	}
+	
+	public static double getHangerLeftSide() {
+		
+		double value = 0;
+		
+		if(operatorJs.getRawButton(4))
+		{
+			value = operatorJs.getY();
+		}
+			
+		return value;
+	}
 }
