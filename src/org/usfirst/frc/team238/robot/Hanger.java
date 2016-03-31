@@ -63,12 +63,12 @@ public class Hanger {
 				//mjf since there is a check in release the hounds for getMatchTime and we don't execute unless the hounds are loose so we don't need one here
 				
 				//Code for no JS
-				hangTalonOne.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
-				hangTalonTwo.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
+				//hangTalonOne.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+				//hangTalonTwo.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
 				
 				//code for two JS
-				//hangTalonOne.set(ControlBoard.getOperatorLeftJs().getY());
-				//hangTalonTwo.set(ControlBoard.getOperatorRightJs().getY());
+				hangTalonOne.set(ControlBoard.getOperatorLeftJs().getY());
+				hangTalonTwo.set(ControlBoard.getOperatorRightJs().getY() * -1);
 				
 				//code for one JS
 				//hangTalonOne.set(ControlBoard.getOperatorRightJs().getY());
@@ -82,12 +82,12 @@ public class Hanger {
 			else
 			{
 				//Code for no JS
-				hangTalonOne.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
-				hangTalonTwo.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
+				//hangTalonOne.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+				//hangTalonTwo.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
 			
 				//code for two JS
-				//hangTalonOne.set(ControlBoard.getOperatorLeftJs().getY());
-				//hangTalonTwo.set(ControlBoard.getOperatorRightJs().getY());
+				hangTalonOne.set(ControlBoard.getOperatorLeftJs().getY());
+				hangTalonTwo.set(ControlBoard.getOperatorRightJs().getY() * -1);
 				
 				//code for one JS
 				//hangTalonOne.set(ControlBoard.getOperatorRightJs().getY());
