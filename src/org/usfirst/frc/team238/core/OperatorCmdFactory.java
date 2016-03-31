@@ -11,6 +11,9 @@ import org.usfirst.frc.team238.commands.CommandCollectorRetractTeleop;
 import org.usfirst.frc.team238.commands.CommandCollectorDeploy;
 import org.usfirst.frc.team238.commands.CommandCollectorDeployTeleop;
 import org.usfirst.frc.team238.robot.Intake;
+import org.usfirst.frc.team238.robot.Hanger;
+import org.usfirst.frc.team238.commands.CommandReleaseTheHounds;
+import org.usfirst.frc.team238.commands.CommandBeamMeUp;
 
 
 
@@ -31,6 +34,10 @@ public class OperatorCmdFactory {
 	CommandCollectorDeploy operatorDeployCollector;
 	
 	CommandCollectorDeployTeleop operatorDeployCollectorTeleop;
+	
+	CommandReleaseTheHounds commandReleaseTheHounds;
+	
+	CommandBeamMeUp commandBeamMeUp;
 
 	
 	HashMap <Integer, Command> operatorCommands;
@@ -41,7 +48,7 @@ public class OperatorCmdFactory {
 	
 	}
 	
-	public HashMap<Integer, Command> createOperatorCommands(Intake theIntake){
+	public HashMap<Integer, Command> createOperatorCommands(Intake theIntake, Hanger theHanger){
 	
 		operatorCollectorIn = new CommandCollectorIn(theIntake);
 		operatorCommands.put(2, operatorCollectorIn);
@@ -49,7 +56,7 @@ public class OperatorCmdFactory {
 		operatorCollectorOut = new CommandCollectorOut(theIntake);
 		operatorCommands.put(3, operatorCollectorOut);
 		
-		operatorStopCollector = new CommandStopCollector(theIntake);
+		operatorStopCollector = new CommandStopCollector(theIntake, theHanger);
 		operatorCommands.put(0, operatorStopCollector);
 		
 		operatorDeployCollectorTeleop = new CommandCollectorDeployTeleop(theIntake);
@@ -65,7 +72,13 @@ public class OperatorCmdFactory {
 		operatorCommands.put(11, commandRetractWedge);
 		
 		operatorDeployCollector = new CommandCollectorDeploy(theIntake);
-		operatorCommands.put(8, operatorDeployCollector);
+		operatorCommands.put(23, operatorDeployCollector);
+		
+		commandReleaseTheHounds = new CommandReleaseTheHounds(theHanger);
+		operatorCommands.put(1, commandReleaseTheHounds);
+		
+		commandBeamMeUp = new CommandBeamMeUp(theHanger);
+		operatorCommands.put(5, commandBeamMeUp);
 		
 		
 		

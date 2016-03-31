@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.DriverStation;
 
 
 /**
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot {
 	Navigation myNavigation;
 	Drivetrain myDriveTrain;
 	Hanger myHanger;
+	DriverStation myDriverstation;
 	
 	// Autonomous Mode Support
 	String autoMode;
@@ -155,6 +157,8 @@ public class Robot extends IterativeRobot {
 			
 			SmartDashboard.putBoolean("Debug", false);
 			
+			SmartDashboard.putBoolean("Match Time Flag", false);
+			
 			SmartDashboard.putInt("AutoStateCmdIndex", 0);
 			autonomousStateParamsUpdate = new SendableChooser();
 			autonomousStateParamsUpdate.addDefault("As Received", "0");
@@ -188,6 +192,8 @@ public class Robot extends IterativeRobot {
 			
 			myHanger = new Hanger();
 			myHanger.init();
+			
+			myDriverstation = DriverStation.getInstance();
 		
 			SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
 			
@@ -204,7 +210,7 @@ public class Robot extends IterativeRobot {
 			
 			//Controller object for telop
 			theMCP = new CommandController();
-			theMCP.init(myRobotDrive, /*autonomousDrive,*/ myIntake, myDriveTrain, myNavigation);
+			theMCP.init(myRobotDrive, /*autonomousDrive,*/ myIntake, myDriveTrain, myNavigation, myHanger);
 
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 
@@ -261,6 +267,8 @@ public class Robot extends IterativeRobot {
 			theMCP.buttonPressed(commandValue);
 			myNavigation.navxValues();
 			//myNavigation.ultrasonicSensor();
+			SmartDashboard.putNumber("Match Time", myDriverstation.getMatchTime());
+			
 
 		} catch (Exception e) {
 			

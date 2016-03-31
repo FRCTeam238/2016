@@ -8,6 +8,7 @@ import org.usfirst.frc.team238.robot.Intake;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 import edu.wpi.first.wpilibj.RobotDrive;
+import org.usfirst.frc.team238.robot.Hanger;
 
 
 public class CommandController {
@@ -21,10 +22,10 @@ public class CommandController {
 	HashMap<Integer, Command> driverRightCmdList;
 	HashMap<Integer, Command> operatorCmdList;
 	
-	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Intake intakeMechanism, Drivetrain driveTrain, Navigation myNavigation)
+	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Intake intakeMechanism, Drivetrain driveTrain, Navigation myNavigation, Hanger theHanger)
 	{
 		// populate the command lists
-		setupOperatorCommands(intakeMechanism);
+		setupOperatorCommands(intakeMechanism, theHanger);
 		setupDriverCommands(myRobotDrive, driveTrain);
 		setupAutonomousCommands(driveTrain, myNavigation);
 	}
@@ -67,12 +68,12 @@ public class CommandController {
 		return operatorCmdList.get(cmdName);
 	}
 	
-	private void setupOperatorCommands(Intake intakeMechanism)
+	private void setupOperatorCommands(Intake intakeMechanism, Hanger theHanger)
 	{
 		theOperatorCmdFactory = new OperatorCmdFactory();
 		theOperatorCmdFactory.init();
 		
-		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(intakeMechanism);
+		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(intakeMechanism, theHanger);
 	}
 
 	/*
