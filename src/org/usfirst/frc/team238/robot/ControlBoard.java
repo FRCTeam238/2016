@@ -123,7 +123,7 @@ public class ControlBoard {
 	
 	public static boolean canWeReleaseTheHounds()
 	{
-		boolean  secondButton = operatorJs.getRawButton(8); //this button may need to change
+		boolean  secondButton = manualOverrideJs.getRawButton(1); //this button may need to change
 		return secondButton;
 	}
 	

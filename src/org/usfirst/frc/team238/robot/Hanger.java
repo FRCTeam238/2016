@@ -32,7 +32,7 @@ public class Hanger {
 	{
 		matchTimeTest = SmartDashboard.getBoolean("Match Time Flag");
 		
-		if(matchTimeTest == false)
+		if(matchTimeTest == true)
 		{
 			if((theDriverstation.getMatchTime() < 30) && (ControlBoard.canWeReleaseTheHounds())) 
 			{

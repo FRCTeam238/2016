@@ -72,7 +72,7 @@ public class OperatorCmdFactory {
 		operatorCommands.put(11, commandRetractWedge);
 		
 		operatorDeployCollector = new CommandCollectorDeploy(theIntake);
-		operatorCommands.put(15, operatorDeployCollector);
+		operatorCommands.put(8, operatorDeployCollector);
 		
 		commandReleaseTheHounds = new CommandReleaseTheHounds(theHanger);
 		operatorCommands.put(1, commandReleaseTheHounds);
