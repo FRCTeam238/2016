@@ -51,6 +51,28 @@ public class Hanger {
 	
 	}
 	
+	public void retractTheHounds()
+	{
+		matchTimeTest = SmartDashboard.getBoolean("Match Time Flag");
+			
+		if(matchTimeTest == true)
+		{
+			if((theDriverstation.getMatchTime() < 30) && (ControlBoard.canWeReleaseTheHounds())) 
+			{
+				deploySolenoid.set(true);
+				houndsOnTheLoose = true;
+			}
+			}
+		else
+		{
+			if(ControlBoard.canWeReleaseTheHounds())
+			{
+				deploySolenoid.set(true);
+				houndsOnTheLoose = true;
+			}
+		}
+	}
+	
 	public void beamMeUpScotty()
 	{
 		

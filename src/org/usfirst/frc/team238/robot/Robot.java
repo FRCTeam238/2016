@@ -82,7 +82,7 @@ public class Robot extends IterativeRobot {
 
 				count = 0;
 				
-				//myNavigation.getDistanceFromUltrasonic();
+				myNavigation.getDistanceFromUltrasonic();
 				
 				//SmartDashboard.putNumber("yawValue", myNavigation.getYaw());
 				
@@ -241,7 +241,7 @@ public class Robot extends IterativeRobot {
 			
 			theMACP.process();
 			myNavigation.navxValues();
-			//myNavigation.ultrasonicSensor();
+			myNavigation.getDistanceFromUltrasonic();
 			
 		} catch (Exception ex) {
 			Logger.logString("Autonomous exception");

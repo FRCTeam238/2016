@@ -14,6 +14,7 @@ import org.usfirst.frc.team238.robot.Intake;
 import org.usfirst.frc.team238.robot.Hanger;
 import org.usfirst.frc.team238.commands.CommandReleaseTheHounds;
 import org.usfirst.frc.team238.commands.CommandBeamMeUp;
+import org.usfirst.frc.team238.commands.CommandRetractTheHounds;
 
 
 
@@ -38,6 +39,8 @@ public class OperatorCmdFactory {
 	CommandReleaseTheHounds commandReleaseTheHounds;
 	
 	CommandBeamMeUp commandBeamMeUp;
+	
+	CommandRetractTheHounds commandRetractTheHounds;
 
 	
 	HashMap <Integer, Command> operatorCommands;
@@ -79,6 +82,9 @@ public class OperatorCmdFactory {
 		
 		commandBeamMeUp = new CommandBeamMeUp(theHanger);
 		operatorCommands.put(5, commandBeamMeUp);
+		
+		commandRetractTheHounds = new CommandRetractTheHounds(theHanger);
+		operatorCommands.put(9, commandRetractTheHounds);
 		
 		
 		

@@ -102,7 +102,7 @@ public class CommandDriveForward implements Command {
 			rollValue = 0;
 		}
 		if ((params[3] != null) || (!params[3].isEmpty())){
-			ultrasonicTarget = Double.parseDouble(params[3]) * 12;
+			ultrasonicTarget = Double.parseDouble(params[3]);
 		}
 		else {
 			ultrasonicTarget = 0;
@@ -117,8 +117,9 @@ public class CommandDriveForward implements Command {
 		boolean isDone = false;
 		double amountOfTicks;
 		double currnetRollValue = myNavigation.getRoll();
+		double currentUltrasonicDistance;
 		
-		ultrasonicTarget = myNavigation.getDistanceFromUltrasonic();
+		currentUltrasonicDistance = myNavigation.getDistanceFromUltrasonic();
 		
 		amountOfTicks = myRobotDrive.getEncoderTicks();
 		Logger.logTwoDouble("Target Value = " , targetValue , " Amount Of Ticks = " , amountOfTicks);
@@ -144,6 +145,20 @@ public class CommandDriveForward implements Command {
 			myRobotDrive.driveForward(0, 0);
 			
 		}*/
+		else if(ultrasonicTarget > 0)
+		{
+			/*This (amountOfTicks >= targetValue - 6840) is here so the sonic sensor doesn't 
+			 * kick in until 1.5 feet away from the target distance*/
+			if((currentUltrasonicDistance <= ultrasonicTarget) && (amountOfTicks >= targetValue - 6840))
+			{
+				isDone = true;
+				myRobotDrive.driveForward(0, 0);
+			}
+			else
+			{
+				isDone = false;
+			}
+		}
 		else
 		{
 			if (amountOfTicks > targetValue)
