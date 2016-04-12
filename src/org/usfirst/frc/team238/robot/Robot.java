@@ -84,10 +84,6 @@ public class Robot extends IterativeRobot {
 				
 				myNavigation.getDistanceFromUltrasonic();
 				
-				//SmartDashboard.putNumber("yawValue", myNavigation.getYaw());
-				
-				//testDrivestraight();
-				
 				debug = SmartDashboard.getBoolean("Debug");
 				Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
 				
@@ -100,6 +96,8 @@ public class Robot extends IterativeRobot {
 				
 				
 				theMACP.pickAMode(automousModeFromDS);
+				
+				SmartDashboard.putString("Chosen Auto Mode", String.valueOf(automousModeFromDS));
 				
 				if(update != 0)
 				{

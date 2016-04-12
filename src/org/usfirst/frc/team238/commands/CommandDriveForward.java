@@ -62,12 +62,12 @@ public class CommandDriveForward implements Command {
 		
 		myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight);	//If yaw error is positive, slow down left side to turn yaw back to left
 		
-		SmartDashboard.putNumber("YawError", yawError);
+		/*SmartDashboard.putNumber("YawError", yawError);
 		SmartDashboard.putNumber("CurrenTYaw", currentYaw);
 		//SmartDashboard.putNumber("YawErrorTotal", yawErrorTotal);
 		SmartDashboard.putNumber("YawCorrection", yawCorrection);
 		SmartDashboard.putNumber("finalMotorValueLeft", finalMotorValueLeft);
-		SmartDashboard.putNumber("finalMotorValueRight", finalMotorValueRight);
+		SmartDashboard.putNumber("finalMotorValueRight", finalMotorValueRight);*/
 		
 		
 		Logger.logThreeDoubles("CurrentYaw: ", currentYaw, "  YawError: ", yawError, "  YawCorrection: ", yawCorrection);
@@ -119,7 +119,7 @@ public class CommandDriveForward implements Command {
 		double currnetRollValue = myNavigation.getRoll();
 		double currentUltrasonicDistance;
 		
-		currentUltrasonicDistance = myNavigation.getDistanceFromUltrasonic();
+		
 		
 		amountOfTicks = myRobotDrive.getEncoderTicks();
 		Logger.logTwoDouble("Target Value = " , targetValue , " Amount Of Ticks = " , amountOfTicks);
@@ -147,16 +147,19 @@ public class CommandDriveForward implements Command {
 		}*/
 		else if(ultrasonicTarget > 0)
 		{
+			isDone = false;
 			/*This (amountOfTicks >= targetValue - 6840) is here so the sonic sensor doesn't 
 			 * kick in until 1.5 feet away from the target distance*/
-			if((currentUltrasonicDistance <= ultrasonicTarget) && (amountOfTicks >= targetValue - 6840))
+			if((amountOfTicks >= targetValue - 6840))
 			{
-				isDone = true;
-				myRobotDrive.driveForward(0, 0);
-			}
-			else
-			{
-				isDone = false;
+				currentUltrasonicDistance = myNavigation.getDistanceFromUltrasonic();
+				
+				if(currentUltrasonicDistance <= ultrasonicTarget)
+				{
+					isDone = true;
+					myRobotDrive.driveForward(0, 0);
+				}
+				
 			}
 		}
 		else
