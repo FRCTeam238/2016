@@ -233,8 +233,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
-		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
+		//SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
+		//SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
 		try {
 			
 			theMACP.process();
@@ -254,8 +254,8 @@ public class Robot extends IterativeRobot {
 
 		int commandValue[];
 		
-		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
-		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
+//		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
+		//SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
 		
 		try {
 
