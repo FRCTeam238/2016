@@ -26,6 +26,8 @@ public class Hanger {
 		deploySolenoid = new Solenoid(3);
 		houndsOnTheLoose = false;
 		matchTimeTest = false;
+		hangTalonOne.enableBrakeMode(true);
+		hangTalonTwo.enableBrakeMode(true);
 	}
 	
 	public void releaseTheHounds()
@@ -59,17 +61,16 @@ public class Hanger {
 		{
 			if((theDriverstation.getMatchTime() < 30) && (ControlBoard.canWeReleaseTheHounds())) 
 			{
-				deploySolenoid.set(true);
-				houndsOnTheLoose = true;
+				deploySolenoid.set(false);
+				houndsOnTheLoose = false;
 			}
-			}
+		}
 		else
 		{
-			if(ControlBoard.canWeReleaseTheHounds())
-			{
-				deploySolenoid.set(true);
-				houndsOnTheLoose = true;
-			}
+			
+			deploySolenoid.set(false);
+			houndsOnTheLoose = false;
+			
 		}
 	}
 	

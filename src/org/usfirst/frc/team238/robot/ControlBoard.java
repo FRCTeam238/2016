@@ -108,8 +108,8 @@ public class ControlBoard {
 		
 		commands[0] = getCommand(manualOverrideJs);
 		commands[1] = getCommand(operatorJs);
-		commands[2] = getDriverCommand(getDriverLeftJs());
-		commands[3] = getDriverCommand(getDriverRightJs());
+		commands[2] = getDriverCommand(getDriverRightJs());
+		commands[3] = getDriverCommand(getDriverLeftJs());
 		commands[4] = CrusaderCommon.DRIVE_TRAIN_CMD_IDX;
 		
 		return commands;

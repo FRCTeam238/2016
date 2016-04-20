@@ -1,25 +1,30 @@
 package org.usfirst.frc.team238.robot;
 
-import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class Intake {
 
-	Encoder intakeEncoder;
+	//Encoder intakeEncoder;
 	CANTalon intakeMotor;
 	Solenoid intakeDeploySolenoid;
 	Solenoid intakeWedgeSolenoid;
+	Compressor thePump;
 	
 	public boolean intakeIsDown;
 	
 	
 	public void Init()
 	{
-		intakeEncoder = new Encoder(4,5);
+		//intakeEncoder = new Encoder(4,5);
 		intakeMotor = new CANTalon(9);
 		intakeDeploySolenoid = new Solenoid(1);
 		intakeWedgeSolenoid = new Solenoid(2);
+		
+		thePump = new Compressor();
+		
 	}
 	//Starts the intake pulling balls in.
 	
@@ -80,6 +85,12 @@ public class Intake {
 	public boolean complete()
 	{
 		 return true;
+	}
+	
+	public void resetPCM()
+	{
+		thePump.clearAllPCMStickyFaults(); 
+		return ;
 	}
 
 	

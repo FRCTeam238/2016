@@ -13,6 +13,7 @@ import org.usfirst.frc.team238.commands.CommandCollectorDeployTeleop;
 import org.usfirst.frc.team238.robot.Intake;
 import org.usfirst.frc.team238.robot.Hanger;
 import org.usfirst.frc.team238.commands.CommandReleaseTheHounds;
+import org.usfirst.frc.team238.commands.CommandResetPcm;
 import org.usfirst.frc.team238.commands.CommandBeamMeUp;
 import org.usfirst.frc.team238.commands.CommandRetractTheHounds;
 
@@ -41,9 +42,12 @@ public class OperatorCmdFactory {
 	CommandBeamMeUp commandBeamMeUp;
 	
 	CommandRetractTheHounds commandRetractTheHounds;
-
+	
+	CommandResetPcm commandResetPcm;
 	
 	HashMap <Integer, Command> operatorCommands;
+
+	
 	
 	public void init(){
 	
@@ -86,8 +90,8 @@ public class OperatorCmdFactory {
 		commandRetractTheHounds = new CommandRetractTheHounds(theHanger);
 		operatorCommands.put(9, commandRetractTheHounds);
 		
-		
-		
+		commandResetPcm = new CommandResetPcm(theIntake);
+		operatorCommands.put(4, commandResetPcm);
 		
 		return operatorCommands;
 	

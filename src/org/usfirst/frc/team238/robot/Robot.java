@@ -214,6 +214,7 @@ public class Robot extends IterativeRobot {
 			theMACP = new AutonomousController(); 
 			theMACP.init(theMCP);
 
+			
 			Logger.logString("Fully Initialized");
 
 		} catch (Exception ex) {
@@ -263,9 +264,9 @@ public class Robot extends IterativeRobot {
 			commandValue = myControlBoard.getCommands();
 			//pass the array with the commands coming form the control to the Controller object 
 			theMCP.buttonPressed(commandValue);
-			myNavigation.navxValues();
+			//myNavigation.navxValues();
 			//myNavigation.ultrasonicSensor();
-			SmartDashboard.putNumber("Match Time", myDriverstation.getMatchTime());
+			//SmartDashboard.putNumber("Match Time", myDriverstation.getMatchTime());
 			
 
 		} catch (Exception e) {
