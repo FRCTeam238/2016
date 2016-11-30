@@ -18,7 +18,7 @@ public class StateCollectorDeploy implements AutonomousState {
 	{
 		
 		//get specific  objects needed for creating the command object 
-		deployIntake = (CommandCollectorDeploy) theMcp.getOperatorCmd(8);
+		deployIntake = (CommandCollectorDeploy) theMcp.getOperatorCmd(6);
 		parameters = params;
 		
 	}
@@ -56,7 +56,7 @@ public class StateCollectorDeploy implements AutonomousState {
 		@Override
 		public void prepare() {
 			// TODO Auto-generated method stub
-			deployIntake.setParams(Integer.parseInt(parameters[0]));
+			//deployIntake.setParams(Integer.parseInt(parameters[0]));
 		}
 
 		@Override
@@ -68,7 +68,7 @@ public class StateCollectorDeploy implements AutonomousState {
 		@Override
 		public void showParams() {
 			// TODO Auto-generated method stub
-			SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
+			SmartDashboard.putString("Param 1 - targetValue", "0");
 			SmartDashboard.putString("Param 2 - motorSpeed", "0");
 			SmartDashboard.putString("Param 3 - rollValue", "0");
 			SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
@@ -78,6 +78,17 @@ public class StateCollectorDeploy implements AutonomousState {
 		public void updateParams() {
 			// TODO Auto-generated method stub
 			
+		}
+
+		@Override
+		public String getParam(int value) {
+			String output = "";
+			if(parameters == null||parameters.length-1 < value){
+				output="";
+			}else{
+				output=parameters[value];
+			}
+			return output;
 		}
 
 }

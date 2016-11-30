@@ -11,5 +11,6 @@ public interface AutonomousState {
 	public void reset();
 	public void showParams();
 	public void updateParams();
+	public String getParam(int value);
 	
 }

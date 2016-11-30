@@ -1,5 +1,6 @@
 package org.usfirst.frc.team238.commands;
 
+import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.robot.ControlBoard;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
@@ -8,7 +9,7 @@ import org.usfirst.frc.team238.robot.Navigation;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CommandTurnRight implements Command  {
+public class CommandTurnRight extends AbstractCommand  {
 
 	Drivetrain myRobotDrive;
 	Navigation myNavigation;

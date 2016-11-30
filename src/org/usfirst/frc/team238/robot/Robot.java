@@ -1,7 +1,12 @@
 package org.usfirst.frc.team238.robot;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.AutonomousController;
+import org.usfirst.frc.team238.core.AutonomousJSONFactory;
 import org.usfirst.frc.team238.core.CommandController;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Navigation;
@@ -31,16 +36,11 @@ public class Robot extends IterativeRobot {
 
 	private static int count = 0;
 	//private static boolean AUTO_STARTED = false;
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
 	
 	CANTalon leftFrontDrive; //id = 1
 	CANTalon leftRearDrive; //id = 2
 	CANTalon rightFrontDrive; //id = 3
 	CANTalon rightRearDrive; //id = 4
-	
 	
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
@@ -55,12 +55,18 @@ public class Robot extends IterativeRobot {
 	// Autonomous Mode Support
 	String autoMode;
 	/*AutonomousDrive autonomousDrive;*/
+	private AutonomousJSONFactory jSONFileWriter;
 	private AutonomousController theMACP;
 	SendableChooser autonomousChooser;
+	SendableChooser autonomousSaveChooser;
 	Logger myLogger;
 	SendableChooser autonomousStateParamsUpdate;
-	
-	
+	//Holds all the autonomous states
+	//and takes the data from the AutonomousController in order to
+	//transfer it to the JSONFactory
+	private ArrayList<AutonomousState>[] autonomousModeList;
+	//This holds the names of each mode
+	private ArrayList<String> AutoModeNames;
 	
 	public void disabledInit() {
 		try {
@@ -94,8 +100,15 @@ public class Robot extends IterativeRobot {
 				String updateParams = (String) autonomousStateParamsUpdate.getSelected();
 				int update = Integer.parseInt(updateParams);
 				
+				String saveParam = (String) autonomousSaveChooser.getSelected();
+				int save = Integer.parseInt(saveParam);
 				
 				theMACP.pickAMode(automousModeFromDS);
+				
+				//Get the list of autonomousModes
+				autonomousModeList = theMACP.getAutoModeList();
+				//Get the names of each set of autonomousModes
+				AutoModeNames = theMACP.getAutoModeNames();
 				
 				SmartDashboard.putString("Chosen Auto Mode", String.valueOf(automousModeFromDS));
 				
@@ -103,10 +116,16 @@ public class Robot extends IterativeRobot {
 				{
 					theMACP.updateStateParameters();
 				}
-
+				
+				if(save != 0)
+				{
+					jSONFileWriter.save(autonomousModeList, AutoModeNames);	
+				}
 
 				theMACP.dump();
-
+				
+				myNavigation.navxValues();
+				
 			}
 			count++;
 		} catch (Exception ex) {
@@ -144,7 +163,11 @@ public class Robot extends IterativeRobot {
 			Logger.logString("AutononousInit:Exception");
 		}
 	}
-
+	
+	/**
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
+	 */
 	@SuppressWarnings("deprecation")
 	public void robotInit() {
 
@@ -158,10 +181,19 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putBoolean("Match Time Flag", false);
 			
 			SmartDashboard.putInt("AutoStateCmdIndex", 0);
+			
 			autonomousStateParamsUpdate = new SendableChooser();
 			autonomousStateParamsUpdate.addDefault("As Received", "0");
 			autonomousStateParamsUpdate.addObject("UPDATE", "1");
+			
+			//Create a new SendableChooser for the save function
+			autonomousSaveChooser = new SendableChooser();
+			autonomousSaveChooser.addDefault("DON'T Save", "0");
+			autonomousSaveChooser.addObject("Save", "1");
+			
 			SmartDashboard.putData("Edit State Params", autonomousStateParamsUpdate);
+			//put it on the SmartDashboard
+			SmartDashboard.putData("Save Changes", autonomousSaveChooser);
 			
 			myLogger = new Logger();
 			
@@ -170,7 +202,6 @@ public class Robot extends IterativeRobot {
 			myControlBoard.controlBoardInit();
 
 			//Create robot core objects 
-			
 												// Test Robot | Actual Robot
 			leftFrontDrive = new CANTalon(5);  //id =  1			 5
 			leftRearDrive = new CANTalon(6);   //id =  2			 6
@@ -213,7 +244,9 @@ public class Robot extends IterativeRobot {
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 
 			theMACP.init(theMCP);
-
+			
+			//The file writer to create new AutonomousModes
+			jSONFileWriter = new AutonomousJSONFactory();
 			
 			Logger.logString("Fully Initialized");
 
@@ -253,10 +286,10 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 
-		int commandValue[];
+		HashMap<Integer, Integer> commandValue;
 		
-//		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
-		//SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
+		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
+		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
 		
 		try {
 

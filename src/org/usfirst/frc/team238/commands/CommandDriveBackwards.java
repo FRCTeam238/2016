@@ -1,12 +1,13 @@
 package org.usfirst.frc.team238.commands;
 
+import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Drivetrain;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CommandDriveBackwards implements Command{
+public class CommandDriveBackwards extends AbstractCommand{
 
 	Drivetrain myRobotDrive;
 

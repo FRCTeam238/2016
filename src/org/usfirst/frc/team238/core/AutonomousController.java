@@ -1,7 +1,5 @@
 package org.usfirst.frc.team238.core;
 
-
-
 import java.io.FileReader;
 
 import java.util.ArrayList;
@@ -20,14 +18,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutonomousController implements AutonomousState {
 
 	private AutonomousState currentState;
-	private AutonomousState lastState;
 	private int index = 0;
 	Robot the238Robot;
 	ArrayList<AutonomousState> steps;
+	//Holds all autocommands in order (does not include the automode names)
+	ArrayList<AutonomousState>[] autonomousModeList;
+	//Holds the names for each autonomousMode
+	ArrayList<String> autoModeNames;
 	SendableChooser aModeChooser; 
 	//NetworkButton testBtn;
 	int MAX_NUM_IN_A_LIST =  20;
 	 
+	//Returns a list of each set of AutonomousMode States
+	public ArrayList<AutonomousState>[] getAutoModeList (){
+		return autonomousModeList;
+	}
+		
+	//Returns the name of each AutonomousMode
+	public ArrayList<String> getAutoModeNames (){
+		return autoModeNames;
+	}
 	
 	@Override
 	public void prepare()
@@ -99,8 +109,6 @@ public class AutonomousController implements AutonomousState {
 		
 	}
 	
-	ArrayList<AutonomousState>[] autonomousModeList;
-	
 	@SuppressWarnings("unchecked")
 	public void readJson(CommandController theMCP) {
 
@@ -125,6 +133,7 @@ public class AutonomousController implements AutonomousState {
 				autonomousModeList [i]= new ArrayList<AutonomousState>();
 			}
 			
+			autoModeNames = new ArrayList<String>(numModes);
 			
 			//testBtn = new NetworkButton("SmartDashboard","UPDATEPARAM");
 			
@@ -136,6 +145,9 @@ public class AutonomousController implements AutonomousState {
             	String name = (String) autoModeX.get("Name");
             	Logger.logString("Autonmous Name: " + name);
             	
+            	//Add the name of this mode to the arrayList
+            	autoModeNames.add(name);
+            	
             	//Start building the list of Amodes available that will get pushed to the dashboard
             	if(aModeIndexCounter == 1){
             		aModeChooser.addDefault(name, String.valueOf(aModeIndexCounter));
@@ -144,10 +156,10 @@ public class AutonomousController implements AutonomousState {
             		aModeChooser.addObject(name,String.valueOf(aModeIndexCounter));
             	}
             	
-            	
             	JSONArray companyList = (JSONArray) autoModeX.get("Commands");
 
             	Iterator<JSONObject> iterator = companyList.iterator();
+            	
             	while (iterator.hasNext()) {
             		JSONObject aCommand = iterator.next();
             		String cmdName = (String) aCommand.get("Name");
@@ -224,7 +236,8 @@ public class AutonomousController implements AutonomousState {
 			count++;
 		}
 		
-		while(count < MAX_NUM_IN_A_LIST){
+		//TODO Use statesList.size instead of MAX_NUM
+		while(count < MAX_NUM_IN_A_LIST){ 
 			statesList = "AutoStateList " + count + " ";
 			SmartDashboard.putString( statesList, " ");
 			count++;
@@ -270,6 +283,12 @@ public class AutonomousController implements AutonomousState {
 		Logger.logTwoString("The chosen One =  " , automousModeFromDashBoard);
 		
 		return Integer.parseInt(automousModeFromDashBoard);
+	}
+
+	@Override
+	public String getParam(int value) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,6 +1,8 @@
 package org.usfirst.frc.team238.robot;
 import org.usfirst.frc.team238.core.Logger;
 
+import java.util.*;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,6 +14,9 @@ public class ControlBoard {
 	private static Joystick driverLeftJs; 	// driveTrain left
 	private static Joystick driverRightJs; 	// driveTrain right
 	static Joystick xboxController;
+	
+	HashMap<Integer, Integer> controllers; /*This is the list that contains the locations
+						for the controllers*/
 	
 	boolean isXBoxController;
 	//look at using more sophisticated collection classes
@@ -29,6 +34,8 @@ public class ControlBoard {
 		
 			//array that holds the command sent by each control device
 			commands = new int[5];
+			
+			controllers = new HashMap<Integer, Integer>(5);
 			
 			
 		}
@@ -104,15 +111,24 @@ public class ControlBoard {
 	}
 	
 	//populates each array element with the corresponding value for the joy stick
-	public int[] getCommands(){
+	public HashMap<Integer, Integer> getCommands(){
 		
-		commands[0] = getCommand(manualOverrideJs);
+		/*commands[0] = getCommand(manualOverrideJs);
 		commands[1] = getCommand(operatorJs);
 		commands[2] = getDriverCommand(getDriverRightJs());
 		commands[3] = getDriverCommand(getDriverLeftJs());
-		commands[4] = CrusaderCommon.DRIVE_TRAIN_CMD_IDX;
+		commands[4] = CrusaderCommon.DRIVE_TRAIN_CMD_IDX;*/
 		
-		return commands;
+		controllers.put(0, getCommand(manualOverrideJs));
+		controllers.put(CrusaderCommon.OPR_CMD_LIST, getCommand(operatorJs));
+		controllers.put(CrusaderCommon.INPUT_DRIVER_RIGHT_JS, getDriverCommand(getDriverRightJs()));
+		controllers.put(CrusaderCommon.INPUT_DRIVER_LEFT_JS, getDriverCommand(getDriverLeftJs()));
+		controllers.put(CrusaderCommon.DT_CMD_LIST, CrusaderCommon.DRIVE_TRAIN_CMD_IDX);
+		
+		return controllers;
+		
+		//return commands;
+		
 	}
 	
 	//gets the y value of the manual overide joy stick to feed to the command controller

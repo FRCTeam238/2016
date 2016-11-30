@@ -1,8 +1,9 @@
 package org.usfirst.frc.team238.commands;
 
+import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
 
-public class NoDriverCommand implements Command {
+public class NoDriverCommand extends AbstractCommand {
 	
 	public void prepare(){
 		

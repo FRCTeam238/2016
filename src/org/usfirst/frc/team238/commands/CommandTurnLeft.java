@@ -1,5 +1,6 @@
 package org.usfirst.frc.team238.commands;
 
+import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.ControlBoard;
@@ -9,7 +10,7 @@ import org.usfirst.frc.team238.robot.Navigation;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CommandTurnLeft implements Command  {
+public class CommandTurnLeft extends AbstractCommand  {
 
 	Drivetrain myRobotDrive;
 	Navigation myNavigation; //Pass variable here

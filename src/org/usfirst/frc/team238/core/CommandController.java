@@ -22,12 +22,16 @@ public class CommandController {
 	HashMap<Integer, Command> driverRightCmdList;
 	HashMap<Integer, Command> operatorCmdList;
 	
+	HashMap<Integer, Command> commandValue;
+	
 	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Intake intakeMechanism, Drivetrain driveTrain, Navigation myNavigation, Hanger theHanger)
 	{
 		// populate the command lists
 		setupOperatorCommands(intakeMechanism, theHanger);
 		setupDriverCommands(myRobotDrive, driveTrain);
 		setupAutonomousCommands(driveTrain, myNavigation);
+		
+		commandValue = new HashMap<Integer, Command>(8);
 	}
 	
 	//gets an AutoCommand by key name
@@ -81,33 +85,75 @@ public class CommandController {
 	 * which the values  ( button1 = 1 etc) are the key into a Map of commands that have been pre-loaded 
 	 * in the setup methods,  then "get"s the command associated with the key in the hashmap and calls the execute function on that command.
 	 */
-	public void buttonPressed(int slot[]){
+	/*public void buttonPressed(int[] commandValue){
 		
 		Command commandForTheButtonPressed;
-		Integer buttonPressed = slot[CrusaderCommon.INPUT_DRIVER_LEFT_JS];
+		Integer buttonPressed = commandValue(CrusaderCommon.INPUT_DRIVER_LEFT_JS);
 		
 		commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed);
 		if(commandForTheButtonPressed != null){
 			commandForTheButtonPressed.execute();
 		}
 		
-		buttonPressed = slot[CrusaderCommon.INPUT_DRIVER_RIGHT_JS];
+		buttonPressed = commandValue[CrusaderCommon.INPUT_DRIVER_RIGHT_JS];
 		commandForTheButtonPressed = driverRightCmdList.get(buttonPressed);
 		if(commandForTheButtonPressed != null){
 			commandForTheButtonPressed.execute();
 		}
 		
-		buttonPressed = slot[CrusaderCommon.DT_CMD_LIST];		
+		buttonPressed = commandValue[CrusaderCommon.DT_CMD_LIST];		
 		commandForTheButtonPressed = driverCmdList.get(buttonPressed); 
 		if(commandForTheButtonPressed != null){
 			commandForTheButtonPressed.execute();
 		}
 		
-		buttonPressed = slot[CrusaderCommon.OPR_CMD_LIST];		
+		buttonPressed = commandValue[CrusaderCommon.OPR_CMD_LIST];		
 		commandForTheButtonPressed = operatorCmdList.get(buttonPressed); 
 		if(commandForTheButtonPressed != null){
 			commandForTheButtonPressed.execute();
 		}
-	}
+	}*/
+	
+	public void buttonPressed(HashMap<Integer, Integer> commandValue){
+			
+			Command commandForTheButtonPressed;
+			Integer buttonPressed = commandValue.get(CrusaderCommon.INPUT_DRIVER_LEFT_JS);
+			
+			
+			
+			commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed);
+			if(commandForTheButtonPressed != null){
+				commandForTheButtonPressed.execute();
+			}
+			
+			
+			
+			buttonPressed = commandValue.get(CrusaderCommon.INPUT_DRIVER_RIGHT_JS);
+			commandForTheButtonPressed = driverRightCmdList.get(buttonPressed);
+			if(commandForTheButtonPressed != null){
+				commandForTheButtonPressed.execute();
+			}
+			
+			
+			
+			buttonPressed = commandValue.get(CrusaderCommon.DT_CMD_LIST);
+			Logger.logInt("buttonPressed : ", buttonPressed);
+			commandForTheButtonPressed = driverCmdList.get(buttonPressed); 
+			if(commandForTheButtonPressed != null){
+				Logger.logInt("buttonPressed(in if statement) : ", buttonPressed);
+				commandForTheButtonPressed.execute();
+			}
+			
+			
+			
+			buttonPressed = commandValue.get(CrusaderCommon.OPR_CMD_LIST);		
+			commandForTheButtonPressed = operatorCmdList.get(buttonPressed); 
+			if(commandForTheButtonPressed != null){
+				commandForTheButtonPressed.execute();
+			}
+			
+			
+		}
+
 	
 }

@@ -22,7 +22,7 @@ public class AutonomousCmdFactory {
 	CommandRealign realignCommand;
 	
 	HashMap <String, Command> autonomousCommands;
-	
+	//TODO change that static 10
 	public void init(){
 		autonomousCommands = new HashMap<String, Command>(10);
 	}

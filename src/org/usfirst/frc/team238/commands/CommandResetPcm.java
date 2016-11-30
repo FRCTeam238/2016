@@ -1,9 +1,10 @@
 package org.usfirst.frc.team238.commands;
 
+import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.robot.Intake;
 
-public class CommandResetPcm implements Command {
+public class CommandResetPcm extends AbstractCommand {
 	
 	Intake myIntake;
 	

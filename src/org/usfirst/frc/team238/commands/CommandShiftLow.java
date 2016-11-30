@@ -1,9 +1,10 @@
 package org.usfirst.frc.team238.commands;
 
+import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.robot.Drivetrain;
 
-public class CommandShiftLow implements Command {
+public class CommandShiftLow extends AbstractCommand {
 	
 	Drivetrain myDrivetrain;
 	public CommandShiftLow(Drivetrain driveTrain)

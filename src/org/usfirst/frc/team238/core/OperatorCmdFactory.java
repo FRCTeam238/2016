@@ -7,9 +7,9 @@ import org.usfirst.frc.team238.commands.CommandCollectorOut;
 import org.usfirst.frc.team238.commands.CommandStopCollector;
 import org.usfirst.frc.team238.commands.CommandDeployWedge;
 import org.usfirst.frc.team238.commands.CommandRetractWedge;
-import org.usfirst.frc.team238.commands.CommandCollectorRetractTeleop;
+import org.usfirst.frc.team238.commands.CommandCollectorRetract;
 import org.usfirst.frc.team238.commands.CommandCollectorDeploy;
-import org.usfirst.frc.team238.commands.CommandCollectorDeployTeleop;
+import org.usfirst.frc.team238.commands.CommandCollectorDeploy;
 import org.usfirst.frc.team238.robot.Intake;
 import org.usfirst.frc.team238.robot.Hanger;
 import org.usfirst.frc.team238.commands.CommandReleaseTheHounds;
@@ -31,11 +31,11 @@ public class OperatorCmdFactory {
 	
 	CommandRetractWedge commandRetractWedge;
 	
-	CommandCollectorRetractTeleop operatorRetractCollectorTeleop;
+	CommandCollectorRetract operatorRetractCollectorTeleop;
 	
 	CommandCollectorDeploy operatorDeployCollector;
 	
-	CommandCollectorDeployTeleop operatorDeployCollectorTeleop;
+	CommandCollectorDeploy operatorDeployCollectorTeleop;
 	
 	CommandReleaseTheHounds commandReleaseTheHounds;
 	
@@ -66,10 +66,10 @@ public class OperatorCmdFactory {
 		operatorStopCollector = new CommandStopCollector(theIntake, theHanger);
 		operatorCommands.put(0, operatorStopCollector);
 		
-		operatorDeployCollectorTeleop = new CommandCollectorDeployTeleop(theIntake);
+		operatorDeployCollectorTeleop = new CommandCollectorDeploy(theIntake);
 		operatorCommands.put(6, operatorDeployCollectorTeleop);
 		
-		operatorRetractCollectorTeleop = new CommandCollectorRetractTeleop(theIntake);
+		operatorRetractCollectorTeleop = new CommandCollectorRetract(theIntake);
 		operatorCommands.put(7, operatorRetractCollectorTeleop);
 		
 		commandDeployWedge = new CommandDeployWedge(theIntake);
@@ -77,9 +77,6 @@ public class OperatorCmdFactory {
 		
 		 commandRetractWedge = new CommandRetractWedge(theIntake);
 		operatorCommands.put(11, commandRetractWedge);
-		
-		operatorDeployCollector = new CommandCollectorDeploy(theIntake);
-		operatorCommands.put(8, operatorDeployCollector);
 		
 		commandReleaseTheHounds = new CommandReleaseTheHounds(theHanger);
 		operatorCommands.put(1, commandReleaseTheHounds);

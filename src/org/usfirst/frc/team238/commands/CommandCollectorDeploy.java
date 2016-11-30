@@ -1,13 +1,13 @@
 package org.usfirst.frc.team238.commands;
 
+import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
-import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Intake;
 
-public class CommandCollectorDeploy implements Command {
+public class CommandCollectorDeploy extends AbstractCommand {
 	
 	Intake myIntake;
-	int deploy;
+	
 	
 	public CommandCollectorDeploy(Intake theIntake)
 	{
@@ -23,26 +23,16 @@ public class CommandCollectorDeploy implements Command {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		Logger.logInt("CommandCollecter.execute deploy = : " , deploy);
-		if(deploy == 1)
-		{
-			myIntake.deployCollector();
-		}
-		else
-		{
-			myIntake.retractCollector();
-		}
+		myIntake.deployCollector();
 	}
+
 
 	//@Override
 	public void execute(double overRideValue) {
 		// TODO Auto-generated method stub
 
 	}
-	public void setParams(int param)
-	{
-		deploy = param;
-	}
+
 	 
 	public boolean complete()
 	{

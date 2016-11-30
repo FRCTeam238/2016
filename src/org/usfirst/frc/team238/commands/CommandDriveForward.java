@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team238.commands;
 
+import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Drivetrain;
@@ -9,7 +10,7 @@ import org.usfirst.frc.team238.robot.Navigation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CommandDriveForward implements Command {
+public class CommandDriveForward extends AbstractCommand {
 
 	Drivetrain myRobotDrive;
 	Navigation myNavigation;

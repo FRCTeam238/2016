@@ -1,7 +1,7 @@
 package org.usfirst.frc.team238.autonomousStates;
 
 import org.usfirst.frc.team238.commands.CommandCollectorDeploy;
-import org.usfirst.frc.team238.commands.CommandCollectorRetractTeleop;
+import org.usfirst.frc.team238.commands.CommandCollectorRetract;
 import org.usfirst.frc.team238.core.Logger;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,9 +10,10 @@ import org.usfirst.frc.team238.commands.CommandCollectorIn;
 
 public class StateCollectorIn {
 
-	CommandCollectorRetractTeleop collectorRetract;
+	CommandCollectorRetract collectorRetract;
 	CommandCollectorDeploy collectorDeploy;
 	CommandCollectorIn collectorIntake;
+	String parameters[];
 	
 	//@Override
 	public void process () {
@@ -49,5 +50,15 @@ public class StateCollectorIn {
 	public void updateParams() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public String getParam(int value) {
+			String output = "";
+			if(parameters == null||parameters.length-1 < value){
+			output="";
+		}else{
+			output=parameters[value];
+		}
+		return output;
 	}
 }

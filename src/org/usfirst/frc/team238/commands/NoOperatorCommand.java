@@ -1,8 +1,9 @@
 package org.usfirst.frc.team238.commands;
 
+import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
 
-public  class NoOperatorCommand implements Command {
+public  class NoOperatorCommand extends AbstractCommand {
 	
 	public void prepare(){
 		
@@ -22,6 +23,18 @@ public  class NoOperatorCommand implements Command {
 	
 	public void execute(double overRideValue) {
 		
+	}
+
+	@Override
+	public void setParams() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean done() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

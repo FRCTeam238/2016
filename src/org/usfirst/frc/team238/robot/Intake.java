@@ -68,7 +68,7 @@ public class Intake {
 	{
 		if (intakeIsDown == true)
 		{
-			intakeMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
+			intakeMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);//CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT
 		}
 	}
 	//Detects whether or not we have a ball in the holder.

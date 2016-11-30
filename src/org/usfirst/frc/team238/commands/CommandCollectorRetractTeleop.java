@@ -42,4 +42,10 @@ public class CommandCollectorRetractTeleop implements Command {
 	{
 		 return myIntake.complete();
 	}
+
+	@Override
+	public boolean done() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

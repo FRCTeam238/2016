@@ -37,4 +37,16 @@ public class CommandCollectorDeployTeleop implements Command {
 	{
 		 return myIntake.complete();
 	}
+
+	@Override
+	public void setParams() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean done() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

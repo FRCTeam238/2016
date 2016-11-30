@@ -100,4 +100,16 @@ public class StateTurnLeft implements AutonomousState {
 		parameters[3] = param4;
 	}
 
+
+	@Override
+	public String getParam(int value) {
+			String output = "";
+			if(parameters == null||parameters.length-1 < value){
+			output="";
+		}else{
+			output=parameters[value];
+		}
+		return output;
+	}
+
 }

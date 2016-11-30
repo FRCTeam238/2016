@@ -69,6 +69,16 @@ public class StateDelay implements AutonomousState
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public String getParam(int value) {
+			String output = "";
+			if(parameters == null||parameters.length-1 < value){
+			output="";
+		}else{
+			output=parameters[value];
+		}
+		return output;
+	}
 
 
 }
