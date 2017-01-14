@@ -50,4 +50,7 @@ public class CrusaderCommon {
 	public final static double INTAKE_MOTOR_ROTATE_IN = 1.0;
 	public final static double INTAKE_MOTOR_ROTATE_OUT = -1.0;
 	public final static double INTAKE_MOTOR_OFF = 0;
+	
+	public final static int VISION_ANGLE_SLOT = 0;
+	public final static int VISION_DISTANCE_SLOT = 1;
 }

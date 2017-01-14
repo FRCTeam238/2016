@@ -2,15 +2,16 @@ package org.usfirst.frc.team238.core;
 
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.*;
 import java.nio.ByteBuffer;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class udpClient{
+public class udpClient extends Thread{
 	
-	public final static int PORT = 2238;
-	public final static int BYTE_SIZE = 8;
+	public final static int PORT = 5800;
+	public final static int BYTE_SIZE = 16;
 	public static final double VISION_DATA_FRESHNESS = .1;
 	
 	private static DatagramSocket myClient;
@@ -26,7 +27,7 @@ public class udpClient{
 	private static double lastDataTimestamp;
 	
 	
-	public static void init()
+	public void init()
 	{
 		try
 		{
@@ -50,17 +51,24 @@ public class udpClient{
 	
 	public void run()
 	{
+		byte[] test;
+		
 		while(isRunning)
 		{
 			try
 			{
+				
 				myClient.receive(recievePacket);
+				
+				
 			}
 			catch(IOException e)
 			{
 				e.printStackTrace();
 			}
-			processData(recieveData);
+			
+			test = recievePacket.getData();
+			processData(test);
 		}
 	}
 	
@@ -78,9 +86,9 @@ public class udpClient{
 	{
 		lastDataTimestamp = Timer.getFPGATimestamp();
 		
-		angle = dataBuffer.get();
+		angle = receivedData[0];
 		
-		distance = dataBuffer.get();
+		distance = receivedData[1];
 		
 		/*angle = dataBuffer.wrap(receivedData).getDouble();
 		distance = dataBuffer.wrap(receivedData).getDouble();*/
@@ -94,6 +102,14 @@ public class udpClient{
 	public synchronized double getDistance()
 	{
 		return distance;
+	}
+	
+	public synchronized double[] getData()
+	{
+		
+		double [] dataArray = {angle, distance};
+		
+		return dataArray;
 	}
 	
 	public synchronized boolean isFresh()

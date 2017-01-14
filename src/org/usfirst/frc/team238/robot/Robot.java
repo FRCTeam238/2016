@@ -12,6 +12,7 @@ import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Hanger;
+import org.usfirst.frc.team238.robot.Vision;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -34,7 +35,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 // @SuppressWarnings("deprecation")
 public class Robot extends IterativeRobot {
 
-	private static int count = 0;
+	private static int count = 1;
+	double[] dataFromVision;
 	//private static boolean AUTO_STARTED = false;
 	
 	CANTalon leftFrontDrive; //id = 1
@@ -51,6 +53,7 @@ public class Robot extends IterativeRobot {
 	Drivetrain myDriveTrain;
 	Hanger myHanger;
 	DriverStation myDriverstation;
+	Vision theVision;
 	
 	// Autonomous Mode Support
 	String autoMode;
@@ -85,7 +88,7 @@ public class Robot extends IterativeRobot {
 		boolean debug;
 		try {
 			if (count > 150) {
-
+				
 				count = 0;
 				
 				myNavigation.getDistanceFromUltrasonic();
@@ -126,8 +129,19 @@ public class Robot extends IterativeRobot {
 				
 				myNavigation.navxValues();
 				
+				//Logger.logDouble("Distance ", dataFromVision[CrusaderCommon.VISION_DISTANCE_SLOT]);
+				
+				dataFromVision = theVision.getTheData();
+				
+				Logger.logDouble("Angle ", dataFromVision[CrusaderCommon.VISION_ANGLE_SLOT]);
+				
 			}
+			
+			
+			
+			
 			count++;
+			
 		} catch (Exception ex) {
 			Logger.logString("disabledPriodic exception" );
 			ex.printStackTrace();
@@ -176,7 +190,7 @@ public class Robot extends IterativeRobot {
 			
 			//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
 			
-			SmartDashboard.putBoolean("Debug", false);
+			SmartDashboard.putBoolean("Debug", true);
 			
 			SmartDashboard.putBoolean("Match Time Flag", false);
 			
@@ -247,6 +261,11 @@ public class Robot extends IterativeRobot {
 			
 			//The file writer to create new AutonomousModes
 			jSONFileWriter = new AutonomousJSONFactory();
+			
+			theVision = new Vision();
+			theVision.init();
+			theVision.startClient();
+			
 			
 			Logger.logString("Fully Initialized");
 
