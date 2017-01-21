@@ -9,7 +9,7 @@ import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import org.usfirst.frc.team238.robot.Hanger;
-
+import org.usfirst.frc.team238.robot.Vision;
 
 public class CommandController {
 	AutonomousCmdFactory theRouge;
@@ -24,10 +24,10 @@ public class CommandController {
 	
 	HashMap<Integer, Command> commandValue;
 	
-	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Intake intakeMechanism, Drivetrain driveTrain, Navigation myNavigation, Hanger theHanger)
+	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Intake intakeMechanism, Drivetrain driveTrain, Navigation myNavigation, Hanger theHanger, Vision myVision)
 	{
 		// populate the command lists
-		setupOperatorCommands(intakeMechanism, theHanger);
+		setupOperatorCommands(intakeMechanism, theHanger, myNavigation, driveTrain, myVision);
 		setupDriverCommands(myRobotDrive, driveTrain);
 		setupAutonomousCommands(driveTrain, myNavigation);
 		
@@ -72,12 +72,12 @@ public class CommandController {
 		return operatorCmdList.get(cmdName);
 	}
 	
-	private void setupOperatorCommands(Intake intakeMechanism, Hanger theHanger)
+	private void setupOperatorCommands(Intake intakeMechanism, Hanger theHanger, Navigation myNavigation, Drivetrain driveTrain, Vision myVision)
 	{
 		theOperatorCmdFactory = new OperatorCmdFactory();
 		theOperatorCmdFactory.init();
 		
-		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(intakeMechanism, theHanger);
+		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(intakeMechanism, theHanger, driveTrain, myNavigation, myVision);
 	}
 
 	/*
@@ -123,6 +123,7 @@ public class CommandController {
 			
 			commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed);
 			if(commandForTheButtonPressed != null){
+				
 				commandForTheButtonPressed.execute();
 			}
 			
@@ -131,16 +132,17 @@ public class CommandController {
 			buttonPressed = commandValue.get(CrusaderCommon.INPUT_DRIVER_RIGHT_JS);
 			commandForTheButtonPressed = driverRightCmdList.get(buttonPressed);
 			if(commandForTheButtonPressed != null){
+				//Logger.logInt("buttonPressed driver right : ", buttonPressed);
 				commandForTheButtonPressed.execute();
 			}
 			
 			
 			
 			buttonPressed = commandValue.get(CrusaderCommon.DT_CMD_LIST);
-			Logger.logInt("buttonPressed : ", buttonPressed);
+			//Logger.logInt("buttonPressed : ", buttonPressed);
 			commandForTheButtonPressed = driverCmdList.get(buttonPressed); 
 			if(commandForTheButtonPressed != null){
-				Logger.logInt("buttonPressed(in if statement) : ", buttonPressed);
+				//Logger.logInt("buttonPressed(in if statement) : ", buttonPressed);
 				commandForTheButtonPressed.execute();
 			}
 			

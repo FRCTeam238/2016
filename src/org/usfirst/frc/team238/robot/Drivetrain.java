@@ -23,8 +23,14 @@ public class Drivetrain {
 	int encoderRight;
 	
 	int counter;
-	
+	double protoCounter;
+	int delayCounter;
 	// need turn left turn right
+	int lastBtnPressed;
+	int scalefactor;
+	int scalefactorOnePercent;
+	int btncounter;
+	int btncounterDec;
 	
 	public Drivetrain(RobotDrive theRobotDrive)
 	{
@@ -39,12 +45,17 @@ public class Drivetrain {
 		rightFrontDrive = rightFrontDriveTalon;
 		shifterSolenoid = new Solenoid (0);
 		
-		
+		lastBtnPressed = 0;
+		protoCounter = 0;
+		scalefactor = 5;
+		scalefactorOnePercent = 1;
 		counter = 0;
 		leftFrontDrive.configEncoderCodesPerRev(256);
 		rightFrontDrive.configEncoderCodesPerRev(256);
-
-
+		
+		 btncounter = 0;
+		btncounterDec = 0;
+		
 	}
 	public int getEncoderTicks()
 	{
@@ -140,6 +151,180 @@ public class Drivetrain {
 		return false;
 	}
 
+	public void incrementMotorValue(int currentBtn)
+	{
+		//Logger.logDouble("Button = ", currentBtn);
+		if(btncounter < 7)
+		{
+			btncounter++;
+			return;
+		}
+		btncounter = 0;
+		if((lastBtnPressed == currentBtn)) // || (0 == currentBtn))
+		{
+			lastBtnPressed = currentBtn;
+			//Logger.logDouble("Button = ", currentBtn);
+			SmartDashboard.putNumber("current btn = ", lastBtnPressed);
+			return;
+		}
+		else
+		{
+			lastBtnPressed = currentBtn;
+			
+			if(protoCounter < 1) 
+			{
+				protoCounter = protoCounter * 100;
+				protoCounter += scalefactor;
+				protoCounter = protoCounter/100;
+				robotMotors.tankDrive(protoCounter, 0);
+				lastBtnPressed = currentBtn;
+				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
+			}
+			Logger.logDouble("Increment", protoCounter);
+		}
+	}
+	
+	public void decrementMotorValue(int currentBtn)
+	{
+		if(btncounterDec < 7)
+		{
+			btncounterDec++;
+			return;
+		}
+		btncounterDec = 0;
+		if((lastBtnPressed == currentBtn)) // || (0 == currentBtn))
+		{
+			lastBtnPressed = currentBtn;
+			return;
+		}
+		else
+		{
+			lastBtnPressed = currentBtn;
+			if(protoCounter > -1)
+			{
+				protoCounter = protoCounter * 100;
+				protoCounter -= scalefactor;
+				protoCounter = protoCounter/100;
+				robotMotors.tankDrive(protoCounter, 0);
+				lastBtnPressed = currentBtn;
+				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
+			}
+			Logger.logDouble("decrenment", protoCounter);
+		}
+	}
+	
+	public void incrementMotorValueOnePercent(int currentBtn)
+	{
+		//Logger.logDouble("Button = ", currentBtn);
+		if(btncounter < 7)
+		{
+			btncounter++;
+			return;
+		}
+		btncounter = 0;
+		if((lastBtnPressed == currentBtn)) // || (0 == currentBtn))
+		{
+			lastBtnPressed = currentBtn;
+			//Logger.logDouble("Button = ", currentBtn);
+			SmartDashboard.putNumber("current btn = ", lastBtnPressed);
+			return;
+		}
+		else
+		{
+			lastBtnPressed = currentBtn;
+			
+			if(protoCounter < 1) 
+			{
+				protoCounter = protoCounter * 100;
+				protoCounter += scalefactorOnePercent;
+				protoCounter = protoCounter/100;
+				robotMotors.tankDrive(protoCounter, 0);
+				lastBtnPressed = currentBtn;
+				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
+			}
+			Logger.logDouble("Increment", protoCounter);
+		}
+	}
+	
+	public void decrementMotorValueOnePercent(int currentBtn)
+	{
+		if(btncounterDec < 7)
+		{
+			btncounterDec++;
+			return;
+		}
+		btncounterDec = 0;
+		if((lastBtnPressed == currentBtn)) // || (0 == currentBtn))
+		{
+			lastBtnPressed = currentBtn;
+			return;
+		}
+		else
+		{
+			lastBtnPressed = currentBtn;
+			if(protoCounter > -1)
+			{
+				protoCounter = protoCounter * 100;
+				protoCounter -= scalefactorOnePercent;
+				protoCounter = protoCounter/100;
+				robotMotors.tankDrive(protoCounter, 0);
+				lastBtnPressed = currentBtn;
+				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
+			}
+			Logger.logDouble("decrenment", protoCounter);
+		}
+	}
+	
+	public void resetMotorValue()
+	{
+		protoCounter = 0;
+		lastBtnPressed = 1;
+		robotMotors.tankDrive(0, 0);
+		Logger.logDouble("Reset", protoCounter);
+	}
+	public void nobtnPressed()
+	{
+		lastBtnPressed = 1;
+		//Logger.logDouble("Reset", lastBtnPressed);
+		}
+	/*
+	 * public void incrementMotorValue()
+	{
+		Logger.logDouble("Increment", protoCounter);
+		
+		if(protoCounter < 1)
+		{
+			
+			if(delayCounter > 50)
+			{
+				robotMotors.tankDrive(protoCounter += .10, 0);
+				delayCounter =0;
+			}
+			delayCounter++;
+			Logger.logDouble("Increment", protoCounter);
+		}
+	}
+	
+	public void decrementMotorValue()
+	{
+		Logger.logDouble("decrement", protoCounter);
+		
+		if(protoCounter > -1)
+		{
+			if(delayCounter > 50)
+			{
+				protoCounter = protoCounter * 100;
+				protoCounter -= 10;
+				protoCounter = protoCounter/100;
+				robotMotors.tankDrive(protoCounter, 0);
+				delayCounter =0;
+			}
+			delayCounter++;
+			
+			Logger.logDouble("Decrement", protoCounter);
+		}
+	}
+	 */
 }
 
 

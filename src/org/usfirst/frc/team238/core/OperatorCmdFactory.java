@@ -12,10 +12,15 @@ import org.usfirst.frc.team238.commands.CommandCollectorDeploy;
 import org.usfirst.frc.team238.commands.CommandCollectorDeploy;
 import org.usfirst.frc.team238.robot.Intake;
 import org.usfirst.frc.team238.robot.Hanger;
+import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.Navigation;
+import org.usfirst.frc.team238.robot.Vision;
 import org.usfirst.frc.team238.commands.CommandReleaseTheHounds;
 import org.usfirst.frc.team238.commands.CommandResetPcm;
 import org.usfirst.frc.team238.commands.CommandBeamMeUp;
 import org.usfirst.frc.team238.commands.CommandRetractTheHounds;
+import org.usfirst.frc.team238.commands.CommandTrackTargetRight;
+import org.usfirst.frc.team238.commands.CommandTrackTargetLeft;
 
 
 
@@ -45,6 +50,10 @@ public class OperatorCmdFactory {
 	
 	CommandResetPcm commandResetPcm;
 	
+	CommandTrackTargetRight commandTrackRight;
+	
+	CommandTrackTargetLeft commandTrackLeft;
+	
 	HashMap <Integer, Command> operatorCommands;
 
 	
@@ -55,7 +64,8 @@ public class OperatorCmdFactory {
 	
 	}
 	
-	public HashMap<Integer, Command> createOperatorCommands(Intake theIntake, Hanger theHanger){
+	public HashMap<Integer, Command> createOperatorCommands(Intake theIntake, Hanger theHanger, 
+								Drivetrain driveTrain, Navigation theNavigation, Vision theVision){
 	
 		operatorCollectorIn = new CommandCollectorIn(theIntake);
 		operatorCommands.put(2, operatorCollectorIn);
@@ -84,11 +94,17 @@ public class OperatorCmdFactory {
 		commandBeamMeUp = new CommandBeamMeUp(theHanger);
 		operatorCommands.put(5, commandBeamMeUp);
 		
-		commandRetractTheHounds = new CommandRetractTheHounds(theHanger);
-		operatorCommands.put(9, commandRetractTheHounds);
+		//commandRetractTheHounds = new CommandRetractTheHounds(theHanger);
+		//operatorCommands.put(9, commandRetractTheHounds);
 		
 		commandResetPcm = new CommandResetPcm(theIntake);
 		operatorCommands.put(4, commandResetPcm);
+		
+		commandTrackRight = new CommandTrackTargetRight(driveTrain, theNavigation, theVision);
+		operatorCommands.put(8, commandTrackRight);
+		
+		commandTrackLeft = new CommandTrackTargetLeft(driveTrain, theNavigation, theVision);
+		operatorCommands.put(9, commandTrackLeft);
 		
 		return operatorCommands;
 	

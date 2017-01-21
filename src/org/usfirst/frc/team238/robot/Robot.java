@@ -251,9 +251,13 @@ public class Robot extends IterativeRobot {
 			leftRearDrive.enableBrakeMode(true);
 			rightRearDrive.enableBrakeMode(true);
 			
+			theVision = new Vision();
+			theVision.init();
+			theVision.startClient();
+			
 			//Controller object for telop
 			theMCP = new CommandController();
-			theMCP.init(myRobotDrive, /*autonomousDrive,*/ myIntake, myDriveTrain, myNavigation, myHanger);
+			theMCP.init(myRobotDrive, /*autonomousDrive,*/ myIntake, myDriveTrain, myNavigation, myHanger, theVision);
 
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 
@@ -262,9 +266,7 @@ public class Robot extends IterativeRobot {
 			//The file writer to create new AutonomousModes
 			jSONFileWriter = new AutonomousJSONFactory();
 			
-			theVision = new Vision();
-			theVision.init();
-			theVision.startClient();
+			
 			
 			
 			Logger.logString("Fully Initialized");
