@@ -1,7 +1,7 @@
 package org.usfirst.frc.team238.robot;
 
 //import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 
